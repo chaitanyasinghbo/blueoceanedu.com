@@ -7,7 +7,7 @@
   <meta name="description" content="Blue Ocean Education Consulting is India's premier private admissions advisory. Expert guidance for top US, UK, and global university admissions.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,7 +31,7 @@
       --gray-800:    #1F2937;
       --text:        #111827;
       --font-sans:   'Plus Jakarta Sans', sans-serif;
-      --font-serif:  'Cormorant Garamond', Georgia, serif;
+      --font-serif:  'Libre Baskerville', Georgia, serif;
     }
 
     html { scroll-behavior: smooth; }
@@ -146,10 +146,7 @@
     .hero {
       position: relative;
       width: 100%;
-      height: 580px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height: 660px;
       overflow: hidden;
       background: var(--navy-dark);
     }
@@ -159,59 +156,239 @@
       background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1600&auto=format&fit=crop&q=80');
       background-size: cover;
       background-position: center 30%;
-      opacity: 0.28;
+      opacity: 0.18;
     }
     .hero-overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(
-        to bottom,
-        rgba(7, 27, 62, 0.55) 0%,
-        rgba(7, 27, 62, 0.72) 100%
+        100deg,
+        rgba(7,27,62,0.96) 0%,
+        rgba(7,27,62,0.80) 50%,
+        rgba(7,27,62,0.05) 100%
       );
     }
     .hero-content {
       position: relative;
       z-index: 2;
-      text-align: center;
-      padding: 0 24px;
-      max-width: 840px;
+      height: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
     }
-    .hero-eyebrow {
-      display: inline-block;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.25);
-      color: rgba(255,255,255,0.88);
-      font-size: 11.5px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 6px 16px;
-      border-radius: 100px;
-      margin-bottom: 28px;
+    .hero-text {
+      padding: 60px 0;
     }
     .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(38px, 5vw, 58px);
-      font-weight: 500;
+      font-family: var(--font-sans);
+      font-size: clamp(34px, 3.6vw, 52px);
+      font-weight: 800;
       color: var(--white);
-      line-height: 1.18;
-      letter-spacing: -0.01em;
-      margin-bottom: 32px;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      max-width: 560px;
+      margin-bottom: 20px;
     }
-    .btn-hero {
-      display: inline-block;
-      background: var(--blue-mid);
-      color: var(--white);
-      padding: 15px 38px;
-      border-radius: 7px;
+    .hero-sub {
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.68);
+      max-width: 440px;
+      line-height: 1.65;
+    }
+    .hero-image {
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      width: clamp(280px, 32vw, 460px);
+    }
+    .hero-image img {
+      height: 100%;
+      width: auto;
+      max-width: 100%;
+      display: block;
+      object-fit: contain;
+      object-position: bottom center;
+    }
+
+    /* ── HERO FEATURED TICKER ────────────────────────────────────── */
+    .hero-featured {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      background: rgba(4,16,40,0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      height: 52px;
+    }
+    .hero-featured-label {
+      flex-shrink: 0;
+      padding: 0 20px 0 28px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      white-space: nowrap;
+      border-right: 1px solid rgba(255,255,255,0.12);
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .hero-featured-scroll {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+      height: 100%;
+    }
+    .hero-featured-scroll::before,
+    .hero-featured-scroll::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 60px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .hero-featured-scroll::before {
+      left: 0;
+      background: linear-gradient(to right, rgba(4,16,40,0.72), transparent);
+    }
+    .hero-featured-scroll::after {
+      right: 0;
+      background: linear-gradient(to left, rgba(4,16,40,0.72), transparent);
+    }
+    .hero-featured-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      height: 100%;
+      animation: ticker-scroll 36s linear infinite;
+    }
+    .hero-featured-track:hover { animation-play-state: paused; }
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      white-space: nowrap;
+      padding: 0 24px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 0.01em;
+      transition: color 0.15s;
+    }
+    .ticker-item:hover { color: var(--white); }
+    .ticker-item.serif { font-family: var(--font-serif); font-style: italic; font-size: 15px; font-weight: 400; }
+    .ticker-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 860px) {
+      .hero-featured { display: none; }
+      .hero {
+        height: auto;
+      }
+      .hero-overlay {
+        background: rgba(7,27,62,0.85);
+      }
+      .hero-content {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: start;
+        padding: 0 20px;
+        text-align: center;
+      }
+      .hero-text {
+        padding: 48px 0 24px;
+        order: 1;
+      }
+      .hero h1 {
+        font-size: clamp(26px, 6.5vw, 36px);
+        max-width: 100%;
+        margin-bottom: 14px;
+      }
+      .hero-sub {
+        font-size: 15px;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+      .hero-image {
+        order: 2;
+        width: 55%;
+        max-width: 240px;
+        height: 280px;
+        margin: 0 auto;
+        justify-content: center;
+      }
+      .hero-image img {
+        height: 100%;
+        width: auto;
+      }
+    }
+
+    /* ── STICKY CTA BAR ───────────────────────────────────────────── */
+    .sticky-cta {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: var(--navy-dark);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 -4px 32px rgba(0,0,0,0.28);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+    .sticky-cta p {
+      color: rgba(255,255,255,0.92);
       font-size: 15.5px;
+      font-weight: 500;
+      line-height: 1.4;
+      margin: 0;
+    }
+    .sticky-cta p strong {
+      color: var(--white);
+      font-weight: 700;
+    }
+    .btn-sticky {
+      flex-shrink: 0;
+      display: inline-block;
+      background: var(--gold);
+      color: var(--white);
+      padding: 13px 32px;
+      border-radius: 7px;
+      font-size: 15px;
       font-weight: 700;
       letter-spacing: 0.01em;
       transition: background 0.15s, transform 0.12s;
-      box-shadow: 0 4px 20px rgba(21,87,190,0.4);
+      box-shadow: 0 4px 18px rgba(184,137,42,0.45);
+      white-space: nowrap;
     }
-    .btn-hero:hover { background: var(--navy); transform: translateY(-2px); }
+    .btn-sticky:hover { background: #a07824; transform: translateY(-1px); }
+    @media (max-width: 600px) {
+      .sticky-cta { flex-direction: column; gap: 12px; padding: 16px 20px; text-align: center; }
+    }
+    /* push page content so footer isn't hidden behind bar */
+    body { padding-bottom: 80px; }
 
     /* ── SECTION COMMONS ──────────────────────────────────────────── */
     .section-inner {
@@ -229,30 +406,193 @@
     }
 
     /* ── INTRO / TAGLINE ──────────────────────────────────────────── */
-    .intro-section {
-      background: var(--white);
-      padding: 72px 0 64px;
+    /* ── RESULTS SECTION ─────────────────────────────────────────── */
+    .results-section {
+      background: var(--off-white);
+      padding: 80px 0 72px;
+      border-top: 1px solid var(--gray-200);
     }
-    .intro-section .section-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
+    .results-heading {
+      margin-bottom: 48px;
     }
-    .intro-left h2 {
+    .results-heading h2 {
       font-family: var(--font-serif);
-      font-size: clamp(28px, 3.2vw, 40px);
-      font-weight: 500;
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 400;
       color: var(--navy);
       line-height: 1.22;
-      margin-bottom: 20px;
+      margin-top: 12px;
     }
-    .intro-left p {
-      font-size: 15.5px;
+    .results-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr 1.6fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    /* photo card */
+    .results-photo-card {
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--navy-dark);
+      display: grid;
+    }
+    .results-rotating-img {
+      grid-area: 1 / 1;
+      width: 100%;
+      height: auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .results-rotating-img.active {
+      opacity: 1;
+    }
+    .results-photo-overlay {
+      grid-area: 1 / 1;
+      align-self: end;
+      position: relative;
+      z-index: 2;
+      padding: 16px 24px 24px;
+      background: rgba(7,27,62,0.88);
+    }
+    .results-photo-stat {
+      font-family: var(--font-serif);
+      font-size: 52px;
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .results-photo-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    /* metrics column */
+    .results-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .metric-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      padding: 28px 28px 24px;
+      flex: 1;
+    }
+    .metric-card-num {
+      font-family: var(--font-serif);
+      font-size: 52px;
+      font-weight: 400;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .metric-card-num sup {
+      font-size: 26px;
+      color: var(--blue);
+      font-weight: 500;
+    }
+    .metric-card-desc {
+      font-size: 14px;
       color: var(--gray-600);
-      line-height: 1.7;
-      margin-bottom: 28px;
+      line-height: 1.55;
+      font-weight: 400;
+      max-width: 220px;
     }
+
+    /* bar chart */
+    .results-chart {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      padding: 28px 32px;
+    }
+    .chart-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .chart-legend {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--gray-600);
+      font-weight: 500;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-dot.general { background: var(--gray-200); }
+    .legend-dot.bo      { background: var(--navy); }
+    .chart-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .chart-row {}
+    .chart-row-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 5px;
+    }
+    .chart-school {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gray-800);
+    }
+    .chart-multiplier {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 0.01em;
+    }
+    .chart-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .bar-track {
+      background: var(--gray-100);
+      border-radius: 100px;
+      height: 7px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 100px;
+      transition: width 0.6s ease;
+    }
+    .bar-fill.general { background: var(--gray-300, #D1D5DB); }
+    .bar-fill.bo      { background: var(--navy); }
+    .bar-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3px;
+    }
+    .bar-pct {
+      font-size: 10.5px;
+      color: var(--gray-400);
+      font-weight: 500;
+    }
+    .bar-pct.bo { color: var(--navy); font-weight: 700; }
+
     .btn-outline {
       display: inline-block;
       border: 2px solid var(--blue);
@@ -264,37 +604,23 @@
       transition: all 0.15s;
     }
     .btn-outline:hover { background: var(--blue); color: var(--white); }
-    .intro-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-      border: 1px solid var(--gray-200);
-      border-radius: 12px;
-      overflow: hidden;
+
+    @media (max-width: 960px) {
+      .results-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+      }
+      .results-photo-card { display: none; }
+      .results-metrics { grid-column: 1; }
+      .results-chart   { grid-column: 2; }
     }
-    .stat-cell {
-      background: var(--white);
-      padding: 28px 24px;
-      border: 1px solid var(--gray-200);
-    }
-    .stat-cell:first-child { border-top-left-radius: 11px; }
-    .stat-cell:nth-child(2) { border-top-right-radius: 11px; }
-    .stat-cell:nth-child(3) { border-bottom-left-radius: 11px; }
-    .stat-cell:last-child { border-bottom-right-radius: 11px; }
-    .stat-num {
-      font-family: var(--font-serif);
-      font-size: 38px;
-      font-weight: 600;
-      color: var(--navy);
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-    .stat-num span { font-size: 22px; color: var(--blue); }
-    .stat-desc {
-      font-size: 13px;
-      color: var(--gray-600);
-      line-height: 1.4;
-      font-weight: 500;
+    @media (max-width: 640px) {
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+      .results-metrics { grid-column: 1; flex-direction: row; }
+      .results-chart   { grid-column: 1; }
+      .metric-card-num { font-size: 40px; }
     }
 
     /* ── SERVICES ─────────────────────────────────────────────────── */
@@ -310,7 +636,7 @@
     .services-header h2 {
       font-family: var(--font-serif);
       font-size: clamp(26px, 3vw, 36px);
-      font-weight: 500;
+      font-weight: 400;
       color: var(--navy);
       line-height: 1.2;
     }
@@ -319,6 +645,8 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 20px;
     }
+    @media (max-width: 900px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px)  { .services-grid { grid-template-columns: 1fr; } }
     .service-card {
       background: var(--white);
       border: 1px solid var(--gray-200);
@@ -368,6 +696,159 @@
     .service-link:hover { gap: 9px; }
     .service-link::after { content: '→'; }
 
+    /* ── SERVICES SPLIT CTA ──────────────────────────────────────── */
+    .services-split-section {
+      background: var(--navy-dark);
+      overflow: hidden;
+      border-top: 1px solid var(--gray-200);
+    }
+    .services-split-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 54% 46%;
+      min-height: 600px;
+    }
+    .services-split-left {
+      padding: 88px 72px 88px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .services-split-left .section-label {
+      color: rgba(168,202,255,0.75);
+      margin-bottom: 14px;
+    }
+    .services-split-left h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(24px, 2.6vw, 34px);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .services-split-desc {
+      font-size: 14.5px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
+      margin-bottom: 44px;
+      max-width: 420px;
+    }
+    .services-split-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .services-split-btn {
+      display: grid;
+      grid-template-columns: 48px 1fr 32px;
+      align-items: center;
+      gap: 0 20px;
+      padding: 28px 28px 28px 24px;
+      text-decoration: none;
+      transition: background 0.18s;
+      position: relative;
+    }
+    .services-split-btn + .services-split-btn {
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .services-split-btn-ug {
+      background: rgba(255,255,255,0.04);
+    }
+    .services-split-btn-ug:hover {
+      background: rgba(255,255,255,0.09);
+    }
+    .services-split-btn-mba {
+      background: rgba(184,137,42,0.07);
+    }
+    .services-split-btn-mba:hover {
+      background: rgba(184,137,42,0.14);
+    }
+    .services-split-btn-num {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1;
+      color: rgba(255,255,255,0.18);
+      user-select: none;
+    }
+    .services-split-btn-mba .services-split-btn-num {
+      color: rgba(184,137,42,0.35);
+    }
+    .services-split-btn-body {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .services-split-btn-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .services-split-btn-sub {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.45);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .services-split-btn-arrow {
+      font-size: 18px;
+      color: rgba(255,255,255,0.3);
+      transition: color 0.15s, transform 0.15s;
+      justify-self: end;
+    }
+    .services-split-btn:hover .services-split-btn-arrow {
+      color: var(--white);
+      transform: translateX(4px);
+    }
+    .services-split-btn-mba:hover .services-split-btn-arrow {
+      color: var(--gold-light);
+    }
+    .services-split-right {
+      position: relative;
+      overflow: hidden;
+      background: var(--navy-dark);
+    }
+    .services-split-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, var(--navy-dark) 0%, transparent 30%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .services-split-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    @media (max-width: 860px) {
+      .services-split-inner {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .services-split-left {
+        padding: 56px 24px 48px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+      .services-split-right {
+        height: 340px;
+      }
+      .services-split-right::before {
+        background: linear-gradient(to bottom, var(--navy-dark) 0%, transparent 25%);
+      }
+    }
+
     /* ── IMPACT ───────────────────────────────────────────────────── */
     .impact-section {
       background: var(--white);
@@ -379,7 +860,7 @@
     .impact-header h2 {
       font-family: var(--font-serif);
       font-size: clamp(26px, 3vw, 36px);
-      font-weight: 500;
+      font-weight: 400;
       color: var(--navy);
       margin-bottom: 16px;
     }
@@ -443,6 +924,181 @@
       color: var(--gray-400);
     }
 
+    /* ── UNIVERSITY LOGOS ────────────────────────────────────────── */
+    .logos-section {
+      background: url('back copy.png') center center / cover no-repeat;
+      padding: 80px 0 72px;
+      border-top: 1px solid var(--gray-200);
+      position: relative;
+    }
+    .logos-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.82);
+    }
+    .logos-section .section-inner {
+      position: relative;
+      z-index: 1;
+    }
+    .logos-header {
+      margin-bottom: 40px;
+    }
+    .logos-header h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(24px, 2.8vw, 36px);
+      font-weight: 400;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-top: 12px;
+    }
+    .logos-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    .logo-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      min-height: 72px;
+      transition: box-shadow 0.15s, border-color 0.15s, background 0.15s;
+      cursor: default;
+    }
+    .logo-card:hover {
+      box-shadow: 0 4px 18px rgba(12,45,94,0.10);
+      border-color: var(--blue-rule);
+      background: var(--blue-pale);
+    }
+    .logo-card img.logo-img {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+    }
+    .logo-card-text {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .logo-name {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .logo-sub {
+      display: none;
+    }
+    @media (max-width: 860px) { .logos-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 600px) { .logos-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    /* ── STUDENT PROOF ────────────────────────────────────────────── */
+    .proof-section {
+      background: var(--white);
+      padding: 80px 0 72px;
+      border-top: 1px solid var(--gray-200);
+    }
+    .proof-header {
+      margin-bottom: 40px;
+    }
+    .proof-header h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(24px, 2.8vw, 36px);
+      font-weight: 400;
+      color: var(--navy);
+      margin-top: 12px;
+      line-height: 1.2;
+    }
+    .proof-header p {
+      font-size: 15px;
+      color: var(--gray-600);
+      line-height: 1.65;
+      max-width: 620px;
+      margin-top: 14px;
+    }
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .proof-card {
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      padding: 24px;
+      background: var(--white);
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .proof-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      border-color: var(--blue-rule);
+    }
+    .proof-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .proof-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .proof-city {
+      font-size: 12px;
+      color: var(--gray-400);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+    .proof-scholarship {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--navy);
+      white-space: nowrap;
+    }
+    .proof-category {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: var(--blue-pale);
+      border: 1px solid var(--blue-rule);
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+    .proof-admits {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--gray-800);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .proof-spike {
+      font-size: 12.5px;
+      color: var(--gray-600);
+      line-height: 1.6;
+      border-top: 1px solid var(--gray-100);
+      padding-top: 12px;
+      margin-top: 4px;
+    }
+    @media (max-width: 960px) { .proof-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 580px)  { .proof-grid { grid-template-columns: 1fr; } }
+
     /* ── PRESS ────────────────────────────────────────────────────── */
     .press-section {
       background: var(--gray-50);
@@ -469,7 +1125,7 @@
     .press-logo {
       font-family: var(--font-serif);
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 400;
       color: var(--gray-400);
       letter-spacing: 0.02em;
       transition: color 0.15s;
@@ -498,7 +1154,7 @@
     .discovery-left h2 {
       font-family: var(--font-serif);
       font-size: clamp(26px, 3vw, 38px);
-      font-weight: 500;
+      font-weight: 400;
       color: var(--navy);
       margin-bottom: 16px;
       line-height: 1.22;
@@ -564,7 +1220,7 @@
     .testimonials-header h2 {
       font-family: var(--font-serif);
       font-size: clamp(24px, 2.8vw, 34px);
-      font-weight: 500;
+      font-weight: 400;
       color: var(--navy);
       margin-bottom: 10px;
     }
@@ -650,7 +1306,7 @@
     .strip-text h3 {
       font-family: var(--font-serif);
       font-size: clamp(22px, 2.5vw, 30px);
-      font-weight: 500;
+      font-weight: 400;
       color: var(--white);
       margin-bottom: 8px;
     }
@@ -823,40 +1479,161 @@
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <div class="hero-eyebrow">Founded by a Harvard Kennedy School Alumnus</div>
-      <h1>Private Admissions Guidance<br>for Ambitious Indian Families</h1>
-      <a href="#" class="btn-hero">Talk to an Expert</a>
+      <div class="hero-text">
+        <h1>Give your child the best chance at IVY, Oxbridge and top universities.</h1>
+        <p class="hero-sub">India's leading private admissions advisory. Expert, personalised guidance from Grade 9 through your final application.</p>
+      </div>
+      <div class="hero-image">
+        <img src="Untitled design.png" alt="Blue Ocean Education student admitted to top university" />
+      </div>
+    </div>
+
+    <!-- Featured-in ticker — desktop only -->
+    <div class="hero-featured">
+      <div class="hero-featured-label">Our team featured in</div>
+      <div class="hero-featured-scroll">
+        <div class="hero-featured-track">
+          <!-- first copy -->
+          <span class="ticker-item">Harvard Mittal Institute</span><span class="ticker-dot"></span>
+          <span class="ticker-item serif">NDTV</span><span class="ticker-dot"></span>
+          <span class="ticker-item">The Times of India</span><span class="ticker-dot"></span>
+          <span class="ticker-item">Hindustan Times</span><span class="ticker-dot"></span>
+          <span class="ticker-item serif">Mint</span><span class="ticker-dot"></span>
+          <span class="ticker-item">Business Standard</span><span class="ticker-dot"></span>
+          <span class="ticker-item">India Today</span><span class="ticker-dot"></span>
+          <span class="ticker-item">The Indian Express</span><span class="ticker-dot"></span>
+          <span class="ticker-item">ThePrint</span><span class="ticker-dot"></span>
+          <span class="ticker-item serif">Forbes India</span><span class="ticker-dot"></span>
+          <span class="ticker-item">ABP Live</span><span class="ticker-dot"></span>
+          <span class="ticker-item">Penguin Random House</span><span class="ticker-dot"></span>
+          <span class="ticker-item">HarperCollins</span><span class="ticker-dot"></span>
+          <span class="ticker-item">Masters' Union</span><span class="ticker-dot"></span>
+          <!-- duplicate for seamless loop -->
+          <span class="ticker-item">Harvard Mittal Institute</span><span class="ticker-dot"></span>
+          <span class="ticker-item serif">NDTV</span><span class="ticker-dot"></span>
+          <span class="ticker-item">The Times of India</span><span class="ticker-dot"></span>
+          <span class="ticker-item">Hindustan Times</span><span class="ticker-dot"></span>
+          <span class="ticker-item serif">Mint</span><span class="ticker-dot"></span>
+          <span class="ticker-item">Business Standard</span><span class="ticker-dot"></span>
+          <span class="ticker-item">India Today</span><span class="ticker-dot"></span>
+          <span class="ticker-item">The Indian Express</span><span class="ticker-dot"></span>
+          <span class="ticker-item">ThePrint</span><span class="ticker-dot"></span>
+          <span class="ticker-item serif">Forbes India</span><span class="ticker-dot"></span>
+          <span class="ticker-item">ABP Live</span><span class="ticker-dot"></span>
+          <span class="ticker-item">Penguin Random House</span><span class="ticker-dot"></span>
+          <span class="ticker-item">HarperCollins</span><span class="ticker-dot"></span>
+          <span class="ticker-item">Masters' Union</span><span class="ticker-dot"></span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- INTRO / TAGLINE -->
-  <section class="intro-section">
+  <!-- RESULTS -->
+  <section class="results-section">
     <div class="section-inner">
-      <div class="intro-left">
-        <div class="section-label">India's Leading Private Admissions Advisory</div>
-        <h2>No one else brings this depth of strategy to your child's application.</h2>
-        <p>Blue Ocean Education Consulting is a boutique private admissions advisory founded by Dr. Sanjay Kumar (Harvard Kennedy School). We guide a carefully selected group of ambitious Indian families through the full arc of university admissions — from profile architecture in Grade 9 to final application review in Grade 12. Our students gain admission to Harvard, Yale, Brown, Columbia, Penn, Cambridge, CMU, and more.</p>
-        <a href="#" class="btn-outline">Meet Our Team →</a>
+
+      <div class="results-heading">
+        <div class="section-label">Our Results</div>
+        <h2>Our Students Get In. Consistently.</h2>
       </div>
-      <div class="intro-right">
-        <div class="intro-stats">
-          <div class="stat-cell">
-            <div class="stat-num">100<span>+</span></div>
-            <div class="stat-desc">Students guided to top global universities</div>
-          </div>
-          <div class="stat-cell">
-            <div class="stat-num">₹1<span>Cr</span></div>
-            <div class="stat-desc">Average scholarship secured per admitted student</div>
-          </div>
-          <div class="stat-cell">
-            <div class="stat-num">₹1.5<span>Cr</span></div>
-            <div class="stat-desc">Highest scholarship secured by a Blue Ocean student</div>
-          </div>
-          <div class="stat-cell">
-            <div class="stat-num">Top<span> 20</span></div>
-            <div class="stat-desc">Global university admits across US, UK &amp; Canada</div>
+
+      <div class="results-grid">
+
+        <!-- photo card — hidden on mobile -->
+        <div class="results-photo-card">
+          <img class="results-rotating-img active" src="anushka_cambridge.png" alt="Anushka — Cambridge" />
+          <img class="results-rotating-img" src="prateek_harvard.png" alt="Prateek — Harvard" />
+          <img class="results-rotating-img" src="manya_brown.png" alt="Manya — Brown" />
+          <div class="results-photo-overlay">
+            <div class="results-photo-stat">9/10</div>
+            <div class="results-photo-desc">students gain admission to at least one of their top 5 choices</div>
           </div>
         </div>
+
+        <!-- metric cards -->
+        <div class="results-metrics">
+          <div class="metric-card">
+            <div class="metric-card-num">4×<sup>+</sup></div>
+            <div class="metric-card-desc">Blue Ocean students are over 4× more likely to gain admission to their target university than the general applicant pool.</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-num">100<sup>+</sup></div>
+            <div class="metric-card-desc">acceptances at Ivy League, Oxbridge, and top global universities.</div>
+          </div>
+        </div>
+
+        <!-- bar chart -->
+        <div class="results-chart">
+          <div class="chart-title">Acceptance Rate Comparison</div>
+          <div class="chart-legend">
+            <div class="legend-item"><span class="legend-dot general"></span>General Admit Rate</div>
+            <div class="legend-item"><span class="legend-dot bo"></span>Blue Ocean Student Rate</div>
+          </div>
+          <div class="chart-rows">
+
+            <div class="chart-row">
+              <div class="chart-row-header">
+                <span class="chart-school">Yale</span>
+                <span class="chart-multiplier">3.5× more likely</span>
+              </div>
+              <div class="chart-bars">
+                <div class="bar-track"><div class="bar-fill general" style="width:12%"></div></div>
+                <div class="bar-track"><div class="bar-fill bo" style="width:42%"></div></div>
+              </div>
+              <div class="bar-labels">
+                <span class="bar-pct">4.6%</span>
+                <span class="bar-pct bo">16%</span>
+              </div>
+            </div>
+
+            <div class="chart-row">
+              <div class="chart-row-header">
+                <span class="chart-school">Columbia</span>
+                <span class="chart-multiplier">3.6× more likely</span>
+              </div>
+              <div class="chart-bars">
+                <div class="bar-track"><div class="bar-fill general" style="width:10%"></div></div>
+                <div class="bar-track"><div class="bar-fill bo" style="width:37%"></div></div>
+              </div>
+              <div class="bar-labels">
+                <span class="bar-pct">3.9%</span>
+                <span class="bar-pct bo">14%</span>
+              </div>
+            </div>
+
+            <div class="chart-row">
+              <div class="chart-row-header">
+                <span class="chart-school">Brown</span>
+                <span class="chart-multiplier">4.0× more likely</span>
+              </div>
+              <div class="chart-bars">
+                <div class="bar-track"><div class="bar-fill general" style="width:13%"></div></div>
+                <div class="bar-track"><div class="bar-fill bo" style="width:53%"></div></div>
+              </div>
+              <div class="bar-labels">
+                <span class="bar-pct">5%</span>
+                <span class="bar-pct bo">20%</span>
+              </div>
+            </div>
+
+            <div class="chart-row">
+              <div class="chart-row-header">
+                <span class="chart-school">Cornell</span>
+                <span class="chart-multiplier">4.4× more likely</span>
+              </div>
+              <div class="chart-bars">
+                <div class="bar-track"><div class="bar-fill general" style="width:23%"></div></div>
+                <div class="bar-track"><div class="bar-fill bo" style="width:100%"></div></div>
+              </div>
+              <div class="bar-labels">
+                <span class="bar-pct">8.7%</span>
+                <span class="bar-pct bo">38%</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -872,7 +1649,7 @@
 
         <div class="service-card">
           <img class="service-card-img"
-            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&auto=format&fit=crop&q=75"
+            src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&auto=format&fit=crop&q=75"
             alt="Early Architecture — Grades 8 to 10">
           <div class="service-card-body">
             <h3>Early Architecture<br><span style="font-weight:400;color:var(--gray-400);font-size:13px;">Grades 8–10</span></h3>
@@ -885,7 +1662,7 @@
 
         <div class="service-card">
           <img class="service-card-img"
-            src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=75"
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&auto=format&fit=crop&q=75"
             alt="Strategic Build — Grade 11">
           <div class="service-card-body">
             <h3>Strategic Build<br><span style="font-weight:400;color:var(--gray-400);font-size:13px;">Grade 11</span></h3>
@@ -898,32 +1675,66 @@
 
         <div class="service-card">
           <img class="service-card-img"
-            src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&auto=format&fit=crop&q=75"
-            alt="Final Cycle — Grade 12">
+            src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&auto=format&fit=crop&q=75"
+            alt="Final Year Admissions — Grade 12">
           <div class="service-card-body">
-            <h3>Final Cycle<br><span style="font-weight:400;color:var(--gray-400);font-size:13px;">Grade 12</span></h3>
+            <h3>Final Year Admissions<br><span style="font-weight:400;color:var(--gray-400);font-size:13px;">Grade 12</span></h3>
             <p>Full-cycle application support — Common App, UCAS, essays, supplements, interview preparation, waitlist strategy, and financial aid advisory through decision day.</p>
             <div class="service-card-links">
-              <a href="#" class="service-link">Final Cycle Admissions</a>
-              <a href="#" class="service-link">UCAS &amp; UK Advisory</a>
+              <a href="#" class="service-link">Learn More</a>
             </div>
           </div>
         </div>
 
         <div class="service-card">
           <img class="service-card-img"
-            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop&q=75"
-            alt="Profile Evaluation">
+            src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&auto=format&fit=crop&q=75"
+            alt="Masters & MBA Admissions">
           <div class="service-card-body">
-            <h3>Profile Evaluation<br><span style="font-weight:400;color:var(--gray-400);font-size:13px;">Start Here</span></h3>
-            <p>A rigorous, expert-led assessment of where your child stands today — covering academics, ECs, narrative potential, and realistic university targets.</p>
+            <h3>Masters &amp; MBA<br><span style="font-weight:400;color:var(--gray-400);font-size:13px;">Graduate Admissions</span></h3>
+            <p>Specialised advisory for postgraduate applicants targeting top MBA, MPA, LLM, and Masters programmes at Harvard, Wharton, HEC Paris, Oxford, and beyond.</p>
             <div class="service-card-links">
-              <a href="#" class="service-link">Request Evaluation →</a>
+              <a href="#" class="service-link">Learn More</a>
             </div>
           </div>
         </div>
 
       </div>
+    </div>
+  </section>
+
+  <!-- SERVICES SPLIT CTA -->
+  <section class="services-split-section">
+    <div class="services-split-inner">
+
+      <div class="services-split-left">
+        <div class="section-label">What We Offer</div>
+        <h2>Comprehensive advisory services for every stage of the journey</h2>
+        <p class="services-split-desc">Choose the path that matches where you are — from building the right profile in school to securing your place at the world's top graduate programmes.</p>
+        <div class="services-split-btns">
+          <a href="#" class="services-split-btn services-split-btn-ug">
+            <span class="services-split-btn-num">01</span>
+            <span class="services-split-btn-body">
+              <span class="services-split-btn-title">Undergraduate Admissions</span>
+              <span class="services-split-btn-sub">Grades 8–12 · US, UK &amp; Global Universities</span>
+            </span>
+            <span class="services-split-btn-arrow">→</span>
+          </a>
+          <a href="#" class="services-split-btn services-split-btn-mba">
+            <span class="services-split-btn-num">02</span>
+            <span class="services-split-btn-body">
+              <span class="services-split-btn-title">Masters / MBA Admissions</span>
+              <span class="services-split-btn-sub">MBA, MPA, LLM &amp; Masters Programmes Worldwide</span>
+            </span>
+            <span class="services-split-btn-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="services-split-right">
+        <img src="3.png" alt="Blue Ocean Education student" />
+      </div>
+
     </div>
   </section>
 
@@ -1013,6 +1824,182 @@
         </table>
       </div>
       <p class="impact-note">3-year average acceptance rates across all Blue Ocean students who applied. Individual results vary. Data updated annually.</p>
+    </div>
+  </section>
+
+  <!-- UNIVERSITY LOGOS -->
+  <section class="logos-section">
+    <div class="section-inner">
+      <div class="logos-header">
+        <div class="section-label">Where Our Students Go</div>
+        <h2>Admitted to the world's most selective universities.</h2>
+      </div>
+      <div class="logos-grid">
+        <div class="logo-card" data-domain="harvard.edu"><div class="logo-card-text"><span class="logo-name">Harvard</span></div></div>
+        <div class="logo-card" data-domain="yale.edu"><div class="logo-card-text"><span class="logo-name">Yale</span></div></div>
+        <div class="logo-card" data-domain="princeton.edu"><div class="logo-card-text"><span class="logo-name">Princeton</span></div></div>
+        <div class="logo-card" data-domain="ox.ac.uk"><div class="logo-card-text"><span class="logo-name">Oxford</span></div></div>
+        <div class="logo-card" data-domain="cam.ac.uk" data-logo="cambridge.png"><div class="logo-card-text"><span class="logo-name">Cambridge</span></div></div>
+        <div class="logo-card" data-domain="columbia.edu"><div class="logo-card-text"><span class="logo-name">Columbia</span></div></div>
+        <div class="logo-card" data-domain="upenn.edu"><div class="logo-card-text"><span class="logo-name">Penn</span></div></div>
+        <div class="logo-card" data-domain="stanford.edu"><div class="logo-card-text"><span class="logo-name">Stanford</span></div></div>
+        <div class="logo-card" data-domain="mit.edu"><div class="logo-card-text"><span class="logo-name">MIT</span></div></div>
+        <div class="logo-card" data-domain="brown.edu"><div class="logo-card-text"><span class="logo-name">Brown</span></div></div>
+        <div class="logo-card" data-domain="cornell.edu"><div class="logo-card-text"><span class="logo-name">Cornell</span></div></div>
+        <div class="logo-card" data-domain="jhu.edu"><div class="logo-card-text"><span class="logo-name">Johns Hopkins</span></div></div>
+        <div class="logo-card" data-domain="imperial.ac.uk"><div class="logo-card-text"><span class="logo-name">Imperial</span></div></div>
+        <div class="logo-card" data-domain="lse.ac.uk"><div class="logo-card-text"><span class="logo-name">LSE</span></div></div>
+        <div class="logo-card" data-domain="cmu.edu"><div class="logo-card-text"><span class="logo-name">Carnegie Mellon</span></div></div>
+        <div class="logo-card" data-domain="nyu.edu" data-logo="nyu.png"><div class="logo-card-text"><span class="logo-name">NYU</span></div></div>
+        <div class="logo-card" data-domain="kcl.ac.uk"><div class="logo-card-text"><span class="logo-name">King's College</span></div></div>
+        <div class="logo-card" data-domain="manchester.ac.uk" data-logo="manchester.png"><div class="logo-card-text"><span class="logo-name">Manchester</span></div></div>
+        <div class="logo-card" data-domain="warwick.ac.uk"><div class="logo-card-text"><span class="logo-name">Warwick</span></div></div>
+        <div class="logo-card" data-domain="dur.ac.uk"><div class="logo-card-text"><span class="logo-name">Durham</span></div></div>
+        <div class="logo-card" data-domain="tufts.edu"><div class="logo-card-text"><span class="logo-name">Tufts</span></div></div>
+        <div class="logo-card" data-domain="northeastern.edu"><div class="logo-card-text"><span class="logo-name">Northeastern</span></div></div>
+        <div class="logo-card" data-domain="bu.edu"><div class="logo-card-text"><span class="logo-name">Boston University</span></div></div>
+        <div class="logo-card" data-domain="utoronto.ca"><div class="logo-card-text"><span class="logo-name">Toronto</span></div></div>
+        <div class="logo-card" data-domain="illinois.edu"><div class="logo-card-text"><span class="logo-name">UIUC</span></div></div>
+        <div class="logo-card" data-domain="psu.edu"><div class="logo-card-text"><span class="logo-name">Penn State</span></div></div>
+        <div class="logo-card" data-domain="hec.edu" data-logo="Screenshot 2026-04-24 at 10.37.29 AM.png"><div class="logo-card-text"><span class="logo-name">HEC Paris</span></div></div>
+        <div class="logo-card" data-domain="essec.edu" data-logo="essec.png"><div class="logo-card-text"><span class="logo-name">ESSEC</span></div></div>
+        <div class="logo-card" data-domain="unibocconi.it" data-logo="bocconi.png"><div class="logo-card-text"><span class="logo-name">Bocconi</span></div></div>
+        <div class="logo-card" data-domain="ie.edu"><div class="logo-card-text"><span class="logo-name">IE Business</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDENT PROOF POINTS -->
+  <section class="proof-section">
+    <div class="section-inner">
+      <div class="proof-header">
+        <div class="section-label">Student Results</div>
+        <h2>Real students. Real outcomes.</h2>
+        <p>A selection of Blue Ocean students and where they were admitted. Names used with permission; scholarships are approximate and converted to INR.</p>
+      </div>
+      <div class="proof-grid">
+
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><div class="proof-name">Manya</div><div class="proof-city">Delhi</div></div>
+            <div class="proof-scholarship">₹1.5 Cr</div>
+          </div>
+          <div class="proof-category">Ivy League / Top 30</div>
+          <div class="proof-admits">Brown University · Carnegie Mellon University</div>
+          <div class="proof-spike">Research and social internships in human-centric design.</div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><div class="proof-name">Prateek</div><div class="proof-city">Delhi</div></div>
+            <div class="proof-scholarship">₹95L</div>
+          </div>
+          <div class="proof-category">Ivy League</div>
+          <div class="proof-admits">Harvard University</div>
+          <div class="proof-spike">Extraordinary national and state-level awards in field related to application.</div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><div class="proof-name">Adya</div><div class="proof-city">Delhi</div></div>
+            <div class="proof-scholarship">₹1.05 Cr</div>
+          </div>
+          <div class="proof-category">Ivy League</div>
+          <div class="proof-admits">Harvard University</div>
+          <div class="proof-spike">National-level competitions and awards for pre-law.</div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><div class="proof-name">Anushka</div><div class="proof-city">Delhi</div></div>
+            <div class="proof-scholarship">₹88L</div>
+          </div>
+          <div class="proof-category">Ivy League / UK</div>
+          <div class="proof-admits">Columbia University · University of Cambridge</div>
+          <div class="proof-spike">Hands-on experience at a law firm specialising in criminal law.</div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><div class="proof-name">Shreejeet</div><div class="proof-city">Delhi</div></div>
+            <div class="proof-scholarship">₹1.3 Cr</div>
+          </div>
+          <div class="proof-category">Top 30 / UK</div>
+          <div class="proof-admits">Northeastern · Toronto · Boston University · Manchester</div>
+          <div class="proof-spike">Extracurricular reading of graduate-level mathematics.</div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><div class="proof-name">Randitya</div><div class="proof-city">Gurgaon</div></div>
+            <div class="proof-scholarship">₹1.2 Cr</div>
+          </div>
+          <div class="proof-category">Top 30 / UK</div>
+          <div class="proof-admits">Manchester · Durham · ESSEC · UIUC · UMass</div>
+          <div class="proof-spike">Youngest worker at a related business — full application built in under 3 months.</div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><div class="proof-name">Purusharth</div><div class="proof-city">Noida</div></div>
+            <div class="proof-scholarship">—</div>
+          </div>
+          <div class="proof-category">Top 30</div>
+          <div class="proof-admits">University of Pennsylvania · RPI · Embry-Riddle</div>
+          <div class="proof-spike">Won multiple aerospace competitions and awards.</div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><div class="proof-name">Tathagata</div><div class="proof-city">Pune</div></div>
+            <div class="proof-scholarship">₹1.2 Cr</div>
+          </div>
+          <div class="proof-category">MBA / Graduate</div>
+          <div class="proof-admits">Cornell University (Tech MBA) · Johns Hopkins</div>
+          <div class="proof-spike">Strong fintech fit narrative for Cornell's Tech MBA program.</div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><div class="proof-name">Bhakti</div><div class="proof-city">Delhi</div></div>
+            <div class="proof-scholarship">₹70L</div>
+          </div>
+          <div class="proof-category">MBA / Graduate</div>
+          <div class="proof-admits">Yale · HEC Paris · Carnegie Mellon (MBA)</div>
+          <div class="proof-spike">Mountaineering and high-performance sport used to demonstrate leadership and purpose.</div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><div class="proof-name">Arunima</div><div class="proof-city">Delhi</div></div>
+            <div class="proof-scholarship">₹80L</div>
+          </div>
+          <div class="proof-category">MPA</div>
+          <div class="proof-admits">Harvard University (MPA)</div>
+          <div class="proof-spike">Policy focus with a compelling public service narrative.</div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><div class="proof-name">Shambhavi</div><div class="proof-city">Delhi</div></div>
+            <div class="proof-scholarship">₹96L</div>
+          </div>
+          <div class="proof-category">Top 30</div>
+          <div class="proof-admits">Bocconi · University of Toronto · Stony Brook</div>
+          <div class="proof-spike">Strong academic profile paired with a clear international business vision.</div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><div class="proof-name">Sana</div><div class="proof-city">Delhi</div></div>
+            <div class="proof-scholarship">₹75L</div>
+          </div>
+          <div class="proof-category">Top 30</div>
+          <div class="proof-admits">New York University (NYU)</div>
+          <div class="proof-spike">Creatively articulated a personal connection to New York and her family's Harvard legacy.</div>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -1203,6 +2190,57 @@
       </div>
     </div>
   </footer>
+
+  <!-- LOGO LOADER -->
+  <script>
+    (function () {
+      const sources = [
+        d => `https://img.logo.dev/${d}?token=pk_DEMO&retina=true`,
+        d => `https://www.google.com/s2/favicons?sz=128&domain=${d}`
+      ];
+      document.querySelectorAll('.logo-card[data-domain]').forEach(card => {
+        const domain = card.dataset.domain;
+        const override = card.dataset.logo;
+        const allSources = override ? [() => override, ...sources] : sources;
+        let idx = 0;
+        function tryNext() {
+          if (idx >= allSources.length) return;
+          const img = new Image();
+          img.onload = function () {
+            if (img.naturalWidth > 16) {
+              img.className = 'logo-img';
+              card.insertBefore(img, card.firstChild);
+            } else {
+              idx++; tryNext();
+            }
+          };
+          img.onerror = function () { idx++; tryNext(); };
+          img.src = allSources[idx](domain);
+        }
+        tryNext();
+      });
+    })();
+  </script>
+
+  <!-- PHOTO ROTATOR -->
+  <script>
+    (function () {
+      const imgs = document.querySelectorAll('.results-rotating-img');
+      if (!imgs.length) return;
+      let current = 0;
+      setInterval(function () {
+        imgs[current].classList.remove('active');
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.add('active');
+      }, 3500);
+    })();
+  </script>
+
+  <!-- STICKY CTA BAR -->
+  <div class="sticky-cta">
+    <p><strong>Book a free consultation</strong> with one of our expert advisors.</p>
+    <a href="#" class="btn-sticky">Get Started</a>
+  </div>
 
 </body>
 </html>
