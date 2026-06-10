@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IBDP Admissions | Blue Ocean Education</title>
+  <meta name="description" content="Blue Ocean helps ambitious Indian students develop the depth, originality, and discipline required to compete for the world's most selective universities.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../main.css">
+  <style>
+
+    /* ── Theme toggle ───────────────────────────────── */
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      height: 30px;
+      padding: 0 10px;
+      border-radius: 20px;
+      border: 1px solid color-mix(in oklch, var(--paper) 15%, transparent);
+      background: transparent;
+      cursor: pointer;
+      transition: border-color 160ms;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { border-color: color-mix(in oklch, var(--paper) 32%, transparent); }
+    .td { width: 9px; height: 9px; border-radius: 50%; transition: transform 180ms, box-shadow 180ms; }
+    .td-green { background: oklch(85% 0.12 116); }
+    .td-blue  { background: oklch(66% 0.092 226); }
+    html:not([data-theme="blue"]) .td-green { transform: scale(1.3); box-shadow: 0 0 0 2.5px oklch(85% 0.12 116 / 0.28); }
+    html[data-theme="blue"] .td-blue       { transform: scale(1.3); box-shadow: 0 0 0 2.5px oklch(66% 0.092 226 / 0.28); }
+    html[data-theme="blue"] {
+      --forest-strong: oklch(12% 0.024 250);
+      --forest:        oklch(19% 0.036 246);
+      --forest-soft:   oklch(25% 0.034 244);
+      --moss:          oklch(56% 0.090 226);
+      --lime:          oklch(66% 0.092 226);
+      --lime-low:      oklch(92% 0.030 222);
+      --line-dark:     oklch(29% 0.022 246);
+      --shadow:        oklch(14% 0.020 250 / 0.24);
+      --paper:         oklch(96% 0.008 240);
+      --paper-low:     oklch(92.5% 0.012 236);
+      --paper-deep:    oklch(88% 0.015 232);
+      --line:          oklch(83% 0.012 232);
+    }
+
+    /* ── Nav: logo only ─────────────────────────────── */
+    .menu-toggle { display: none !important; }
+    .nav-links   { display: none !important; }
+    .nav-actions { display: none !important; }
+
+    /* ── Hero MIT background blend ─────────────────── */
+    .hero {
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('../back copy.png') center 35% / cover no-repeat;
+      opacity: 0.13;
+      mix-blend-mode: luminosity;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-grid,
+    .trust-band {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Hero form column ───────────────────────────── */
+    .hero-form-col {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: center;
+    }
+
+    /* desktop: show alumni inside hero-copy, hide mobile-only copy */
+    .lp-alumni-mb { display: none; }
+
+
+
+    /* ── Form card ───────────────────────────────────── */
+    .consul-form-card {
+      background: var(--paper);
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      box-shadow:
+        0 2px 4px oklch(8% 0.03 174 / 0.06),
+        0 12px 28px oklch(8% 0.03 174 / 0.14),
+        0 36px 72px oklch(8% 0.03 174 / 0.22);
+      overflow: hidden;
+      color: var(--ink);
+      position: relative;
+    }
+
+    .form-card-head {
+      padding: 30px 32px 0;
+    }
+
+    .form-step-track {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 22px;
+    }
+
+    .step-pip {
+      height: 5px;
+      border-radius: 99px;
+      background: color-mix(in oklch, var(--forest-strong) 13%, transparent);
+      transition: background 280ms ease, width 280ms ease;
+      width: 28px;
+    }
+
+    .step-pip.active {
+      background: var(--lime);
+      width: 40px;
+    }
+
+    .step-pip.done {
+      background: var(--moss);
+      opacity: 0.5;
+    }
+
+    .step-label-text {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-card-titles {
+      position: relative;
+      min-height: 58px;
+      margin-bottom: 0;
+    }
+
+    .form-title-block {
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .form-title-block.out {
+      opacity: 0;
+      transform: translateX(-12px);
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+    }
+
+    .form-title-block h2 {
+      margin: 0 0 5px;
+      font-size: clamp(20px, 2vw, 25px);
+      font-weight: 900;
+      line-height: 1.06;
+      color: var(--forest-strong);
+    }
+
+    .form-title-block p {
+      margin: 0;
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+
+    /* Steps container */
+    .form-steps-wrap {
+      position: relative;
+    }
+
+    .form-step {
+      padding: 24px 32px 30px;
+      display: grid;
+      gap: 17px;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .form-step.hidden-step {
+      display: none;
+    }
+
+    .form-step.fade-in {
+      animation: stepFadeIn 200ms ease forwards;
+    }
+
+    @keyframes stepFadeIn {
+      from { opacity: 0; transform: translateX(14px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Role toggle */
+    .role-toggle {
+      display: flex;
+      gap: 5px;
+      padding: 4px;
+      background: var(--paper-low);
+      border-radius: 9px;
+      border: 1px solid var(--line);
+    }
+
+    .role-btn {
+      flex: 1;
+      min-height: 36px;
+      padding: 0 10px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 160ms, color 160ms;
+    }
+
+    .role-btn.is-active {
+      background: var(--forest-strong);
+      color: var(--paper);
+    }
+
+    /* Fields */
+    .field-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 10.5px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--moss);
+    }
+
+    .field label .label-note {
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 0 14px;
+      border-radius: 8px;
+      border: 1.5px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 14.5px;
+      font-weight: 500;
+      transition: border-color 160ms ease, box-shadow 160ms ease;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--moss);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--moss) 16%, transparent);
+    }
+
+    .field input.field-error,
+    .field select.field-error {
+      border-color: oklch(60% 0.14 28);
+      box-shadow: 0 0 0 3px oklch(60% 0.14 28 / 0.12);
+    }
+
+    .field input::placeholder { color: color-mix(in oklch, var(--muted) 52%, transparent); }
+
+    /* Phone row */
+    .phone-row {
+      display: flex;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .phone-row .phone-prefix-select {
+      width: 96px !important;
+      flex-shrink: 0;
+      min-height: 46px;
+      padding: 0 24px 0 10px;
+      background: var(--paper-low);
+      border: 1.5px solid var(--line);
+      border-right: none;
+      border-radius: 8px 0 0 8px;
+      font-family: var(--sans);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--ink-soft);
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 7px center;
+    }
+
+    .phone-prefix-select:focus {
+      outline: none;
+      border-color: var(--moss);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--moss) 16%, transparent);
+      position: relative;
+      z-index: 1;
+    }
+
+    .phone-row .field-phone-input {
+      border-radius: 0 8px 8px 0;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .phone-row .field-phone-input:focus {
+      outline: none;
+      border-color: var(--moss);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--moss) 16%, transparent);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Divider */
+    .form-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 0 -32px;
+    }
+
+    /* Actions */
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .form-actions.end { justify-content: flex-end; }
+    .form-actions.between { justify-content: space-between; }
+
+    .btn-continue {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 50px;
+      padding: 0 26px;
+      border-radius: 9px;
+      background: var(--lime);
+      color: var(--forest-strong);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background 180ms, transform 180ms;
+    }
+
+    .btn-continue:hover {
+      background: color-mix(in oklch, var(--lime) 88%, var(--paper));
+      transform: translateY(-1px);
+    }
+
+    .btn-continue:active { transform: translateY(0); }
+
+    .btn-request {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 50px;
+      padding: 0 24px;
+      border-radius: 9px;
+      background: var(--forest-strong);
+      color: var(--paper);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background 180ms, transform 180ms;
+    }
+
+    .btn-request:hover {
+      background: var(--forest);
+      transform: translateY(-1px);
+    }
+
+    .btn-request:active { transform: translateY(0); }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 46px;
+      padding: 0 16px;
+      border-radius: 8px;
+      border: 1.5px solid var(--line);
+      background: transparent;
+      color: var(--ink-soft);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: border-color 160ms, color 160ms;
+    }
+
+    .btn-back:hover {
+      border-color: var(--forest-strong);
+      color: var(--forest-strong);
+    }
+
+    .form-privacy {
+      margin: 0;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .form-privacy a {
+      color: var(--moss);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Success */
+    .form-success {
+      padding: 52px 32px 48px;
+      text-align: center;
+      display: none;
+    }
+
+    .form-success.visible { display: block; }
+
+    .success-mark {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--lime-low);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: var(--forest-strong);
+    }
+
+    .form-success h3 {
+      margin: 0 0 10px;
+      font-size: 23px;
+      font-weight: 900;
+      color: var(--forest-strong);
+    }
+
+    .form-success p {
+      margin: 0;
+      font-size: 15px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      max-width: 320px;
+      margin-inline: auto;
+    }
+
+
+    /* ── Responsive ──────────────────────────────────── */
+    @media (max-width: 860px) {
+      /* main.css puts .hero-copy on row 2 (below media); override since we have no media */
+      .hero-copy {
+        grid-row: 1 !important;
+        padding-bottom: 0;
+      }
+
+      .hero-form-col {
+        grid-column: 1;
+        grid-row: 2;
+        align-self: auto;
+      }
+
+      /* swap: hide desktop alumni, show mobile copy after form */
+      .lp-alumni-dt { display: none; }
+      .lp-alumni-mb {
+        display: flex;
+        grid-column: 1;
+        grid-row: 3;
+        padding-bottom: 8px;
+      }
+
+      .field-row { grid-template-columns: 1fr; }
+
+      .form-card-head,
+      .form-step { padding-left: 22px; padding-right: 22px; }
+
+      .form-divider { margin: 0 -22px; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="../index.html" aria-label="Blue Ocean Education home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="42" height="42" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="13.5" stroke="currentColor" stroke-width="1" stroke-opacity="0.45"/>
+            <path d="M16 5 L18 16 L14 16 Z" fill="var(--moss)"/>
+            <path d="M16 27 L18 16 L14 16 Z" fill="var(--paper)"/>
+            <circle cx="16" cy="16" r="1.5" fill="currentColor" fill-opacity="0.35"/>
+          </svg>
+        </span>
+        <span class="brand-word">
+          <strong>Blue Ocean</strong>
+          <span>Education</span>
+        </span>
+      </a>
+
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ── Hero ─────────────────────────────────────── -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid">
+        <div class="hero-copy reveal">
+          <h1 id="hero-title">Building the most <span>unique</span> Indian IBDP® profiles for college admissions</h1>
+          <p class="hero-lede">Blue Ocean helps build the student before the application. We help Indian parents with helping their child develop the depth, originality, and discipline required to compete for the world's most selective universities.</p>
+          <div class="hero-alumni lp-alumni-dt" aria-label="Built by alumni from">
+            <div class="hero-alumni-label">Built by alumni from:</div>
+            <div class="hero-logo-row">
+              <div class="hero-logo-slot logo-wide" aria-label="Harvard Business School"><img src="../hero-logos/HBS.png" alt=""></div>
+              <div class="hero-logo-slot logo-seal" aria-label="Harvard Kennedy School"><img src="../hero-logos/HKS.png" alt=""></div>
+              <div class="hero-logo-slot logo-wide" aria-label="Harvard University"><img src="../hero-logos/harvard.png" alt=""></div>
+              <div class="hero-logo-slot logo-wide" aria-label="Massachusetts Institute of Technology"><img src="../hero-logos/MIT-Logo.png" alt=""></div>
+              <div class="hero-logo-slot logo-seal" aria-label="IIT Kharagpur"><img src="../hero-logos/Iit-Kharagpur-Logo.webp" alt=""></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-form-col" id="formCard">
+          <div class="consul-form-card">
+
+            <div class="form-card-head">
+              <div class="form-step-track" aria-hidden="true">
+                <div class="step-pip active" id="pip1"></div>
+                <div class="step-pip" id="pip2"></div>
+                <span class="step-label-text" id="stepCounter">Step 1 of 2</span>
+              </div>
+              <div class="form-card-titles">
+                <div class="form-title-block" id="titleStep1">
+                  <h2>Request a Consultation</h2>
+                  <p>A short academic intake so we can prepare for a substantive first conversation.</p>
+                </div>
+                <div class="form-title-block out" id="titleStep2" aria-hidden="true">
+                  <h2>A Few More Details</h2>
+                  <p>This helps us direct you to the most relevant advisor.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-steps-wrap" id="formStepsWrap">
+
+              <!-- Step 1 -->
+              <div class="form-step" id="step1" role="group" aria-labelledby="step1-heading">
+                <span id="step1-heading" class="sr-only">Step 1 of 2: contact information</span>
+
+                <div class="field">
+                  <label>You are a</label>
+                  <div class="role-toggle" role="group" aria-label="Select your role">
+                    <button type="button" class="role-btn is-active" data-role="student" id="roleStudent">Student</button>
+                    <button type="button" class="role-btn" data-role="guardian" id="roleGuardian">Guardian</button>
+                  </div>
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="Arjun" autocomplete="given-name" required>
+                  </div>
+                  <div class="field">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Sharma" autocomplete="family-name" required>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="email">Email Address</label>
+                  <input type="email" id="email" name="email" placeholder="arjun@gmail.com" autocomplete="email" required>
+                </div>
+
+                <div class="form-actions end">
+                  <button type="button" class="btn-continue" id="continueBtn">
+                    Continue
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="form-step hidden-step" id="step2" role="group" aria-labelledby="step2-heading">
+                <span id="step2-heading" class="sr-only">Step 2 of 2: additional details</span>
+
+                <div class="field">
+                  <label for="phone">Phone Number</label>
+                  <div class="phone-row">
+                    <select class="phone-prefix-select" id="phonePrefix" name="phonePrefix" aria-label="Country code">
+                      <option value="+91">🇮🇳 +91</option>
+                      <option value="+1">🇺🇸 +1</option>
+                      <option value="+44">🇬🇧 +44</option>
+                      <option value="+971">🇦🇪 +971</option>
+                      <option value="+65">🇸🇬 +65</option>
+                      <option value="+61">🇦🇺 +61</option>
+                      <option value="+49">🇩🇪 +49</option>
+                      <option value="+33">🇫🇷 +33</option>
+                    </select>
+                    <input type="tel" id="phone" name="phone" class="field-phone-input" placeholder="10-digit number" autocomplete="tel" inputmode="numeric" maxlength="10" required>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="grade">Current Grade</label>
+                  <select id="grade" name="grade" required>
+                    <option value="" disabled selected>Select current grade</option>
+                    <option value="grade8">Grade 8</option>
+                    <option value="grade9">Grade 9</option>
+                    <option value="grade10">Grade 10</option>
+                    <option value="grade11">Grade 11</option>
+                    <option value="grade12">Grade 12</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="school">School Name</label>
+                  <input type="text" id="school" name="school" placeholder="Full name of your school" autocomplete="organization" required>
+                </div>
+
+                <div class="field">
+                  <label for="pincode">Residence Pincode <span class="label-note">(for consultation timing)</span></label>
+                  <input type="text" id="pincode" name="pincode" placeholder="110001" inputmode="numeric" maxlength="6">
+                </div>
+
+                <div class="field">
+                  <label for="scholarship">Scholarship funding needed to cover your child's tuition fees abroad</label>
+                  <select id="scholarship" name="scholarship">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="none">Financial aid is not needed. My family can cover all of the costs.</option>
+                    <option value="aware">I would like to know what financial aid options are open to me, but I don't need it.</option>
+                    <option value="some">I need some financial aid, but my family can cover most of the costs.</option>
+                    <option value="half">I need at least 50% of costs covered by financial aid.</option>
+                    <option value="full">I need 100% of costs covered by financial aid.</option>
+                  </select>
+                </div>
+
+                <div class="form-divider" aria-hidden="true"></div>
+
+                <div class="form-actions between">
+                  <button type="button" class="btn-back" id="backBtn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Back
+                  </button>
+                  <button type="button" class="btn-request" id="submitBtn">
+                    Request Consultation
+                  </button>
+                </div>
+
+                <p class="form-privacy">By submitting, you agree to Blue Ocean Education's <a href="#">Privacy Policy</a> and consent to be contacted regarding your enquiry.</p>
+              </div>
+
+            </div>
+
+            <!-- Success state -->
+            <div class="form-success" id="formSuccess" aria-live="polite">
+              <div class="success-mark" aria-hidden="true">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+                  <path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3>Consultation Requested</h3>
+              <p>Thank you. Our team will reach out within one business day to confirm a time with our counsellors.</p>
+            </div>
+
+          </div><!-- /consul-form-card -->
+        </div><!-- /hero-form-col -->
+
+        <div class="hero-alumni lp-alumni-mb" aria-label="Built by alumni from" aria-hidden="true">
+          <div class="hero-alumni-label">Built by alumni from:</div>
+          <div class="hero-logo-row">
+            <div class="hero-logo-slot logo-wide" aria-label="Harvard Business School"><img src="../hero-logos/HBS.png" alt=""></div>
+            <div class="hero-logo-slot logo-seal" aria-label="Harvard Kennedy School"><img src="../hero-logos/HKS.png" alt=""></div>
+            <div class="hero-logo-slot logo-wide" aria-label="Harvard University"><img src="../hero-logos/harvard.png" alt=""></div>
+            <div class="hero-logo-slot logo-wide" aria-label="Massachusetts Institute of Technology"><img src="../hero-logos/MIT-Logo.png" alt=""></div>
+            <div class="hero-logo-slot logo-seal" aria-label="IIT Kharagpur"><img src="../hero-logos/Iit-Kharagpur-Logo.webp" alt=""></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-band" aria-label="Recognition and media">
+        <div class="trust-inner">
+          <div class="trust-label">Executive team recognized by</div>
+          <div class="trust-items" aria-hidden="true">
+            <span class="trust-logo wide"><img src="../exec-team/harvard-lakshmi.png" alt=""></span>
+            <span class="trust-logo wide"><img src="../exec-team/NDTV.png" alt=""></span>
+            <span class="trust-logo"><img src="../exec-team/times-of-india.png" alt=""></span>
+            <span class="trust-logo wide"><img src="../exec-team/hindustan-times.png" alt=""></span>
+            <span class="trust-logo"><img src="../exec-team/mint.webp" alt=""></span>
+            <span class="trust-logo wide"><img src="../exec-team/business-standard-logo-2.png" alt=""></span>
+            <span class="trust-logo"><img src="../exec-team/Forbes.png" alt=""></span>
+            <span class="trust-logo tall"><img src="../exec-team/The Indian Express.svg" alt=""></span>
+            <span class="trust-logo tall"><img src="../exec-team/penguin.png" alt=""></span>
+            <span class="trust-logo wide"><img src="../exec-team/harvard-lakshmi.png" alt=""></span>
+            <span class="trust-logo wide"><img src="../exec-team/NDTV.png" alt=""></span>
+            <span class="trust-logo"><img src="../exec-team/times-of-india.png" alt=""></span>
+            <span class="trust-logo wide"><img src="../exec-team/hindustan-times.png" alt=""></span>
+            <span class="trust-logo"><img src="../exec-team/mint.webp" alt=""></span>
+            <span class="trust-logo wide"><img src="../exec-team/business-standard-logo-2.png" alt=""></span>
+            <span class="trust-logo"><img src="../exec-team/Forbes.png" alt=""></span>
+            <span class="trust-logo tall"><img src="../exec-team/The Indian Express.svg" alt=""></span>
+            <span class="trust-logo tall"><img src="../exec-team/penguin.png" alt=""></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="numbers-proof reveal" id="results" aria-labelledby="numbers-proof-title">
+      <div class="wrap">
+        <div class="numbers-proof-head">
+          <div>
+            <p class="numbers-proof-kicker">Numbers Don't Lie.</p>
+            <h2 class="numbers-proof-title" id="numbers-proof-title">Unmatched Outcomes.</h2>
+          </div>
+          <p class="numbers-proof-note">A restrained look at outcomes across the world's most selective institutions, with the comparison kept legible and exact.</p>
+        </div>
+
+        <div class="numbers-proof-grid">
+          <div class="institution-proof-card" aria-hidden="true">
+            <div class="institution-fader" aria-hidden="true">
+              <img src="../institution-harvard.jpg" alt="">
+              <img src="../back copy.png" alt="">
+              <img src="../institution-oxford.jpg" alt="">
+            </div>
+          </div>
+
+          <div class="proof-stat-stack">
+            <div class="proof-stat-card">
+              <strong>6x</strong>
+              <p>Our students are 6x more likely to get into the Ivy League and Top 15 colleges.</p>
+            </div>
+          </div>
+
+          <div class="acceptance-card" aria-label="College-specific acceptance rates">
+            <h2>College-Specific Acceptance Rates</h2>
+            <div class="acceptance-legend" aria-hidden="true">
+              <span>General Admit Rate</span>
+              <span>Blue Ocean Student Admit Rate</span>
+            </div>
+
+            <div class="acceptance-chart">
+              <div class="acceptance-row">
+                <div class="acceptance-school">Harvard</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 6.3%;"></span></div>
+                    <span class="acceptance-value">3.8%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 38%;"></span></div>
+                    <span class="acceptance-value">22.8%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="acceptance-row">
+                <div class="acceptance-school">Stanford</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 5.8%;"></span></div>
+                    <span class="acceptance-value">3.5%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 35%;"></span></div>
+                    <span class="acceptance-value">21.0%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="acceptance-row">
+                <div class="acceptance-school">Yale</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 7%;"></span></div>
+                    <span class="acceptance-value">4.2%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 42%;"></span></div>
+                    <span class="acceptance-value">25.2%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="acceptance-row">
+                <div class="acceptance-school">Columbia</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 7%;"></span></div>
+                    <span class="acceptance-value">4.2%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 42%;"></span></div>
+                    <span class="acceptance-value">25.2%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="acceptance-row">
+                <div class="acceptance-school">UPenn</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 8.2%;"></span></div>
+                    <span class="acceptance-value">4.9%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 49%;"></span></div>
+                    <span class="acceptance-value">29.4%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="acceptance-row">
+                <div class="acceptance-school">Dartmouth</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 9.7%;"></span></div>
+                    <span class="acceptance-value">5.8%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 58%;"></span></div>
+                    <span class="acceptance-value">34.8%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="acceptance-row">
+                <div class="acceptance-school">Princeton</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 7.2%;"></span></div>
+                    <span class="acceptance-value">4.3%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 43%;"></span></div>
+                    <span class="acceptance-value">25.8%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="acceptance-row">
+                <div class="acceptance-school">Cornell</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 11.7%;"></span></div>
+                    <span class="acceptance-value">7.0%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 70%;"></span></div>
+                    <span class="acceptance-value">42.0%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="acceptance-row">
+                <div class="acceptance-school">MIT</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 7.7%;"></span></div>
+                    <span class="acceptance-value">4.6%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 46%;"></span></div>
+                    <span class="acceptance-value">27.6%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="services-section" id="method" aria-labelledby="services-title">
+      <div class="services-header wrap">
+        <p class="eyebrow">Blue Ocean Profile Architecture</p>
+        <h2 class="services-heading" id="services-title">
+          <em>Develop the student.</em>
+          <strong>Admissions follow.</strong>
+        </h2>
+      </div>
+      <div class="services-layout wrap">
+        <div class="services-text-sticky">
+          <div class="services-text-well">
+            <div class="service-text-block is-active" data-index="0">
+              <p class="method-kicker">01 / Academic Project Development</p>
+              <h3>Build Intellectual Work That Belongs in Your Application</h3>
+              <p>We help students develop serious academic projects — work that reflects genuine curiosity, depth, and initiative. Not a school assignment. Not a resume filler. Something original that stands as primary evidence of who they are intellectually.</p>
+            </div>
+            <div class="service-text-block" data-index="1">
+              <p class="method-kicker">02 / Competition Strategy</p>
+              <h3>Compete Where Winning Carries Real Weight</h3>
+              <p>We identify competitions, fellowships, and prizes in your child's domain where results move admissions committees. Then we build a preparation strategy so the outcome becomes a meaningful part of the application story.</p>
+            </div>
+            <div class="service-text-block" data-index="2">
+              <p class="method-kicker">03 / Community Impact</p>
+              <h3>Create Service That Outlasts Your Involvement</h3>
+              <p>Generic volunteering does not move selective admissions committees. We help students design genuine community initiatives that are meaningful, sustainable, and capable of growing beyond their time in school. Work that reflects character, not just participation.</p>
+            </div>
+            <div class="service-text-block" data-index="3">
+              <p class="method-kicker">04 / Unique Skill Development</p>
+              <h3>Find Your Distinctive Edge and Take It as Far as It Can Go</h3>
+              <p>Every student has a natural strength that most programs never develop properly. We identify what makes each student genuinely different — in performance, domain expertise, original thinking, or craft — and help them reach a level that is hard to ignore.</p>
+            </div>
+            <div class="service-text-block" data-index="4">
+              <p class="method-kicker">05 / Language and Argumentation</p>
+              <h3>Learn to Think, Write, and Argue With Precision</h3>
+              <p>The clearest signal of intellectual maturity is how someone reasons through a problem and defends a position. We train students to think, speak, and write with clarity — strengthening their essays, interviews, and academic work from the ground up.</p>
+            </div>
+            <div class="service-text-block" data-index="5">
+              <p class="method-kicker">06 / Admissions Strategy</p>
+              <h3>Connect Your Profile to the Right Universities, Worldwide</h3>
+              <p>Blue Ocean students do not apply and hope. We build a targeted university list, a clearly argued positioning, and an application architecture that connects every part of the student's profile to a coherent story across the US, UK, Singapore, and beyond.</p>
+            </div>
+            <div class="service-text-block" data-index="6">
+              <p class="method-kicker">07 / Ongoing Mentorship</p>
+              <h3>Work 1-1 With Our Founder-Led Team</h3>
+              <p>Every student works directly with Dr. Sanjay Kumar and a team of mentors from Harvard, MIT, and the world's top universities. Weekly sessions drive progress. Monthly strategy meetings with Dr. Sanjay keep the full profile architecture sharp.</p>
+            </div>
+          </div>
+        </div>
+        <div class="services-cards-col">
+          <div class="service-row" data-index="0">
+            <div class="service-row-text">
+              <p class="method-kicker">01 / Academic Project Development</p>
+              <h3>Build Intellectual Work That Belongs in Your Application</h3>
+              <p>We help students develop serious academic projects — work that reflects genuine curiosity, depth, and initiative. Not a school assignment. Not a resume filler. Something original that stands as primary evidence of who they are intellectually.</p>
+            </div>
+            <div class="service-card service-card-svg">
+              <img src="../green-profile-arch/1.svg" data-blue="../blue-profile-arch/1.svg" alt="Academic Project Development">
+            </div>
+          </div>
+          <div class="service-row" data-index="1">
+            <div class="service-row-text">
+              <p class="method-kicker">02 / Competition Strategy</p>
+              <h3>Compete Where Winning Carries Real Weight</h3>
+              <p>We identify competitions, fellowships, and prizes in your child's domain where results move admissions committees. Then we build a preparation strategy so the outcome becomes a meaningful part of the application story.</p>
+            </div>
+            <div class="service-card service-card-svg">
+              <img src="../green-profile-arch/2.svg" data-blue="../blue-profile-arch/2.svg" alt="Competition Strategy">
+            </div>
+          </div>
+          <div class="service-row" data-index="2">
+            <div class="service-row-text">
+              <p class="method-kicker">03 / Community Impact</p>
+              <h3>Create Service That Outlasts Your Involvement</h3>
+              <p>Generic volunteering does not move selective admissions committees. We help students design genuine community initiatives that are meaningful, sustainable, and capable of growing beyond their time in school. Work that reflects character, not just participation.</p>
+            </div>
+            <div class="service-card service-card-svg">
+              <img src="../green-profile-arch/3.svg" data-blue="../blue-profile-arch/3.svg" alt="Community Impact">
+            </div>
+          </div>
+          <div class="service-row" data-index="3">
+            <div class="service-row-text">
+              <p class="method-kicker">04 / Unique Skill Development</p>
+              <h3>Find Your Distinctive Edge and Take It as Far as It Can Go</h3>
+              <p>Every student has a natural strength that most programs never develop properly. We identify what makes each student genuinely different — in performance, domain expertise, original thinking, or craft — and help them reach a level that is hard to ignore.</p>
+            </div>
+            <div class="service-card service-card-svg">
+              <img src="../green-profile-arch/4.svg" data-blue="../blue-profile-arch/4.svg" alt="Unique Skill Development">
+            </div>
+          </div>
+          <div class="service-row" data-index="4">
+            <div class="service-row-text">
+              <p class="method-kicker">05 / Language and Argumentation</p>
+              <h3>Learn to Think, Write, and Argue With Precision</h3>
+              <p>The clearest signal of intellectual maturity is how someone reasons through a problem and defends a position. We train students to think, speak, and write with clarity — strengthening their essays, interviews, and academic work from the ground up.</p>
+            </div>
+            <div class="service-card service-card-svg">
+              <img src="../green-profile-arch/5.svg" data-blue="../blue-profile-arch/5.svg" alt="Language and Argumentation">
+            </div>
+          </div>
+          <div class="service-row" data-index="5">
+            <div class="service-row-text">
+              <p class="method-kicker">06 / Admissions Strategy</p>
+              <h3>Connect Your Profile to the Right Universities, Worldwide</h3>
+              <p>Blue Ocean students do not apply and hope. We build a targeted university list, a clearly argued positioning, and an application architecture that connects every part of the student's profile to a coherent story across the US, UK, Singapore, and beyond.</p>
+            </div>
+            <div class="service-card service-card-svg">
+              <img src="../green-profile-arch/6.svg" data-blue="../blue-profile-arch/6.svg" alt="Admissions Strategy">
+            </div>
+          </div>
+          <div class="service-row" data-index="6">
+            <div class="service-row-text">
+              <p class="method-kicker">07 / Ongoing Mentorship</p>
+              <h3>Work 1-1 With Our Founder-Led Team</h3>
+              <p>Every student works directly with Dr. Sanjay Kumar and a team of mentors from Harvard, MIT, and the world's top universities. Weekly sessions drive progress. Monthly strategy meetings with Dr. Sanjay keep the full profile architecture sharp.</p>
+            </div>
+            <div class="service-card service-card-svg">
+              <img src="../green-profile-arch/7.svg" data-blue="../blue-profile-arch/7.svg" alt="Ongoing Mentorship">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="outcomes">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Outcomes</p>
+            <h2 class="section-title">Where our students end up.</h2>
+          </div>
+          <p class="section-copy">Blue Ocean students have earned offers from the most selective universities in the world. The names matter, but so does how the student got there.</p>
+        </div>
+        <div class="outcome-carousel reveal">
+          <div class="outcome-track" id="outcomeTrack">
+            <article class="outcome-card">
+              <img class="outcome-photo" src="../admits-green/arunima.svg" data-blue="../admits-blue/arunima.svg" alt="Arunima, admitted to Harvard University">
+              <div class="outcome-body">
+                <div class="outcome-name">
+                  <strong>Arunima</strong>
+                  <div class="admit-badges" aria-label="Arunima admitted institution">
+                    <span class="admit-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt="Harvard"></span>
+                  </div>
+                </div>
+                <p>Admitted to Harvard University.</p>
+              </div>
+            </article>
+            <article class="outcome-card">
+              <img class="outcome-photo" src="../admits-green/prateek.svg" data-blue="../admits-blue/prateek.svg" alt="Prateek, admitted to Harvard University">
+              <div class="outcome-body">
+                <div class="outcome-name">
+                  <strong>Prateek</strong>
+                  <div class="admit-badges" aria-label="Prateek admitted institution">
+                    <span class="admit-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt="Harvard"></span>
+                  </div>
+                </div>
+                <p>Admitted to Harvard University.</p>
+              </div>
+            </article>
+            <article class="outcome-card">
+              <img class="outcome-photo" src="../admits-green/adya.svg" data-blue="../admits-blue/adya.svg" alt="Adya, admitted to Harvard University">
+              <div class="outcome-body">
+                <div class="outcome-name">
+                  <strong>Adya</strong>
+                  <div class="admit-badges" aria-label="Adya admitted institution">
+                    <span class="admit-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt="Harvard"></span>
+                  </div>
+                </div>
+                <p>Admitted to Harvard University.</p>
+              </div>
+            </article>
+            <article class="outcome-card">
+              <img class="outcome-photo" src="../admits-green/tathagata.svg" data-blue="../admits-blue/tathagata.svg" alt="Tathagata, admitted to Cornell and Johns Hopkins">
+              <div class="outcome-body">
+                <div class="outcome-name">
+                  <strong>Tathagata</strong>
+                  <div class="admit-badges" aria-label="Tathagata admitted institutions">
+                    <span class="admit-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=cornell.edu" alt="Cornell"></span>
+                    <span class="admit-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=jhu.edu" alt="Johns Hopkins"></span>
+                  </div>
+                </div>
+                <p>Admitted to Cornell and Johns Hopkins.</p>
+              </div>
+            </article>
+            <article class="outcome-card">
+              <img class="outcome-photo" src="../admits-green/seema.svg" data-blue="../admits-blue/seema.svg" alt="Seema, admitted to Harvard University">
+              <div class="outcome-body">
+                <div class="outcome-name">
+                  <strong>Seema</strong>
+                  <div class="admit-badges" aria-label="Seema admitted institution">
+                    <span class="admit-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt="Harvard"></span>
+                  </div>
+                </div>
+                <p>Admitted to Harvard University.</p>
+              </div>
+            </article>
+            <article class="outcome-card">
+              <img class="outcome-photo" src="../admits-green/palakshi.svg" data-blue="../admits-blue/palakshi.svg" alt="Palakshi, admitted to Harvard University">
+              <div class="outcome-body">
+                <div class="outcome-name">
+                  <strong>Palakshi</strong>
+                  <div class="admit-badges" aria-label="Palakshi admitted institution">
+                    <span class="admit-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt="Harvard"></span>
+                  </div>
+                </div>
+                <p>Admitted to Harvard University.</p>
+              </div>
+            </article>
+            <article class="outcome-card">
+              <img class="outcome-photo" src="../admits-green/shreejeet.svg" data-blue="../admits-blue/shreejeet.svg" alt="Shreejeet, admitted to Northeastern, University of Toronto, and Boston University">
+              <div class="outcome-body">
+                <div class="outcome-name">
+                  <strong>Shreejeet</strong>
+                  <div class="admit-badges" aria-label="Shreejeet admitted institutions">
+                    <span class="admit-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=northeastern.edu" alt="Northeastern"></span>
+                    <span class="admit-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=utoronto.ca" alt="University of Toronto"></span>
+                    <span class="admit-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=bu.edu" alt="Boston University"></span>
+                  </div>
+                </div>
+                <p>Admitted to Northeastern, University of Toronto, and Boston University.</p>
+              </div>
+            </article>
+            <article class="outcome-card">
+              <img class="outcome-photo" src="../admits-green/manya.svg" data-blue="../admits-blue/manya.svg" alt="Manya, admitted to Brown University and Carnegie Mellon">
+              <div class="outcome-body">
+                <div class="outcome-name">
+                  <strong>Manya</strong>
+                  <div class="admit-badges" aria-label="Manya admitted institutions">
+                    <span class="admit-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=brown.edu" alt="Brown"></span>
+                    <span class="admit-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=cmu.edu" alt="Carnegie Mellon"></span>
+                  </div>
+                </div>
+                <p>Admitted to Brown University and Carnegie Mellon.</p>
+              </div>
+            </article>
+          </div>
+          <div class="outcome-nav">
+            <button class="outcome-btn" id="outcomePrev" aria-label="Previous" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="outcome-btn" id="outcomeNext" aria-label="Next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section team-section" id="team">
+      <div class="wrap">
+        <div class="team-grid">
+          <div class="team-header reveal">
+            <div>
+              <p class="eyebrow">Team</p>
+              <h2>Founder led. Intentionally limited.</h2>
+            </div>
+            <p>Every student works with Dr. Sanjay Kumar and a carefully selected mentor network from Ivy League and top-30 global universities. The model requires personal attention, so we keep it limited.</p>
+          </div>
+          <div class="team-people-grid reveal">
+            <article class="team-person team-founder">
+              <div class="team-photo" role="img" aria-label="Dr. Sanjay Kumar">
+                <img src="../exec-team-pics/sanjay.svg" data-blue="../exec-team-pics-blue/sanjay.svg" alt="Dr. Sanjay Kumar">
+              </div>
+              <div class="team-person-copy">
+                <p class="team-role">Founder &amp; Strategic Director</p>
+                <div class="team-name-row">
+                  <div class="team-name-li">
+                    <h3>Dr. Sanjay Kumar</h3>
+                    <a class="team-li-btn" href="https://www.linkedin.com/in/sanjay-kumar-phd-61142579/" target="_blank" rel="noopener" aria-label="Dr. Sanjay Kumar on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                  </div>
+                  <div class="team-inst-badges" aria-label="Dr. Sanjay Kumar institutions">
+                    <span class="team-inst-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=hks.harvard.edu" alt="Harvard Kennedy School"></span>
+                    <span class="team-inst-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt="Harvard Mittal South Asia Institute"></span>
+                    <span class="team-inst-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=upgrad.com" alt="upGrad"></span>
+                    <span class="team-inst-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=utoronto.ca" alt="University of Toronto"></span>
+                    <span class="team-inst-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=sewabharat.org" alt="SEWA Bharat"></span>
+                  </div>
+                </div>
+                <p>Harvard Kennedy School alumnus and former India Country Director, Harvard Lakshmi Mittal South Asia Institute. Leads admissions strategy and personally shapes each student's direction.</p>
+              </div>
+            </article>
+            <div class="team-support-stack">
+              <article class="team-person team-support">
+                <div class="team-photo" role="img" aria-label="Rajat Sethi">
+                  <img src="../exec-team-pics/rajat.svg" data-blue="../exec-team-pics-blue/rajat.svg" alt="Rajat Sethi">
+                </div>
+                <div class="team-person-copy">
+                  <p class="team-role">Strategic Advisory Council</p>
+                  <div class="team-name-row">
+                    <div class="team-name-li">
+                      <h3>Rajat Sethi</h3>
+                      <a class="team-li-btn" href="https://www.linkedin.com/in/sethirajat/" target="_blank" rel="noopener" aria-label="Rajat Sethi on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    </div>
+                    <div class="team-inst-badges" aria-label="Rajat Sethi institutions">
+                      <span class="team-inst-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt="Harvard"></span>
+                      <span class="team-inst-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=mit.edu" alt="MIT Sloan"></span>
+                      <span class="team-inst-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=iitkgp.ac.in" alt="IIT Kharagpur"></span>
+                    </div>
+                  </div>
+                  <p>Harvard, MIT Sloan, and IIT Kharagpur alumnus. Author, policy strategist, and co-founder of QuBeats.</p>
+                </div>
+              </article>
+              <article class="team-person team-support">
+                <div class="team-photo" role="img" aria-label="Rajiv Gupta">
+                  <img src="../exec-team-pics/rajiv.svg" data-blue="../exec-team-pics-blue/rajiv.svg" alt="Rajiv Gupta">
+                </div>
+                <div class="team-person-copy">
+                  <p class="team-role">Strategic Advisory Council</p>
+                  <div class="team-name-row">
+                    <div class="team-name-li">
+                      <h3>Rajiv Gupta</h3>
+                      <a class="team-li-btn" href="https://www.linkedin.com/in/rajiv-gupta-891a25b/" target="_blank" rel="noopener" aria-label="Rajiv Gupta on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    </div>
+                    <div class="team-inst-badges" aria-label="Rajiv Gupta institutions">
+                      <span class="team-inst-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt="Harvard"></span>
+                      <span class="team-inst-badge"><img src="https://www.google.com/s2/favicons?sz=64&domain=mastersunion.org" alt="Masters' Union"></span>
+                    </div>
+                  </div>
+                  <p>Chairperson, School of Family Business at Masters' Union. Author of <em>Lala Company</em> and founder of Reverentia Family Business Advisors.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact paper-low" aria-labelledby="universities-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Admits</p>
+            <h2 class="section-title" id="universities-title">Where students go.</h2>
+          </div>
+          <p class="section-copy">A representative selection across the US, UK, Europe, and Canada.</p>
+        </div>
+        <div class="universities reveal">
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt=""><strong>Harvard</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=yale.edu" alt=""><strong>Yale</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=princeton.edu" alt=""><strong>Princeton</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=ox.ac.uk" alt=""><strong>Oxford</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=cam.ac.uk" alt=""><strong>Cambridge</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=columbia.edu" alt=""><strong>Columbia</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=upenn.edu" alt=""><strong>Penn</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=stanford.edu" alt=""><strong>Stanford</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=mit.edu" alt=""><strong>MIT</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=brown.edu" alt=""><strong>Brown</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=cornell.edu" alt=""><strong>Cornell</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=jhu.edu" alt=""><strong>Johns Hopkins</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=imperial.ac.uk" alt=""><strong>Imperial</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=lse.ac.uk" alt=""><strong>LSE</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=cmu.edu" alt=""><strong>Carnegie Mellon</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=nyu.edu" alt=""><strong>NYU</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=kcl.ac.uk" alt=""><strong>King's College</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=manchester.ac.uk" alt=""><strong>Manchester</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=warwick.ac.uk" alt=""><strong>Warwick</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=durham.ac.uk" alt=""><strong>Durham</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=tufts.edu" alt=""><strong>Tufts</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=northeastern.edu" alt=""><strong>Northeastern</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=utoronto.ca" alt=""><strong>Toronto</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=hec.edu" alt=""><strong>HEC Paris</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=essec.edu" alt=""><strong>ESSEC</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=unibocconi.it" alt=""><strong>Bocconi</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=ie.edu" alt=""><strong>IE Business</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=illinois.edu" alt=""><strong>UIUC</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=bu.edu" alt=""><strong>Boston University</strong></div>
+          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=psu.edu" alt=""><strong>Penn State</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" id="fit">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow light">Right fit</p>
+            <h2 class="section-title">This is selective by design.</h2>
+          </div>
+          <p class="section-copy">The model works only when the family, student, counselor, and mentor all take the work seriously.</p>
+        </div>
+        <div class="fit-grid reveal">
+          <div class="fit-block">
+            <h3>This program is for you if...</h3>
+            <ul class="fit-list">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Your child is hardworking, ambitious, coachable, and willing to do the work.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>You are focused on long-term development, not only the application.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>You understand that elite outcomes require time, depth, and consistent execution.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>You want the genuine attention of a founder-led team, not a junior counselor.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="fit-block not">
+            <h3>This program is not for you if...</h3>
+            <ul class="fit-list">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>
+                <span>You are looking for shortcuts or guaranteed admissions.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>
+                <span>You want a done-for-you application service where the student does not grow.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>
+                <span>You are looking for cheap counseling or a volume-based agency.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>
+                <span>Your child is not serious about education, career, or future.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="brand footer-brand" href="../index.html" aria-label="Blue Ocean Education home">
+            <span class="brand-mark" aria-hidden="true">
+              <svg width="40" height="40" viewBox="0 0 32 32" fill="none">
+                <circle cx="16" cy="16" r="13.5" stroke="currentColor" stroke-width="1" stroke-opacity="0.45"/>
+                <path d="M16 5 L18 16 L14 16 Z" fill="var(--moss)"/>
+                <path d="M16 27 L18 16 L14 16 Z" fill="var(--paper)"/>
+                <circle cx="16" cy="16" r="1.5" fill="currentColor" fill-opacity="0.35"/>
+              </svg>
+            </span>
+            <span class="brand-word">
+              <strong>Blue Ocean</strong>
+              <span>Education</span>
+            </span>
+          </a>
+          <p>A founder-led advisory helping hardworking Indian students build the profiles required for Harvard, Yale, Oxford, Cambridge, and the world's most selective universities.</p>
+        </div>
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="../method.html">Method</a></li>
+            <li><a href="../results.html">Results</a></li>
+            <li><a href="../fit.html">Right Fit</a></li>
+            <li><a href="../team.html">Team</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <ul>
+            <li><a href="tel:+919821118128">+91 98211 18128</a></li>
+            <li><a href="mailto:admissions@blueoceanedu.com">admissions@blueoceanedu.com</a></li>
+            <li>6, School Lane, Connaught Place</li>
+            <li>New Delhi, 110001</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Blue Ocean Education Consulting. All rights reserved.</span>
+        <span>Private Admissions Advisory</span>
+        <button class="theme-toggle" id="themeToggle" aria-label="Switch colour theme" title="Switch colour theme">
+          <span class="td td-green"></span>
+          <span class="td td-blue"></span>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <div class="sticky-cta" id="stickyCta" aria-label="Consultation call to action">
+    <span>Would you like to work 1-1 with our team?</span>
+    <a class="btn btn-lime" href="#formCard">Get Started</a>
+  </div>
+
+  <script src="../scroll-story.js"></script>
+  <script>
+    const stickyCta = document.getElementById('stickyCta');
+    const hero = document.querySelector('.hero');
+
+    /* Theme */
+    const themeToggle = document.getElementById('themeToggle');
+    function applyTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      document.querySelectorAll('[data-blue]').forEach(img => {
+        if (!img.dataset.green) img.dataset.green = img.getAttribute('src');
+        img.src = theme === 'blue' ? img.dataset.blue : img.dataset.green;
+      });
+    }
+    applyTheme(localStorage.getItem('boTheme') || 'blue');
+    themeToggle.addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'blue' ? 'green' : 'blue';
+      applyTheme(next);
+      localStorage.setItem('boTheme', next);
+    });
+
+    /* Reveal */
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* Bar chart */
+    const barObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); barObserver.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.numbers-proof').forEach(el => barObserver.observe(el));
+
+    /* Services sticky scroll */
+    (function () {
+      var textBlocks = Array.from(document.querySelectorAll('.service-text-block'));
+      var cards = Array.from(document.querySelectorAll('.service-card'));
+      var currentIndex = -1;
+      var frame = null;
+      if (!textBlocks.length || !cards.length) return;
+      function setActive(index) {
+        if (index === currentIndex) return;
+        currentIndex = index;
+        textBlocks.forEach(function (block, i) {
+          block.classList.remove('is-active', 'is-prev');
+          if (i < index) block.classList.add('is-prev');
+          else if (i === index) block.classList.add('is-active');
+        });
+      }
+      function update() {
+        frame = null;
+        var center = window.innerHeight * 0.5;
+        var best = 0, bestDist = Infinity;
+        cards.forEach(function (card, i) {
+          var rect = card.getBoundingClientRect();
+          var dist = Math.abs(rect.top + rect.height * 0.5 - center);
+          if (dist < bestDist) { bestDist = dist; best = i; }
+        });
+        setActive(best);
+      }
+      function requestUpdate() { if (frame === null) frame = requestAnimationFrame(update); }
+      window.addEventListener('scroll', requestUpdate, { passive: true });
+      window.addEventListener('resize', requestUpdate);
+      update();
+    }());
+
+    /* Sticky CTA — show after hero exits */
+    const stickyObserver = new IntersectionObserver(([entry]) => {
+      stickyCta.classList.toggle('visible', !entry.isIntersecting);
+    }, { threshold: 0.08 });
+    stickyObserver.observe(hero);
+
+    /* Outcome carousel */
+    (function () {
+      const track = document.getElementById('outcomeTrack');
+      const prevBtn = document.getElementById('outcomePrev');
+      const nextBtn = document.getElementById('outcomeNext');
+      if (!track || !prevBtn || !nextBtn) return;
+      function cardStep() {
+        const card = track.querySelector('.outcome-card');
+        return card ? card.offsetWidth + 14 : 300;
+      }
+      prevBtn.addEventListener('click', () => track.scrollBy({ left: -cardStep(), behavior: 'smooth' }));
+      nextBtn.addEventListener('click', () => track.scrollBy({ left: cardStep(), behavior: 'smooth' }));
+      function updateButtons() {
+        prevBtn.disabled = track.scrollLeft <= 1;
+        nextBtn.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+      }
+      track.addEventListener('scroll', updateButtons, { passive: true });
+      window.addEventListener('resize', updateButtons);
+      updateButtons();
+    }());
+
+    /* Role toggle */
+    document.querySelectorAll('.role-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+      });
+    });
+
+    /* 2-step form */
+    const step1    = document.getElementById('step1');
+    const step2    = document.getElementById('step2');
+    const title1   = document.getElementById('titleStep1');
+    const title2   = document.getElementById('titleStep2');
+    const pip1     = document.getElementById('pip1');
+    const pip2     = document.getElementById('pip2');
+    const counter  = document.getElementById('stepCounter');
+    const success  = document.getElementById('formSuccess');
+    const formCard = document.getElementById('formCard');
+
+    function showStep2() {
+      const first = document.getElementById('firstName');
+      const last  = document.getElementById('lastName');
+      const email = document.getElementById('email');
+      let ok = true;
+      [first, last, email].forEach(el => {
+        el.classList.remove('field-error');
+        if (!el.value.trim() || (el.type === 'email' && !el.value.includes('@'))) { el.classList.add('field-error'); ok = false; }
+      });
+      if (!ok) { first.focus(); return; }
+      title1.classList.add('out'); title1.setAttribute('aria-hidden', 'true');
+      title2.classList.remove('out'); title2.removeAttribute('aria-hidden');
+      pip1.classList.remove('active'); pip1.classList.add('done');
+      pip2.classList.add('active');
+      counter.textContent = 'Step 2 of 2';
+      step1.classList.add('hidden-step');
+      step2.classList.remove('hidden-step'); step2.classList.add('fade-in');
+      document.getElementById('phone').focus();
+    }
+
+    function showStep1() {
+      title2.classList.add('out'); title2.setAttribute('aria-hidden', 'true');
+      title1.classList.remove('out'); title1.removeAttribute('aria-hidden');
+      pip2.classList.remove('active');
+      pip1.classList.remove('done'); pip1.classList.add('active');
+      counter.textContent = 'Step 1 of 2';
+      step2.classList.add('hidden-step'); step2.classList.remove('fade-in');
+      step1.classList.remove('hidden-step');
+      document.getElementById('firstName').focus();
+    }
+
+    const SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxzYB2CtlMlPP0H9zCeEJAElhuSRWnF5RdyiL75JH_G2PcOn7ExTbxdc6kDev63ssMo8w/exec';
+
+    async function submitForm() {
+      const phone   = document.getElementById('phone');
+      const grade   = document.getElementById('grade');
+      const school  = document.getElementById('school');
+      const pincode = document.getElementById('pincode');
+      let ok = true;
+
+      [phone, grade, school].forEach(el => {
+        el.classList.remove('field-error');
+        if (!el.value.trim()) { el.classList.add('field-error'); ok = false; }
+      });
+
+      const digits = phone.value.replace(/\D/g, '');
+      if (digits.length !== 10) { phone.classList.add('field-error'); ok = false; }
+
+      if (pincode.value && pincode.value.replace(/\D/g, '').length !== 6) {
+        pincode.classList.add('field-error'); ok = false;
+      }
+
+      if (!ok) { phone.focus(); return; }
+
+      const submitBtn = document.getElementById('submitBtn');
+      const originalLabel = submitBtn.textContent;
+      submitBtn.textContent = 'Submitting…';
+      submitBtn.disabled = true;
+
+      const activeRole = document.querySelector('.role-btn.is-active');
+      const prefix = document.getElementById('phonePrefix').value;
+
+      const payload = {
+        timestamp:    new Date().toISOString(),
+        form_source:  'lp_landing_page',
+        user_type:    activeRole ? activeRole.dataset.role : 'guardian',
+        first_name:   document.getElementById('firstName').value.trim(),
+        last_name:    document.getElementById('lastName').value.trim(),
+        email:        document.getElementById('email').value.trim(),
+        phone:        prefix.replace('+', '00') + ' ' + phone.value.trim(),
+        grade:        grade.value,
+        school_name:  school.value.trim(),
+        pincode:      pincode.value.trim(),
+        financial_aid: document.getElementById('scholarship').options[document.getElementById('scholarship').selectedIndex].text,
+        page_url:     window.location.href,
+        page_title:   document.title
+      };
+
+      try {
+        await fetch(SHEET_WEBHOOK_URL, {
+          method: 'POST',
+          mode:   'no-cors',
+          body:   new URLSearchParams(payload)
+        });
+      } catch (err) {
+        console.error('Sheet submit error:', err);
+      }
+
+      submitBtn.textContent = originalLabel;
+      submitBtn.disabled = false;
+      document.getElementById('formStepsWrap').style.display = 'none';
+      formCard.querySelector('.form-card-head').style.display = 'none';
+      success.classList.add('visible');
+    }
+
+    document.getElementById('continueBtn').addEventListener('click', showStep2);
+    document.getElementById('backBtn').addEventListener('click', showStep1);
+    document.getElementById('submitBtn').addEventListener('click', submitForm);
+
+    document.querySelectorAll('.field input, .field select').forEach(el => {
+      el.addEventListener('input', () => el.classList.remove('field-error'));
+    });
+
+    /* Numeric-only enforcement */
+    ['phone', 'pincode'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('input', () => {
+        const pos = el.selectionStart;
+        const cleaned = el.value.replace(/\D/g, '');
+        if (el.value !== cleaned) { el.value = cleaned; el.setSelectionRange(pos - 1, pos - 1); }
+      });
+    });
+  </script>
+
+</body>
+</html>
