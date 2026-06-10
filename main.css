@@ -639,7 +639,7 @@
     }
 
     .proof-stat-card strong {
-      color: var(--forest-strong);
+      color: var(--moss);
       font-size: clamp(48px, 3.8vw, 66px);
       line-height: 0.9;
       font-weight: 900;
@@ -677,7 +677,7 @@
       margin: 22px 0 20px;
       color: var(--muted);
       font-size: 13px;
-      font-weight: 900;
+      font-weight: 500;
     }
 
     .acceptance-legend span {
@@ -695,7 +695,7 @@
     }
 
     .acceptance-legend span:last-child {
-      color: var(--forest-strong);
+      color: var(--moss);
     }
 
     .acceptance-legend span:last-child::before {
@@ -772,10 +772,15 @@
 
     .acceptance-value {
       min-width: 48px;
-      color: var(--ink);
+      color: var(--muted);
       font-size: 14px;
-      font-weight: 900;
+      font-weight: 600;
       line-height: 1;
+    }
+
+    .acceptance-main-bar .acceptance-value {
+      color: var(--moss);
+      font-weight: 700;
     }
 
     .section {
