@@ -6,14 +6,14 @@
     :root {
       --ink: oklch(15% 0.022 188);
       --ink-soft: oklch(34% 0.018 188);
-      --muted: oklch(49% 0.017 188);
+      --muted: oklch(46% 0.017 188);
       --paper: oklch(96% 0.014 84);
       --paper-low: oklch(92.5% 0.018 86);
       --paper-deep: oklch(88% 0.022 86);
       --forest: oklch(20% 0.052 164);
       --forest-strong: oklch(14% 0.044 174);
       --forest-soft: oklch(27% 0.05 164);
-      --moss: oklch(56% 0.09 150);
+      --moss: oklch(46% 0.09 150);
       --lime: oklch(85% 0.12 116);
       --lime-low: oklch(90% 0.055 116);
       --clay: oklch(58% 0.12 34);
@@ -599,6 +599,7 @@
       opacity: 0;
       filter: saturate(0.9) contrast(1.03);
       animation: institutionFade 15s infinite;
+      will-change: opacity, transform;
     }
 
     .institution-fader img:nth-child(2) {
@@ -2258,7 +2259,7 @@
       height: 26px;
       border-radius: 5px;
       background: #0a66c2;
-      color: #fff;
+      color: var(--paper);
       flex-shrink: 0;
       text-decoration: none;
       transition: opacity 0.15s;
@@ -2455,7 +2456,7 @@
       display: flex;
       justify-content: space-between;
       gap: 20px;
-      color: color-mix(in oklch, var(--paper) 42%, var(--forest));
+      color: color-mix(in oklch, var(--paper) 55%, var(--forest));
       font-size: 12px;
     }
 

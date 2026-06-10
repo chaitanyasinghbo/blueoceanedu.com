@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Founder-Led Admissions Architecture — Blue Ocean Education</title>
+  <title>Admissions | Blue Ocean Education</title>
   <meta name="description" content="Blue Ocean helps ambitious Indian students develop the depth, originality, and discipline required to compete for the world's most selective universities.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,18 +33,26 @@
     html:not([data-theme="blue"]) .td-green { transform: scale(1.3); box-shadow: 0 0 0 2.5px oklch(85% 0.12 116 / 0.28); }
     html[data-theme="blue"] .td-blue       { transform: scale(1.3); box-shadow: 0 0 0 2.5px oklch(66% 0.092 226 / 0.28); }
     html[data-theme="blue"] {
-      --forest-strong: oklch(12% 0.024 250);
-      --forest:        oklch(19% 0.036 246);
-      --forest-soft:   oklch(25% 0.034 244);
-      --moss:          oklch(56% 0.090 226);
-      --lime:          oklch(66% 0.092 226);
-      --lime-low:      oklch(92% 0.030 222);
-      --line-dark:     oklch(29% 0.022 246);
+      --forest-strong: oklch(26% 0.055 242);
+      --forest:        oklch(33% 0.068 240);
+      --forest-soft:   oklch(41% 0.065 238);
+      --moss:          oklch(48% 0.100 226);
+      --lime:          oklch(72% 0.115 222);
+      --lime-low:      oklch(93% 0.038 222);
+      --line-dark:     oklch(44% 0.038 240);
       --shadow:        oklch(14% 0.020 250 / 0.24);
-      --paper:         oklch(96% 0.008 240);
-      --paper-low:     oklch(92.5% 0.012 236);
-      --paper-deep:    oklch(88% 0.015 232);
-      --line:          oklch(83% 0.012 232);
+      --paper:         oklch(97% 0.020 228);
+      --paper-low:     oklch(93.5% 0.026 228);
+      --paper-deep:    oklch(89% 0.030 226);
+      --line:          oklch(84% 0.018 228);
+    --ink:           oklch(15% 0.018 240);
+    --ink-soft:      oklch(34% 0.016 240);
+    --muted:         oklch(46% 0.014 240);
+    --clay:          oklch(60% 0.10 216);
+    }
+
+    html[data-theme="blue"] :focus-visible {
+      outline-color: oklch(46% 0.090 226);
     }
 
     /* ── Nav: logo only ─────────────────────────────── */
