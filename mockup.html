@@ -1,0 +1,2407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blue Ocean Education | Private Admissions Advisory</title>
+  <meta name="description" content="A founder-led advisory for ambitious Indian students building distinctive profiles for Harvard, Yale, Oxford, Cambridge, and the world's most selective universities.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: oklch(15% 0.015 248);
+      --ink-soft: oklch(34% 0.011 244);
+      --muted: oklch(49% 0.009 238);
+      --paper: oklch(96% 0.014 84);
+      --paper-low: oklch(92.5% 0.018 86);
+      --paper-deep: oklch(88% 0.022 86);
+      --ocean: oklch(19% 0.036 246);
+      --ocean-deep: oklch(12% 0.024 250);
+      --ocean-soft: oklch(25% 0.034 244);
+      --slate: oklch(50% 0.058 228);
+      --sky: oklch(66% 0.092 226);
+      --sky-low: oklch(92% 0.030 222);
+      --clay: oklch(58% 0.12 34);
+      --blue: oklch(48% 0.11 230);
+      --line: oklch(82% 0.018 86);
+      --line-dark: oklch(29% 0.022 246);
+      --shadow: oklch(14% 0.020 250 / 0.24);
+      --serif: "EB Garamond", Georgia, serif;
+      --sans: "Bricolage Grotesque", system-ui, sans-serif;
+      --max: 1248px;
+      --pad: clamp(20px, 5vw, 56px);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      padding-bottom: calc(72px + env(safe-area-inset-bottom));
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--sky);
+      outline-offset: 4px;
+    }
+
+    .wrap {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      padding-inline: var(--pad);
+    }
+
+    .site-archive {
+      display: none !important;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: color-mix(in oklch, var(--ocean-deep) 94%, var(--paper) 6%);
+      border-bottom: 1px solid var(--line-dark);
+    }
+
+    .nav {
+      width: min(100%, var(--max));
+      height: 74px;
+      margin: 0 auto;
+      padding-inline: var(--pad);
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--paper);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: max-content;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      color: var(--sky);
+    }
+
+    .brand-word {
+      display: grid;
+      gap: 3px;
+      line-height: 1;
+    }
+
+    .brand-word strong {
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+
+    .brand-word span {
+      font-size: 21px;
+      font-weight: 400;
+      letter-spacing: -0.025em;
+      color: color-mix(in oklch, var(--paper) 80%, var(--ocean));
+      text-transform: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      list-style: none;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 13px;
+      border-radius: 8px;
+      color: color-mix(in oklch, var(--paper) 72%, var(--ocean));
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 160ms ease, background 160ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--paper);
+      background: color-mix(in oklch, var(--paper) 9%, transparent);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .phone-link {
+      font-size: 13px;
+      font-weight: 700;
+      color: color-mix(in oklch, var(--paper) 70%, var(--ocean));
+      white-space: nowrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-lime {
+      background: var(--sky);
+      color: var(--ocean-deep);
+      border-color: var(--sky);
+    }
+
+    .btn-lime:hover {
+      background: color-mix(in oklch, var(--sky) 88%, var(--paper));
+    }
+
+    .btn-outline-dark {
+      color: var(--paper);
+      border-color: color-mix(in oklch, var(--paper) 24%, transparent);
+      background: transparent;
+    }
+
+    .btn-outline-dark:hover {
+      border-color: var(--sky);
+      color: var(--sky);
+    }
+
+    .btn-ink {
+      background: var(--ocean-deep);
+      color: var(--paper);
+      border-color: var(--ocean-deep);
+    }
+
+    .btn-ink:hover {
+      background: var(--ocean);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid color-mix(in oklch, var(--paper) 20%, transparent);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--paper);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .menu-toggle svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* ─── Hero ─────────────────────────────────────────────── */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, color-mix(in oklch, var(--paper) 4%, transparent) 1px, transparent 1px),
+        linear-gradient(180deg, color-mix(in oklch, var(--paper) 4%, transparent) 1px, transparent 1px),
+        var(--ocean-deep);
+      background-size: 80px 80px;
+      color: var(--paper);
+      min-height: calc(100vh - 74px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-grid {
+      width: min(100%, var(--max));
+      flex: 1 0 auto;
+      margin: 0 auto;
+      min-height: calc(100vh - 148px);
+      padding: clamp(44px, 8vh, 88px) var(--pad) clamp(36px, 5vh, 56px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(400px, 0.85fr);
+      gap: clamp(28px, 3.5vw, 44px);
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--slate);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow.light {
+      color: var(--sky);
+    }
+
+    .hero-copy {
+      grid-column: 1;
+      grid-row: 1;
+      padding-bottom: 0;
+      position: relative;
+      z-index: 3;
+    }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 100%;
+      font-size: 82px;
+      line-height: 0.92;
+      letter-spacing: 0;
+      font-weight: 800;
+    }
+
+    .hero h1 span {
+      color: var(--sky);
+    }
+
+    .hero-lede {
+      margin: 28px 0 0;
+      max-width: 600px;
+      color: color-mix(in oklch, var(--paper) 72%, var(--ocean));
+      font-size: 20px;
+      line-height: 1.52;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .hero-alumni {
+      margin: 42px 0 0;
+      padding: 18px 0;
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      gap: 22px;
+      align-items: center;
+      border-top: 1px solid var(--line-dark);
+      border-bottom: 1px solid var(--line-dark);
+    }
+
+    .hero-alumni-label {
+      color: var(--sky);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    .hero-logo-row {
+      display: flex;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    .hero-logo-slot {
+      min-height: 64px;
+      flex: 1 1 0;
+      border: 1px solid var(--line-dark);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      padding: 10px 12px;
+      color: color-mix(in oklch, var(--paper) 82%, var(--ocean));
+      background: color-mix(in oklch, var(--paper) 92%, var(--sky-low));
+    }
+
+    .hero-logo-slot img {
+      max-width: 100%;
+      width: auto;
+      height: 36px;
+      object-fit: contain;
+    }
+
+    .hero-logo-slot.logo-wide {
+      flex: 1.35 1 0;
+    }
+
+    .hero-logo-slot.logo-wide img {
+      height: 34px;
+    }
+
+    .hero-logo-slot.logo-seal {
+      flex: 0.82 1 0;
+    }
+
+    .hero-logo-slot.logo-seal img {
+      height: 42px;
+    }
+
+    .hero-media {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: stretch;
+      min-height: 620px;
+      position: relative;
+      display: grid;
+      align-items: end;
+      z-index: 1;
+    }
+
+    .campus-frame {
+      position: absolute;
+      inset: 26px 0 96px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line-dark);
+      box-shadow: 0 28px 80px var(--shadow);
+      background: var(--ocean);
+    }
+
+    .campus-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, color-mix(in oklch, var(--ocean-deep) 2%, transparent), color-mix(in oklch, var(--ocean-deep) 44%, transparent));
+      pointer-events: none;
+    }
+
+    .campus-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.86) contrast(0.98);
+    }
+
+    .student-figure {
+      position: absolute;
+      right: -48px;
+      bottom: 74px;
+      width: min(112%, 630px);
+      max-height: none;
+      object-fit: contain;
+      object-position: bottom right;
+      filter: drop-shadow(0 24px 46px oklch(8% 0.03 252 / 0.46));
+      z-index: 2;
+    }
+
+    .hero-caption {
+      position: absolute;
+      left: 0;
+      bottom: 88px;
+      z-index: 3;
+      width: min(252px, 52%);
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: var(--sky);
+      color: var(--ocean-deep);
+      box-shadow: 0 12px 36px oklch(8% 0.04 252 / 0.24);
+    }
+
+    .hero-caption strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .hero-caption span {
+      display: block;
+      font-size: 12px;
+      line-height: 1.42;
+      color: color-mix(in oklch, var(--ocean-deep) 82%, var(--paper));
+    }
+
+    .trust-band {
+      width: 100%;
+      border-top: 1px solid var(--line-dark);
+      color: color-mix(in oklch, var(--paper) 68%, var(--ocean));
+      background: color-mix(in oklch, var(--ocean) 42%, transparent);
+    }
+
+    .trust-inner {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      padding: 17px var(--pad);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      overflow: hidden;
+    }
+
+    .trust-label {
+      flex: 0 0 auto;
+      min-width: max-content;
+      color: var(--sky);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .trust-items {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding-left: 22px;
+      white-space: nowrap;
+      animation: drift 32s linear infinite;
+    }
+
+    .trust-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 118px;
+      height: 42px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: color-mix(in oklch, var(--paper) 94%, var(--sky-low));
+      opacity: 0.92;
+    }
+
+    .trust-logo img {
+      max-width: 118px;
+      max-height: 30px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .trust-logo.tall img {
+      max-height: 34px;
+    }
+
+    .trust-logo.wide {
+      min-width: 152px;
+    }
+
+    .trust-logo.wide img {
+      max-width: 152px;
+    }
+
+    .trust-logo::after {
+      content: "/";
+      margin-left: 24px;
+      color: color-mix(in oklch, var(--paper) 24%, transparent);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    @keyframes drift {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── Sections ─────────────────────────────────────────── */
+
+    .section {
+      padding: 104px 0;
+    }
+
+    .section.compact {
+      padding: 76px 0;
+    }
+
+    .section.dark {
+      background: var(--ocean);
+      color: var(--paper);
+    }
+
+    .section.paper-low {
+      background: var(--paper-low);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.65fr);
+      gap: 48px;
+      align-items: end;
+      margin-bottom: 46px;
+    }
+
+    .section-title {
+      margin: 0;
+      max-width: 760px;
+      font-size: 52px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .section-title.serif {
+      font-family: var(--serif);
+      font-size: 58px;
+      font-weight: 500;
+      line-height: 1.03;
+    }
+
+    .section-copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+      max-width: 620px;
+    }
+
+    .dark .section-copy {
+      color: color-mix(in oklch, var(--paper) 66%, var(--ocean));
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 52px;
+      align-items: stretch;
+    }
+
+    .intro-panel {
+      padding: 42px;
+      background: var(--ocean-deep);
+      color: var(--paper);
+      border-radius: 8px;
+      min-height: 440px;
+      display: grid;
+      align-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intro-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, color-mix(in oklch, var(--paper) 5%, transparent) 1px, transparent 1px),
+        linear-gradient(180deg, color-mix(in oklch, var(--paper) 5%, transparent) 1px, transparent 1px);
+      background-size: 56px 56px;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    .intro-panel > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .intro-panel blockquote {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 42px;
+      line-height: 1.08;
+      color: var(--paper);
+    }
+
+    .intro-panel cite {
+      margin-top: 32px;
+      color: var(--sky);
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .intro-copy {
+      display: grid;
+      gap: 18px;
+      align-content: center;
+    }
+
+    .intro-copy p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 18px;
+      line-height: 1.65;
+      max-width: 760px;
+    }
+
+    .intro-copy strong {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .photo-slot {
+      min-height: 320px;
+      border-radius: 8px;
+      border: 1px solid color-mix(in oklch, var(--line) 88%, var(--ocean));
+      background:
+        linear-gradient(135deg, color-mix(in oklch, var(--paper) 85%, var(--sky-low)), color-mix(in oklch, var(--paper-deep) 82%, var(--slate))),
+        var(--paper-low);
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: end start;
+      padding: 22px;
+    }
+
+    .photo-slot::before {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border: 1px solid color-mix(in oklch, var(--ocean) 18%, transparent);
+      border-radius: 5px;
+    }
+
+    .photo-slot::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 49.6%, color-mix(in oklch, var(--ocean) 16%, transparent) 50%, transparent 50.4%),
+        linear-gradient(180deg, transparent 49.6%, color-mix(in oklch, var(--ocean) 16%, transparent) 50%, transparent 50.4%);
+      opacity: 0.45;
+    }
+
+    .slot-label {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 4px;
+    }
+
+    .slot-label strong {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ocean);
+    }
+
+    .slot-label span {
+      font-family: var(--serif);
+      font-size: 23px;
+      line-height: 1.05;
+      color: var(--ink);
+    }
+
+    /* ─── Programs ─────────────────────────────────────────── */
+
+    .program-shell {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .program-tabs {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .program-tab {
+      width: 100%;
+      min-height: 74px;
+      padding: 16px;
+      border: 1px solid var(--line-dark);
+      border-radius: 8px;
+      background: color-mix(in oklch, var(--ocean-deep) 64%, transparent);
+      color: color-mix(in oklch, var(--paper) 72%, var(--ocean));
+      display: grid;
+      gap: 5px;
+      text-align: left;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+
+    .program-tab:hover,
+    .program-tab[aria-selected="true"] {
+      background: var(--sky);
+      color: var(--ocean-deep);
+      border-color: var(--sky);
+    }
+
+    .program-tab strong {
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .program-tab span {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.82;
+    }
+
+    .program-stage {
+      display: none;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.72fr);
+      gap: 30px;
+      min-height: 520px;
+      border: 1px solid var(--line-dark);
+      border-radius: 8px;
+      background: color-mix(in oklch, var(--ocean-deep) 68%, transparent);
+      overflow: hidden;
+    }
+
+    .program-stage.active {
+      display: grid;
+    }
+
+    .stage-copy {
+      padding: 42px;
+      display: grid;
+      align-content: space-between;
+      gap: 36px;
+    }
+
+    .stage-kicker {
+      color: var(--sky);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 0 0 12px;
+    }
+
+    .stage-copy h3 {
+      margin: 0;
+      font-size: 48px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .stage-copy p {
+      margin: 22px 0 0;
+      max-width: 620px;
+      color: color-mix(in oklch, var(--paper) 70%, var(--ocean));
+      font-size: 17px;
+      line-height: 1.62;
+    }
+
+    .stage-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--line-dark);
+      border-bottom: 1px solid var(--line-dark);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .stage-list li {
+      padding: 15px 16px 15px 0;
+      border-bottom: 1px solid var(--line-dark);
+      color: color-mix(in oklch, var(--paper) 76%, var(--ocean));
+      font-size: 14px;
+      line-height: 1.42;
+    }
+
+    .stage-list li:nth-child(2n) {
+      padding-left: 16px;
+      border-left: 1px solid var(--line-dark);
+    }
+
+    .stage-list li:nth-last-child(-n + 2) {
+      border-bottom: none;
+    }
+
+    .stage-media {
+      padding: 24px 24px 24px 0;
+      display: grid;
+      min-height: 100%;
+    }
+
+    .stage-media .photo-slot {
+      min-height: 100%;
+      background:
+        linear-gradient(135deg, color-mix(in oklch, var(--ocean-soft) 78%, var(--paper)), color-mix(in oklch, var(--sky-low) 24%, var(--ocean))),
+        var(--ocean-soft);
+      border-color: var(--line-dark);
+    }
+
+    .stage-media .slot-label strong,
+    .stage-media .slot-label span {
+      color: var(--paper);
+    }
+
+    /* ─── Method ────────────────────────────────────────────── */
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.15fr);
+      gap: 58px;
+      align-items: start;
+    }
+
+    .method-sticky {
+      position: sticky;
+      top: 108px;
+    }
+
+    .method-sticky h2 {
+      margin: 0 0 22px;
+      font-size: 54px;
+      line-height: 1;
+      font-weight: 800;
+    }
+
+    .method-sticky p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .method-list {
+      display: grid;
+      border-top: 1px solid var(--line);
+    }
+
+    .method-row {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 26px;
+      padding: 25px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .method-num {
+      font-family: var(--serif);
+      font-size: 38px;
+      line-height: 1;
+      color: var(--slate);
+    }
+
+    .method-row h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      line-height: 1.15;
+    }
+
+    .method-row p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.58;
+    }
+
+    /* ─── Outcomes ──────────────────────────────────────────── */
+
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .outcome-card {
+      min-height: 460px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      display: grid;
+      grid-template-rows: 320px 1fr;
+    }
+
+    .outcome-card .photo-slot {
+      min-height: 288px;
+      border: none;
+      border-radius: 0;
+    }
+
+    .outcome-photo {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      object-position: center;
+      background: var(--paper-low);
+    }
+
+    .outcome-body {
+      padding: 20px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 13px;
+    }
+
+    .outcome-name {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 13px;
+    }
+
+    .outcome-name strong {
+      font-size: 20px;
+    }
+
+    .outcome-body p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .admit-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 9px;
+      align-items: center;
+      flex: 0 0 auto;
+    }
+
+    .admit-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+    }
+
+    .admit-badge img {
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+    }
+
+    /* ─── Fit ───────────────────────────────────────────────── */
+
+    .fit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .fit-block {
+      border: 1px solid var(--line-dark);
+      border-radius: 8px;
+      padding: 30px;
+      background: color-mix(in oklch, var(--ocean-deep) 48%, transparent);
+    }
+
+    .fit-block h3 {
+      margin: 0 0 20px;
+      color: var(--paper);
+      font-size: 30px;
+      line-height: 1.1;
+    }
+
+    .fit-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 13px;
+    }
+
+    .fit-list li {
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr);
+      gap: 11px;
+      color: color-mix(in oklch, var(--paper) 74%, var(--ocean));
+      font-size: 15px;
+      line-height: 1.48;
+    }
+
+    .fit-list svg {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      color: var(--sky);
+    }
+
+    .fit-block.not .fit-list svg {
+      color: color-mix(in oklch, var(--paper) 34%, var(--ocean));
+    }
+
+    /* ─── Team ──────────────────────────────────────────────── */
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 50px;
+      align-items: center;
+    }
+
+    .team-copy h2 {
+      margin: 0 0 24px;
+      font-size: 54px;
+      line-height: 1;
+    }
+
+    .team-copy p {
+      margin: 0 0 26px;
+      color: var(--ink-soft);
+      font-size: 18px;
+      line-height: 1.62;
+    }
+
+    .credential-list {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .credential {
+      padding: 18px 0;
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .credential strong {
+      font-size: 14px;
+      color: var(--ocean);
+    }
+
+    .credential span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .team-media-grid {
+      display: grid;
+      grid-template-columns: 1fr 0.78fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .team-media-grid .photo-slot:first-child {
+      min-height: 520px;
+    }
+
+    .team-media-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    /* ─── Universities ──────────────────────────────────────── */
+
+    .universities {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .university {
+      min-height: 86px;
+      padding: 16px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      align-content: center;
+      gap: 7px;
+    }
+
+    .university img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      filter: saturate(0.84);
+    }
+
+    .university strong {
+      font-size: 14px;
+      line-height: 1.1;
+    }
+
+    .university span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── Quote ─────────────────────────────────────────────── */
+
+    .quote-band {
+      padding: 90px 0;
+      background: var(--sky);
+      color: var(--ocean-deep);
+    }
+
+    .quote-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.36fr) minmax(0, 1fr);
+      gap: 46px;
+      align-items: start;
+    }
+
+    .quote-mark {
+      font-family: var(--serif);
+      font-size: 126px;
+      line-height: 0.75;
+    }
+
+    .quote-text {
+      margin: 0;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 42px;
+      line-height: 1.18;
+    }
+
+    .quote-credit {
+      margin-top: 24px;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ─── CTA ───────────────────────────────────────────────── */
+
+    .cta-section {
+      padding: 96px 0;
+      background:
+        linear-gradient(90deg, color-mix(in oklch, var(--paper) 5%, transparent) 1px, transparent 1px),
+        var(--ocean-deep);
+      background-size: 72px 72px;
+      color: var(--paper);
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 42px;
+      align-items: end;
+    }
+
+    .cta-grid h2 {
+      margin: 0;
+      font-size: 66px;
+      line-height: 0.95;
+      font-weight: 800;
+    }
+
+    .cta-grid p {
+      margin: 22px 0 0;
+      max-width: 640px;
+      color: color-mix(in oklch, var(--paper) 68%, var(--ocean));
+      font-size: 18px;
+      line-height: 1.58;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    /* ─── Footer ────────────────────────────────────────────── */
+
+    .footer {
+      background: var(--ocean-deep);
+      color: color-mix(in oklch, var(--paper) 62%, var(--ocean));
+      border-top: 1px solid var(--line-dark);
+      padding: 54px 0 32px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.35fr repeat(3, minmax(0, 1fr));
+      gap: 36px;
+    }
+
+    .footer h3 {
+      margin: 0 0 14px;
+      color: var(--paper);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .footer p,
+    .footer a {
+      color: color-mix(in oklch, var(--paper) 62%, var(--ocean));
+      font-size: 14px;
+      line-height: 1.62;
+    }
+
+    .footer a:hover {
+      color: var(--sky);
+    }
+
+    .footer ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 9px;
+    }
+
+    .footer-bottom {
+      margin-top: 40px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line-dark);
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: color-mix(in oklch, var(--paper) 42%, var(--ocean));
+      font-size: 12px;
+    }
+
+    /* ─── Sticky CTA ────────────────────────────────────────── */
+
+    .sticky-cta {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(14px, 2.2vw, 28px);
+      width: 100%;
+      min-height: 72px;
+      padding: 12px var(--pad) calc(12px + env(safe-area-inset-bottom));
+      background: var(--ocean-deep);
+      color: var(--paper);
+      border-top: 1px solid var(--line-dark);
+      box-shadow: 0 -18px 46px var(--shadow);
+      transform: translateY(120%);
+      transition: transform 260ms ease;
+    }
+
+    .sticky-cta.visible {
+      transform: translateY(0);
+    }
+
+    .sticky-cta span {
+      max-width: 560px;
+      font-size: 14px;
+      line-height: 1.4;
+      color: color-mix(in oklch, var(--paper) 74%, var(--ocean));
+    }
+
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: opacity 320ms ease, transform 320ms ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── Responsive ────────────────────────────────────────── */
+
+    @media (max-width: 1120px) {
+      .hero h1 {
+        font-size: 68px;
+      }
+
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr) 370px;
+        gap: 30px;
+      }
+
+      .section-title,
+      .method-sticky h2,
+      .team-copy h2 {
+        font-size: 46px;
+      }
+
+      .section-title.serif {
+        font-size: 50px;
+      }
+
+      .outcome-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .universities {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 920px) {
+      body.menu-open .nav-links {
+        display: grid;
+      }
+
+      .nav {
+        height: 68px;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+      }
+
+      .brand-mark svg {
+        width: 34px;
+        height: 34px;
+      }
+
+      .brand-word strong,
+      .brand-word span {
+        font-size: 16px;
+        letter-spacing: -0.02em;
+      }
+
+      .nav-links {
+        display: none;
+        position: fixed;
+        inset: 68px 16px auto 16px;
+        padding: 16px;
+        border-radius: 8px;
+        border: 1px solid var(--line-dark);
+        background: var(--ocean-deep);
+        box-shadow: 0 18px 54px var(--shadow);
+      }
+
+      .nav-links a {
+        justify-content: space-between;
+        min-height: 46px;
+        border-bottom: 1px solid var(--line-dark);
+        border-radius: 0;
+      }
+
+      .nav-links li:last-child a {
+        border-bottom: none;
+      }
+
+      .nav-actions {
+        margin-left: auto;
+      }
+
+      .phone-link {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        padding-top: 26px;
+      }
+
+      .hero-copy {
+        grid-column: 1;
+        grid-row: 2;
+        padding-bottom: 10px;
+      }
+
+      .hero-media {
+        grid-column: 1;
+        grid-row: 1;
+        min-height: 520px;
+      }
+
+      .campus-frame {
+        inset: 20px 0 84px 0;
+      }
+
+      .student-figure {
+        right: -20px;
+        bottom: 62px;
+        width: min(68%, 430px);
+      }
+
+      .hero-caption {
+        width: min(330px, 76%);
+      }
+
+      .section-head,
+      .intro-grid,
+      .program-shell,
+      .program-stage,
+      .method-grid,
+      .team-grid,
+      .cta-grid,
+      .quote-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .program-tabs {
+        grid-template-columns: repeat(4, minmax(210px, 1fr));
+        overflow-x: auto;
+        padding-bottom: 6px;
+      }
+
+      .program-stage {
+        min-height: auto;
+      }
+
+      .stage-media {
+        padding: 0 24px 24px;
+      }
+
+      .stage-media .photo-slot {
+        min-height: 340px;
+      }
+
+      .method-sticky {
+        position: static;
+      }
+
+      .fit-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .team-media-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .team-media-grid .photo-slot:first-child {
+        min-height: 360px;
+      }
+
+      .cta-actions {
+        justify-content: flex-start;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding-bottom: calc(104px + env(safe-area-inset-bottom));
+      }
+
+      .nav-actions .btn {
+        display: none;
+      }
+
+      .brand-word strong {
+        font-size: 14px;
+      }
+
+      .brand-word span {
+        font-size: 14px;
+      }
+
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+      }
+
+      .brand-mark svg {
+        width: 32px;
+        height: 32px;
+      }
+
+      .hero h1 {
+        font-size: 48px;
+      }
+
+      .hero-lede {
+        font-size: 17px;
+      }
+
+      .hero-alumni {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px 0;
+      }
+
+      .hero-alumni-label {
+        font-size: 14px;
+        letter-spacing: 0.08em;
+      }
+
+      .hero-logo-slot {
+        min-height: 62px;
+        padding: 8px;
+      }
+
+      .hero-logo-slot img {
+        height: 30px;
+      }
+
+      .hero-logo-slot.logo-wide img {
+        height: 30px;
+      }
+
+      .hero-logo-slot.logo-seal img {
+        height: 38px;
+      }
+
+      .hero-media {
+        min-height: 430px;
+      }
+
+      .student-figure {
+        right: -28px;
+        bottom: 62px;
+        width: min(86%, 390px);
+      }
+
+      .hero-caption {
+        bottom: 24px;
+      }
+
+      .trust-inner {
+        display: grid;
+      }
+
+      .trust-items {
+        animation-duration: 24s;
+      }
+
+      .section {
+        padding: 74px 0;
+      }
+
+      .section.compact {
+        padding: 58px 0;
+      }
+
+      .section-title,
+      .stage-copy h3,
+      .method-sticky h2,
+      .team-copy h2 {
+        font-size: 38px;
+      }
+
+      .section-title.serif {
+        font-size: 42px;
+      }
+
+      .intro-panel,
+      .stage-copy,
+      .fit-block {
+        padding: 26px;
+      }
+
+      .intro-panel blockquote,
+      .quote-text {
+        font-size: 31px;
+      }
+
+      .stage-list {
+        grid-template-columns: 1fr;
+      }
+
+      .stage-list li:nth-child(2n) {
+        padding-left: 0;
+        border-left: none;
+      }
+
+      .stage-list li:nth-last-child(-n + 2) {
+        border-bottom: 1px solid var(--line-dark);
+      }
+
+      .stage-list li:last-child {
+        border-bottom: none;
+      }
+
+      .program-tabs {
+        grid-template-columns: 1fr;
+        overflow-x: visible;
+      }
+
+      .method-row {
+        grid-template-columns: 54px minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      .outcome-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .universities {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .credential {
+        grid-template-columns: 1fr;
+        gap: 5px;
+      }
+
+      .quote-mark {
+        font-size: 92px;
+      }
+
+      .cta-grid h2 {
+        font-size: 42px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+      }
+
+      .sticky-cta {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        gap: 10px;
+        min-height: 76px;
+        padding: 12px var(--pad) calc(12px + env(safe-area-inset-bottom));
+      }
+
+      .sticky-cta span {
+        font-size: 13px;
+        max-width: none;
+      }
+
+      .sticky-cta .btn {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 1ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="Blue Ocean Education home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="42" height="42" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="13.5" stroke="currentColor" stroke-width="1" stroke-opacity="0.45"/>
+            <path d="M16 5 L18 16 L14 16 Z" fill="currentColor"/>
+            <path d="M16 27 L18 16 L14 16 Z" fill="currentColor" opacity="0.18"/>
+            <circle cx="16" cy="16" r="1.5" fill="currentColor" fill-opacity="0.35"/>
+          </svg>
+        </span>
+        <span class="brand-word">
+          <strong>Blue Ocean</strong>
+          <span>Education</span>
+        </span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#method">Method</a></li>
+        <li class="site-archive" hidden data-archived="programs-paused"><a href="#programs">Programs</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#fit">Right fit</a></li>
+        <li><a href="#team">Team</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a class="phone-link" href="tel:+919821118128">+91 98211 18128</a>
+        <a class="btn btn-lime" href="mailto:hello@blueoceanedu.in">Consultation</a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow light">Founder-led admissions architecture</p>
+          <h1 id="hero-title">Build the student <span>before</span> the application.</h1>
+          <p class="hero-lede">Blue Ocean helps ambitious Indian students develop the depth, originality, and discipline required to compete for the world's most selective universities.</p>
+          <div class="hero-actions">
+            <a class="btn btn-lime" href="mailto:hello@blueoceanedu.in">
+              Request a private review
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a class="btn btn-outline-dark" href="tel:+919821118128">Call the team</a>
+          </div>
+          <div class="hero-alumni" aria-label="Built by alumni from">
+            <div class="hero-alumni-label">Built by alumni from:</div>
+            <div class="hero-logo-row">
+              <div class="hero-logo-slot logo-wide" aria-label="Harvard Business School">
+                <img src="hero-logos/HBS.png" alt="">
+              </div>
+              <div class="hero-logo-slot logo-seal" aria-label="Harvard Kennedy School">
+                <img src="hero-logos/HKS.png" alt="">
+              </div>
+              <div class="hero-logo-slot logo-wide" aria-label="Harvard University">
+                <img src="hero-logos/harvard.png" alt="">
+              </div>
+              <div class="hero-logo-slot logo-wide" aria-label="Massachusetts Institute of Technology">
+                <img src="hero-logos/MIT-Logo.png" alt="">
+              </div>
+              <div class="hero-logo-slot logo-seal" aria-label="IIT Kharagpur">
+                <img src="hero-logos/Iit-Kharagpur-Logo.webp" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-media reveal">
+          <div class="campus-frame">
+            <img src="back copy.png" alt="MIT campus building in winter light">
+          </div>
+          <img class="student-figure" src="Untitled design.png" alt="Blue Ocean student wearing a Yale sweatshirt">
+          <div class="hero-caption">
+            <strong>Private, selective, high-touch.</strong>
+            <span>For families who want a serious plan years before application week.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-band" aria-label="Recognition and media">
+        <div class="trust-inner">
+          <div class="trust-label">Executive team recognized by</div>
+          <div class="trust-items" aria-hidden="true">
+            <span class="trust-logo wide"><img src="exec-team/harvard-lakshmi.png" alt=""></span>
+            <span class="trust-logo wide"><img src="exec-team/NDTV.png" alt=""></span>
+            <span class="trust-logo"><img src="exec-team/times-of-india.png" alt=""></span>
+            <span class="trust-logo wide"><img src="exec-team/hindustan-times.png" alt=""></span>
+            <span class="trust-logo"><img src="exec-team/mint.webp" alt=""></span>
+            <span class="trust-logo wide"><img src="exec-team/business-standard-logo-2.png" alt=""></span>
+            <span class="trust-logo"><img src="exec-team/Forbes.png" alt=""></span>
+            <span class="trust-logo tall"><img src="exec-team/The Indian Express.svg" alt=""></span>
+            <span class="trust-logo tall"><img src="exec-team/penguin.png" alt=""></span>
+            <span class="trust-logo wide"><img src="exec-team/harvard-lakshmi.png" alt=""></span>
+            <span class="trust-logo wide"><img src="exec-team/NDTV.png" alt=""></span>
+            <span class="trust-logo"><img src="exec-team/times-of-india.png" alt=""></span>
+            <span class="trust-logo wide"><img src="exec-team/hindustan-times.png" alt=""></span>
+            <span class="trust-logo"><img src="exec-team/mint.webp" alt=""></span>
+            <span class="trust-logo wide"><img src="exec-team/business-standard-logo-2.png" alt=""></span>
+            <span class="trust-logo"><img src="exec-team/Forbes.png" alt=""></span>
+            <span class="trust-logo tall"><img src="exec-team/The Indian Express.svg" alt=""></span>
+            <span class="trust-logo tall"><img src="exec-team/penguin.png" alt=""></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="wrap">
+        <div class="intro-grid">
+          <div class="intro-panel reveal">
+            <p class="eyebrow light">The core belief</p>
+            <blockquote>When students are developed to the height of their potential, admissions follow.</blockquote>
+            <cite>Blue Ocean Education</cite>
+          </div>
+          <div class="intro-copy reveal">
+            <p><strong>Most admissions companies start with the application. Blue Ocean starts with the student.</strong></p>
+            <p>We ask what this student could become if guided properly. What are their natural strengths? Which fields, ideas, and problems could they engage with deeply? What kind of work would stand out because it is genuinely meaningful?</p>
+            <p>For the right family, Blue Ocean becomes the environment they may not otherwise have access to: academic direction, project guidance, intellectual training, competition strategy, community impact development, language training, and admissions architecture.</p>
+            <div class="photo-slot" role="img" aria-label="Reserved space for a real student project photograph">
+              <div class="slot-label">
+                <strong>Image space</strong>
+                <span>Student project review or mentor working session</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark site-archive" id="programs" hidden data-archived="programs-paused">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow light">Programs</p>
+            <h2 class="section-title">Four entry points, one standard.</h2>
+          </div>
+          <p class="section-copy">The work changes by grade level. The bar does not. Each track is designed around the student's age, current profile, and available runway.</p>
+        </div>
+
+        <div class="program-shell reveal">
+          <div class="program-tabs" role="tablist" aria-label="Blue Ocean programs">
+            <button class="program-tab" id="tab-early" type="button" role="tab" aria-selected="true" aria-controls="panel-early" data-panel="early">
+              <strong>Early Architecture</strong>
+              <span>Grades 8 to 10</span>
+            </button>
+            <button class="program-tab" id="tab-build" type="button" role="tab" aria-selected="false" aria-controls="panel-build" data-panel="build">
+              <strong>Strategic Build</strong>
+              <span>Grade 11</span>
+            </button>
+            <button class="program-tab" id="tab-final" type="button" role="tab" aria-selected="false" aria-controls="panel-final" data-panel="final">
+              <strong>Final Year Admissions</strong>
+              <span>Grade 12</span>
+            </button>
+            <button class="program-tab" id="tab-grad" type="button" role="tab" aria-selected="false" aria-controls="panel-grad" data-panel="grad">
+              <strong>Masters and MBA</strong>
+              <span>Graduate</span>
+            </button>
+          </div>
+
+          <article class="program-stage active" id="panel-early" role="tabpanel" aria-labelledby="tab-early" data-stage="early">
+            <div class="stage-copy">
+              <div>
+                <p class="stage-kicker">Grades 8 to 10</p>
+                <h3>Build the foundation before pressure arrives.</h3>
+                <p>For families who want to use time well. We identify interests, subject choices, early projects, reading habits, and skill foundations while the student still has room to grow.</p>
+              </div>
+              <ul class="stage-list">
+                <li>IB and IGCSE subject direction</li>
+                <li>Interest discovery through serious work</li>
+                <li>First academic and service projects</li>
+                <li>Language, argumentation, and confidence</li>
+              </ul>
+            </div>
+            <div class="stage-media">
+              <div class="photo-slot" role="img" aria-label="Reserved space for a student workshop photograph">
+                <div class="slot-label">
+                  <strong>Image space</strong>
+                  <span>Early cohort session or student workshop</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="program-stage" id="panel-build" role="tabpanel" aria-labelledby="tab-build" data-stage="build">
+            <div class="stage-copy">
+              <div>
+                <p class="stage-kicker">Grade 11</p>
+                <h3>The year where the profile becomes visible.</h3>
+                <p>Grade 11 is where raw potential has to become evidence. We build the university list, narrative direction, recommendation strategy, projects, competitions, and testing plan.</p>
+              </div>
+              <ul class="stage-list">
+                <li>University and country strategy</li>
+                <li>Personal narrative positioning</li>
+                <li>Competition and research planning</li>
+                <li>Recommendation relationship planning</li>
+              </ul>
+            </div>
+            <div class="stage-media">
+              <div class="photo-slot" role="img" aria-label="Reserved space for a profile planning photograph">
+                <div class="slot-label">
+                  <strong>Image space</strong>
+                  <span>Profile planning wall or mentor table</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="program-stage" id="panel-final" role="tabpanel" aria-labelledby="tab-final" data-stage="final">
+            <div class="stage-copy">
+              <div>
+                <p class="stage-kicker">Grade 12</p>
+                <h3>Application work with depth, precision, and calm.</h3>
+                <p>For students entering the final cycle, we guide school lists, Common App, UCAS, personal statements, supplements, interviews, financial aid, waitlists, and decision planning.</p>
+              </div>
+              <ul class="stage-list">
+                <li>Common App and UCAS execution</li>
+                <li>Essay strategy and editing</li>
+                <li>Interview preparation</li>
+                <li>Decision-day and waitlist support</li>
+              </ul>
+            </div>
+            <div class="stage-media">
+              <div class="photo-slot" role="img" aria-label="Reserved space for application review photograph">
+                <div class="slot-label">
+                  <strong>Image space</strong>
+                  <span>Essay review, interview prep, or family meeting</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="program-stage" id="panel-grad" role="tabpanel" aria-labelledby="tab-grad" data-stage="grad">
+            <div class="stage-copy">
+              <div>
+                <p class="stage-kicker">Graduate admissions</p>
+                <h3>For MBA, Masters, MPA, LLM, and specialist programs.</h3>
+                <p>We advise applicants targeting Harvard Business School, Wharton, HEC Paris, INSEAD, LBS, Harvard Kennedy School, Oxford Blavatnik, and other elite graduate programs.</p>
+              </div>
+              <ul class="stage-list">
+                <li>Career story and positioning</li>
+                <li>School selection and application calendar</li>
+                <li>Essays, recommendations, and interviews</li>
+                <li>Scholarship and decision support</li>
+              </ul>
+            </div>
+            <div class="stage-media">
+              <div class="photo-slot" role="img" aria-label="Reserved space for graduate advisory photograph">
+                <div class="slot-label">
+                  <strong>Image space</strong>
+                  <span>MBA applicant review or founder consultation</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section paper-low" id="method">
+      <div class="wrap">
+        <div class="method-grid">
+          <div class="method-sticky reveal">
+            <p class="eyebrow">Method</p>
+            <h2>Blue Ocean Profile Architecture</h2>
+            <p>Seven disciplines turn a promising student into a globally competitive applicant. Each part connects to the student's genuine strengths, not a generic activity list.</p>
+          </div>
+          <div class="method-list reveal">
+            <article class="method-row">
+              <div class="method-num">01</div>
+              <div>
+                <h3>Academic Project Development</h3>
+                <p>Serious intellectual projects that reflect curiosity, depth, and initiative in a chosen domain.</p>
+              </div>
+            </article>
+            <article class="method-row">
+              <div class="method-num">02</div>
+              <div>
+                <h3>Competition Strategy</h3>
+                <p>Guidance toward high-quality competitions in economics, mathematics, science, research, and domain-specific arenas.</p>
+              </div>
+            </article>
+            <article class="method-row">
+              <div class="method-num">03</div>
+              <div>
+                <h3>Community Impact</h3>
+                <p>Service initiatives that are meaningful, sustainable, and capable of outlasting the student's involvement.</p>
+              </div>
+            </article>
+            <article class="method-row">
+              <div class="method-num">04</div>
+              <div>
+                <h3>Unique Skill Development</h3>
+                <p>Identifying distinctive strengths and taking those abilities to a higher level of execution.</p>
+              </div>
+            </article>
+            <article class="method-row">
+              <div class="method-num">05</div>
+              <div>
+                <h3>Language and Argumentation</h3>
+                <p>Training students to think, speak, write, and argue clearly across essays, interviews, and academic work.</p>
+              </div>
+            </article>
+            <article class="method-row">
+              <div class="method-num">06</div>
+              <div>
+                <h3>Admissions Strategy</h3>
+                <p>Connecting student development to the right university strategy across countries, essays, recommendations, and positioning.</p>
+              </div>
+            </article>
+            <article class="method-row">
+              <div class="method-num">07</div>
+              <div>
+                <h3>Ongoing Mentorship</h3>
+                <p>Weekly engagement with elite mentors and monthly strategic direction from Dr. Sanjay Kumar.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="results">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Outcomes</p>
+            <h2 class="section-title serif">Proof, handled with restraint.</h2>
+          </div>
+          <p class="section-copy">Blue Ocean students have earned offers from the most selective universities in the world. The names matter, but so does how the student got there.</p>
+        </div>
+
+        <div class="outcome-grid reveal">
+          <article class="outcome-card">
+            <img class="outcome-photo" src="manya_brown.png" alt="Manya, admitted to Brown and Carnegie Mellon">
+            <div class="outcome-body">
+              <div class="outcome-name">
+                <strong>Manya</strong>
+                <div class="admit-badges" aria-label="Manya admitted institutions">
+                  <span class="admit-badge">
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=brown.edu" alt="">
+                  </span>
+                  <span class="admit-badge">
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cmu.edu" alt="">
+                  </span>
+                </div>
+              </div>
+              <p>Admitted to Brown and Carnegie Mellon.</p>
+            </div>
+          </article>
+
+          <article class="outcome-card">
+            <img class="outcome-photo" src="prateek_harvard.png" alt="Prateek, admitted to Harvard">
+            <div class="outcome-body">
+              <div class="outcome-name">
+                <strong>Prateek</strong>
+                <div class="admit-badges" aria-label="Prateek admitted institution">
+                  <span class="admit-badge">
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt="">
+                  </span>
+                </div>
+              </div>
+              <p>Admitted to Harvard.</p>
+            </div>
+          </article>
+
+          <article class="outcome-card">
+            <img class="outcome-photo" src="anushka_cambridge.png" alt="Anushka, admitted to Columbia and Cambridge">
+            <div class="outcome-body">
+              <div class="outcome-name">
+                <strong>Anushka</strong>
+                <div class="admit-badges" aria-label="Anushka admitted institutions">
+                  <span class="admit-badge">
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=columbia.edu" alt="">
+                  </span>
+                  <span class="admit-badge">
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cam.ac.uk" alt="">
+                  </span>
+                </div>
+              </div>
+              <p>Admitted to Columbia and Cambridge.</p>
+            </div>
+          </article>
+
+          <article class="outcome-card">
+            <img class="outcome-photo" src="bhakti.png" alt="Bhakti, admitted to Yale, HEC Paris, and Carnegie Mellon MBA">
+            <div class="outcome-body">
+              <div class="outcome-name">
+                <strong>Bhakti</strong>
+                <div class="admit-badges" aria-label="Bhakti admitted institutions">
+                  <span class="admit-badge">
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=yale.edu" alt="">
+                  </span>
+                  <span class="admit-badge">
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=hec.edu" alt="">
+                  </span>
+                  <span class="admit-badge">
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cmu.edu" alt="">
+                  </span>
+                </div>
+              </div>
+              <p>Admitted to Yale, HEC Paris, and Carnegie Mellon MBA.</p>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section dark" id="fit">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow light">Right fit</p>
+            <h2 class="section-title">This is selective by design.</h2>
+          </div>
+          <p class="section-copy">The model works only when the family, student, counselor, and mentor all take the work seriously.</p>
+        </div>
+
+        <div class="fit-grid reveal">
+          <div class="fit-block">
+            <h3>This program is for you if...</h3>
+            <ul class="fit-list">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Your child is hardworking, ambitious, coachable, and willing to do the work.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>You are focused on long-term development, not only the application.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>You understand that elite outcomes require time, depth, and consistent execution.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>You want the genuine attention of a founder-led team, not a junior counselor.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="fit-block not">
+            <h3>This program is not for you if...</h3>
+            <ul class="fit-list">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>
+                <span>You are looking for shortcuts or guaranteed admissions.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>
+                <span>You want a done-for-you application service where the student does not grow.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>
+                <span>You are looking for cheap counseling or a volume-based agency.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>
+                <span>Your child is not serious about education, career, or future.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="team">
+      <div class="wrap">
+        <div class="team-grid">
+          <div class="team-copy reveal">
+            <p class="eyebrow">Team</p>
+            <h2>Founder-led, mentor-supported, intentionally limited.</h2>
+            <p>Every student works with the founder and a carefully selected mentor network from Ivy League and top-30 global universities. The model requires personal attention, so we keep it limited.</p>
+            <div class="credential-list">
+              <div class="credential">
+                <strong>Dr. Sanjay Kumar</strong>
+                <span>Founder and Strategic Director. Harvard Business School and Harvard Kennedy School.</span>
+              </div>
+              <div class="credential">
+                <strong>Rajat Sethi</strong>
+                <span>Author, policy advisor, alumnus of MIT and Masters' Union. Supports narrative and intellectual training.</span>
+              </div>
+              <div class="credential">
+                <strong>Rajeev Gupta</strong>
+                <span>Harvard Kennedy School alumnus. Advises graduate and professional applicants.</span>
+              </div>
+              <div class="credential">
+                <strong>Mentor network</strong>
+                <span>Vetted mentors from Ivy League and top-30 universities working weekly with students.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="team-media-grid reveal">
+            <div class="photo-slot" role="img" aria-label="Reserved space for founder portrait or consultation photograph">
+              <div class="slot-label">
+                <strong>Image space</strong>
+                <span>Founder portrait or private consultation</span>
+              </div>
+            </div>
+            <div class="team-media-stack">
+              <div class="photo-slot" role="img" aria-label="Reserved space for mentor session photograph">
+                <div class="slot-label">
+                  <strong>Image space</strong>
+                  <span>Mentor session</span>
+                </div>
+              </div>
+              <div class="photo-slot" role="img" aria-label="Reserved space for parent consultation photograph">
+                <div class="slot-label">
+                  <strong>Image space</strong>
+                  <span>Parent consultation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact paper-low" aria-labelledby="universities-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Admits</p>
+            <h2 class="section-title" id="universities-title">Where students go.</h2>
+          </div>
+          <p class="section-copy">A representative selection across the US, UK, Europe, and Canada.</p>
+        </div>
+        <div class="universities reveal">
+          <div class="university"><strong>Harvard</strong><span>US</span></div>
+          <div class="university"><strong>Yale</strong><span>US</span></div>
+          <div class="university"><strong>Brown</strong><span>US</span></div>
+          <div class="university"><strong>Columbia</strong><span>US</span></div>
+          <div class="university"><img src="cambridge.png" alt=""><strong>Cambridge</strong><span>UK</span></div>
+          <div class="university"><strong>Oxford</strong><span>UK</span></div>
+          <div class="university"><img src="nyu.png" alt=""><strong>NYU</strong><span>US</span></div>
+          <div class="university"><strong>Carnegie Mellon</strong><span>US</span></div>
+          <div class="university"><img src="manchester.png" alt=""><strong>Manchester</strong><span>UK</span></div>
+          <div class="university"><img src="bocconi.png" alt=""><strong>Bocconi</strong><span>Italy</span></div>
+          <div class="university"><img src="essec.png" alt=""><strong>ESSEC</strong><span>France</span></div>
+          <div class="university"><strong>Toronto</strong><span>Canada</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section" aria-labelledby="cta-title">
+      <div class="wrap cta-grid reveal">
+        <div>
+          <p class="eyebrow light">Private consultation</p>
+          <h2 id="cta-title">Start with a serious review.</h2>
+          <p>Whether your child is planning ahead or entering the final application cycle, our team will help you understand the profile, the gaps, and the path forward.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-lime" href="mailto:hello@blueoceanedu.in">Email us</a>
+          <a class="btn btn-outline-dark" href="tel:+919821118128">Call +91 98211 18128</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <h3>Blue Ocean Education</h3>
+          <p>India's boutique admissions advisory for ambitious families targeting Harvard, Yale, Brown, Columbia, Cambridge, and the world's most selective universities.</p>
+        </div>
+        <div>
+          <h3>Programs</h3>
+          <ul>
+            <li><a href="#programs">Early Architecture</a></li>
+            <li><a href="#programs">Strategic Build</a></li>
+            <li><a href="#programs">Final Year Admissions</a></li>
+            <li><a href="#programs">Masters and MBA</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="#method">Method</a></li>
+            <li><a href="#results">Results</a></li>
+            <li><a href="#fit">Right fit</a></li>
+            <li><a href="#team">Team</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <ul>
+            <li><a href="tel:+919821118128">+91 98211 18128</a></li>
+            <li><a href="mailto:hello@blueoceanedu.in">hello@blueoceanedu.in</a></li>
+            <li>New Delhi, Mumbai, Bangalore</li>
+            <li>Mon to Sat, 10am to 7pm IST</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Blue Ocean Education Consulting. All rights reserved.</span>
+        <span>Private Admissions Advisory</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="sticky-cta" id="stickyCta" aria-label="Consultation call to action">
+    <span>Would you like to 1-1 with our team?</span>
+    <a class="btn btn-lime" href="mailto:hello@blueoceanedu.in">Get Started</a>
+  </div>
+
+  <script>
+    const body = document.body;
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    const stickyCta = document.getElementById("stickyCta");
+    const hero = document.querySelector(".hero");
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = body.classList.toggle("menu-open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+    });
+
+    navLinks.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        body.classList.remove("menu-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open menu");
+      }
+    });
+
+    const tabs = Array.from(document.querySelectorAll(".program-tab"));
+    const stages = Array.from(document.querySelectorAll(".program-stage"));
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const target = tab.dataset.panel;
+
+        tabs.forEach((item) => {
+          item.setAttribute("aria-selected", String(item === tab));
+        });
+
+        stages.forEach((stage) => {
+          stage.classList.toggle("active", stage.dataset.stage === target);
+        });
+      });
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
+
+    const stickyObserver = new IntersectionObserver(([entry]) => {
+      stickyCta.classList.toggle("visible", !entry.isIntersecting);
+    }, { threshold: 0.08 });
+
+    stickyObserver.observe(hero);
+  </script>
+</body>
+</html>

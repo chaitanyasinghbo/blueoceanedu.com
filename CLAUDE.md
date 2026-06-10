@@ -1,57 +1,65 @@
-# CLAUDE.md
+# Blue Ocean Education — Claude Instructions
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Before making any website changes, read:
+- [docs/brand.md](docs/brand.md)
+- [docs/product.md](docs/product.md)
+- [docs/site.md](docs/site.md)
 
-## Project overview
+Always keep the site aligned with Blue Ocean's premium, founder-led, student talent-development positioning.
 
-Static single-page landing site for Blue Ocean Education Consulting — a private admissions advisory for Indian families targeting top US/UK/global universities.
+Do not make the site sound like a generic college consultancy.
 
-## Development
+## Required before any change
 
-No build system. To preview locally:
+1. Read the three docs above
+2. Check that the proposed change is consistent with the voice and positioning in `docs/brand.md`
+3. Check that the product framing is accurate per `docs/product.md`
+4. Follow all conventions in `docs/site.md` (colors, typography, copy rules, what not to do)
 
-```bash
-npx serve .          # or: python3 -m http.server 8080
-open http://localhost:8080
-```
+## Scroll services/outcomes pattern
 
-There are no tests, no linters, and no npm dependencies.
+When the user asks for a Crimson-style "Everything Your Child Needs. All in One Place." section, build it as a vertical scrolling services/outcomes story, not a carousel.
 
-## Architecture
+Use this structure:
+- Section heading at the top
+- A vertical stack of feature rows
+- Each row is a two-column layout on desktop: left copy, right visual card or image collage
+- Each row is approximately one viewport tall, or slightly less
+- Text is vertically centered in the row
+- The visual moves with the page flow and is not fixed while content swaps
+- Include a fixed bottom CTA bar when the reference asks for it: left message, right `Get Started` action
+- Mobile stacks normally: heading, copy, visual, next row
 
-The entire site lives in **[index.html](index.html)** — all CSS is inline in `<style>` tags in `<head>`, all JavaScript is inline at the bottom of `<body>`. There are no external JS libraries or CSS files.
+Expected sequence when recreating the referenced services/outcomes section:
+- Get in With a Winning Strategy
+- Showcase Leadership With a High-Impact Capstone Project
+- Conduct Research That Stands Out
+- Win Prestigious Honors & Awards
+- Write Essays That Seal the Deal
+- Top-Scoring Tutors That Lift Grades and Test Scores
+- Former Ivy League Admissions Officers, Now Working for You
 
-Image assets (student/university PNGs) sit in the project root alongside `index.html`.
+Use this motion:
+- Mostly normal vertical scrolling
+- As a row enters, text moves from low opacity to full opacity
+- As a row enters, the image or visual card fades in and moves slightly upward
+- As a row leaves, it fades slightly and continues moving naturally with page scroll
+- The effect must be smooth and subtle
+- Respect `prefers-reduced-motion`
 
-### Page sections (in DOM order)
+Do not build:
+- horizontal sliders
+- carousels
+- image areas that stay fixed while only the content swaps
+- random fade-only reveal animations
+- flashy parallax
 
-1. Announcement bar
-2. Navigation (sticky, `z-index: 100`)
-3. Hero — background image + overlay gradient + auto-scrolling ticker
-4. Results — metrics + bar chart
-5. Services
-6. Services split CTA
-7. Impact table
-8. University logos
-9. Student proof points
-10. Press / Featured In
-11. Discovery CTA
-12. Testimonials
-13. Counselors strip CTA
-14. Footer
-15. Three inline JS blocks: logo loader, photo rotator, sticky CTA bar
+Implementation note: use `scroll-story.js` for this behavior. Wire the row selector and CSS custom property prefix into `BlueOceanScrollStory.initVerticalScrollStory(...)`.
 
-### Design tokens (CSS custom properties)
+## Keep the docs current
 
-```
---navy: #0C2D5E     --navy-dark: #071B3E
---blue: #1557BE     --blue-mid: #1E6DD5
---blue-pale: #EBF3FD  --gold: #B8892A
---font-sans: 'Plus Jakarta Sans'   --font-serif: 'Libre Baskerville'
-```
+When you make a change that introduces a new convention, adds a section, changes a metric, revises copy rules, or updates product framing — update the relevant doc file before finishing the task.
 
-Max content width: `1240px` via `.section-inner` and `.nav-inner`.
-
-## Impeccable skill
-
-The `impeccable` UI design skill is installed at [.agents/skills/impeccable/](.agents/skills/impeccable/). Use `$impeccable <command>` for design work (craft, shape, polish, audit, live, etc.). It requires a `PRODUCT.md` at the project root for brand context — run `$impeccable teach` if missing.
+- Design or tone changes → update `docs/brand.md`
+- Product, service, or outcome changes → update `docs/product.md`
+- Structural, layout, or convention changes → update `docs/site.md`

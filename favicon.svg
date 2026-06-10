@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <circle cx="16" cy="16" r="16" fill="oklch(19% 0.036 246)"/>
+  <circle cx="16" cy="16" r="13.5" stroke="white" stroke-width="1" stroke-opacity="0.45" fill="none"/>
+  <path d="M16 5 L18 16 L14 16 Z" fill="oklch(66% 0.092 226)"/>
+  <path d="M16 27 L18 16 L14 16 Z" fill="oklch(96% 0.008 240)" opacity="0.7"/>
+  <circle cx="16" cy="16" r="1.5" fill="white" fill-opacity="0.35"/>
+</svg>
