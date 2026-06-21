@@ -1647,15 +1647,12 @@
         console.error('Sheet submit error:', err);
       }
 
-      submitBtn.textContent = originalLabel;
-      submitBtn.disabled = false;
-      document.getElementById('formStepsWrap').style.display = 'none';
-      formCard.querySelector('.form-card-head').style.display = 'none';
-      success.classList.add('visible');
-
-      if (window.dataLayer && window.dataLayer.push) {
-        window.dataLayer.push({ "event": "EVALUATION_THANKYOUPAGE" });
+      try {
+        sessionStorage.setItem('blueOceanLead', JSON.stringify(payload));
+      } catch (err) {
+        console.warn('Unable to save lead details:', err);
       }
+      window.location.href = 'next-steps.html';
     }
 
     document.getElementById('continueBtn').addEventListener('click', showStep2);

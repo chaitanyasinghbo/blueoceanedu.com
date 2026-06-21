@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2STB24PJGQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2STB24PJGQ');
+    dataLayer.push({ "event": "EVALUATION_THANKYOUPAGE" });
+  </script>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '754270597536586');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=754270597536586&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <meta charset="UTF-8">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Next Steps | Admissions | Blue Ocean Education</title>
+  <meta name="description" content="You're in. Here are the five most useful next steps while a Blue Ocean advisor reviews your profile.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+  <style>
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ── Theme toggle (matches lp.html) ────────────── */
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      height: 30px;
+      padding: 0 10px;
+      border-radius: 20px;
+      border: 1px solid color-mix(in oklch, var(--paper) 15%, transparent);
+      background: transparent;
+      cursor: pointer;
+      transition: border-color 160ms;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { border-color: color-mix(in oklch, var(--paper) 32%, transparent); }
+    .td { width: 9px; height: 9px; border-radius: 50%; transition: transform 180ms, box-shadow 180ms; }
+    .td-green { background: oklch(85% 0.12 116); }
+    .td-blue  { background: oklch(66% 0.092 226); }
+    html:not([data-theme="blue"]) .td-green { transform: scale(1.3); box-shadow: 0 0 0 2.5px oklch(85% 0.12 116 / 0.28); }
+    html[data-theme="blue"] .td-blue       { transform: scale(1.3); box-shadow: 0 0 0 2.5px oklch(66% 0.092 226 / 0.28); }
+    html[data-theme="blue"] {
+      --forest-strong: oklch(26% 0.055 242);
+      --forest:        oklch(33% 0.068 240);
+      --forest-soft:   oklch(41% 0.065 238);
+      --moss:          oklch(48% 0.100 226);
+      --lime:          oklch(72% 0.115 222);
+      --lime-low:      oklch(93% 0.038 222);
+      --line-dark:     oklch(44% 0.038 240);
+      --shadow:        oklch(14% 0.020 250 / 0.24);
+      --paper:         oklch(97% 0.020 228);
+      --paper-low:     oklch(93.5% 0.026 228);
+      --paper-deep:    oklch(89% 0.030 226);
+      --line:          oklch(84% 0.018 228);
+      --ink:           oklch(15% 0.018 240);
+      --ink-soft:      oklch(34% 0.016 240);
+      --muted:         oklch(46% 0.014 240);
+      --clay:          oklch(60% 0.10 216);
+    }
+    html[data-theme="blue"] :focus-visible {
+      outline-color: oklch(46% 0.090 226);
+    }
+
+    /* ── Nav: logo only (matches lp.html) ──────────── */
+    .menu-toggle { display: none !important; }
+    .nav-links   { display: none !important; }
+    .nav-actions { display: none !important; }
+
+    /* ── Page header ────────────────────────────────── */
+    .ns-header {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(125deg, color-mix(in oklch, var(--forest-strong) 95%, transparent) 0%, color-mix(in oklch, var(--forest) 84%, transparent) 55%, color-mix(in oklch, var(--forest-soft) 70%, transparent) 100%),
+        url('institution-harvard.jpg') center 32% / cover no-repeat;
+    }
+    .ns-header .wrap { position: relative; z-index: 1; }
+    .ns-status-line {
+      margin: 18px 0 0;
+      color: color-mix(in oklch, var(--paper) 78%, transparent);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* ── Step list ──────────────────────────────────── */
+    .next-steps-section { background: var(--paper-low); }
+
+    .ns-step-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .ns-step-card {
+      display: grid;
+      grid-template-columns: 68px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+      padding: 30px clamp(22px, 3vw, 34px);
+      border-radius: 22px;
+    }
+
+    .ns-step-card.tone-1 { background: var(--forest-strong); color: var(--paper); }
+    .ns-step-card.tone-2 { background: var(--forest); color: var(--paper); }
+    .ns-step-card.tone-3 { background: var(--forest-soft); color: var(--paper); }
+    .ns-step-card.tone-4 { background: var(--moss); color: var(--paper); }
+    .ns-step-card.tone-5 { background: var(--lime-low); color: var(--forest-strong); border: 1px solid var(--line); }
+
+    .ns-step-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .tone-1 .ns-step-number, .tone-2 .ns-step-number, .tone-3 .ns-step-number, .tone-4 .ns-step-number {
+      background: color-mix(in oklch, var(--paper) 14%, transparent);
+      border: 1px solid color-mix(in oklch, var(--paper) 22%, transparent);
+      color: var(--paper);
+    }
+    .tone-5 .ns-step-number {
+      background: color-mix(in oklch, var(--forest-strong) 8%, transparent);
+      border: 1px solid color-mix(in oklch, var(--forest-strong) 14%, transparent);
+      color: var(--forest-strong);
+    }
+
+    .ns-step-kicker {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .tone-1 .ns-step-kicker, .tone-2 .ns-step-kicker, .tone-3 .ns-step-kicker, .tone-4 .ns-step-kicker { color: color-mix(in oklch, var(--paper) 72%, transparent); }
+    .tone-5 .ns-step-kicker { color: var(--moss); }
+
+    .ns-step-main h3 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(20px, 2.4vw, 26px);
+      line-height: 1.12;
+      margin: 0 0 10px;
+    }
+
+    .ns-step-main p {
+      margin: 0;
+      font-size: 14.5px;
+      line-height: 1.7;
+      max-width: 58ch;
+    }
+    .tone-1 .ns-step-main p, .tone-2 .ns-step-main p, .tone-3 .ns-step-main p, .tone-4 .ns-step-main p { color: color-mix(in oklch, var(--paper) 86%, transparent); }
+    .tone-5 .ns-step-main p { color: var(--muted); }
+
+    .ns-step-actions { margin-top: 18px; }
+
+    /* Newsletter form, matches .field input pattern */
+    .ns-newsletter-form {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr) auto;
+      gap: 10px;
+      margin-top: 18px;
+      max-width: 640px;
+      align-items: center;
+    }
+    .ns-newsletter-input {
+      min-width: 0;
+      min-height: 46px;
+      padding: 0 14px;
+      border-radius: 8px;
+      border: 1.5px solid color-mix(in oklch, var(--paper) 24%, transparent);
+      background: color-mix(in oklch, var(--paper) 12%, transparent);
+      color: var(--paper);
+      font-family: var(--sans);
+      font-size: 14.5px;
+      outline: none;
+      transition: border-color 160ms ease, background 160ms ease;
+    }
+    .ns-newsletter-input::placeholder { color: color-mix(in oklch, var(--paper) 60%, transparent); }
+    .ns-newsletter-input:focus {
+      border-color: var(--lime);
+      background: color-mix(in oklch, var(--paper) 18%, transparent);
+    }
+    .ns-newsletter-status {
+      grid-column: 1 / -1;
+      margin-top: 10px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: color-mix(in oklch, var(--paper) 76%, transparent);
+    }
+    .ns-newsletter-status.ok { color: var(--lime); }
+    .ns-newsletter-status.error { color: oklch(80% 0.12 28); }
+
+    .ns-blog-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .ns-blog-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 46px;
+      padding: 0 16px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      background: color-mix(in oklch, var(--paper) 12%, transparent);
+      border: 1px solid color-mix(in oklch, var(--paper) 20%, transparent);
+      color: var(--paper);
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+    .ns-blog-link:hover {
+      background: color-mix(in oklch, var(--paper) 18%, transparent);
+      border-color: var(--lime);
+      transform: translateY(-1px);
+    }
+
+    .ns-foot-note {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.65;
+      max-width: 70ch;
+    }
+
+    @media (max-width: 720px) {
+      .ns-step-card { grid-template-columns: 1fr; gap: 14px; padding: 24px 20px; border-radius: 18px; }
+      .ns-step-number { width: 48px; height: 48px; border-radius: 12px; font-size: 16px; }
+      .ns-newsletter-form { grid-template-columns: 1fr; }
+      .ns-newsletter-status { grid-column: 1; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="https://blueoceanedu.com/" aria-label="Blue Ocean Education home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="42" height="42" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="13.5" stroke="currentColor" stroke-width="1" stroke-opacity="0.45"/>
+            <path d="M16 5 L18 16 L14 16 Z" fill="var(--moss)"/>
+            <path d="M16 27 L18 16 L14 16 Z" fill="var(--paper)"/>
+            <circle cx="16" cy="16" r="1.5" fill="currentColor" fill-opacity="0.35"/>
+          </svg>
+        </span>
+        <span class="brand-word">
+          <strong>Blue Ocean</strong>
+          <span>Education</span>
+        </span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="section compact dark ns-header">
+      <div class="wrap">
+        <p class="eyebrow light">Submission Received</p>
+        <h1 class="section-title" id="nsTitle" style="font-size: clamp(2rem, 5vw, 3.25rem); max-width: 720px;">Your next steps with Blue Ocean.</h1>
+        <p class="section-copy" style="margin-top: 1.25rem; max-width: 620px;">We have your details. While our team reviews your profile, these five steps are the most useful place to start.</p>
+        <p class="ns-status-line" id="nsStatus">A Blue Ocean advisor will follow up within one business day.</p>
+      </div>
+    </section>
+
+    <section class="section next-steps-section">
+      <div class="wrap">
+        <div class="section-head reveal" style="margin-bottom: 32px;">
+          <div>
+            <p class="eyebrow">Next Actions</p>
+            <h2 class="section-title" style="font-size: clamp(1.8rem, 3.4vw, 2.5rem);">Use the next few minutes well.</h2>
+          </div>
+          <p class="section-copy">Start at the top and work down. Five resources, in the order most families find useful.</p>
+        </div>
+
+        <ol class="ns-step-list">
+          <li class="ns-step-card tone-1 reveal">
+            <div class="ns-step-number">01</div>
+            <div class="ns-step-main">
+              <span class="ns-step-kicker">Newsletter</span>
+              <h3>Subscribe to the Blue Ocean Admissions Newsletter</h3>
+              <p>Enter your name and email for admissions guidance, deadlines, and updates from our team.</p>
+              <form class="ns-newsletter-form" id="newsletterForm">
+                <label class="sr-only" for="newsletterFirstName">First name</label>
+                <input class="ns-newsletter-input" type="text" id="newsletterFirstName" name="newsletterFirstName" placeholder="First name" autocomplete="given-name">
+                <label class="sr-only" for="newsletterEmail">Email address</label>
+                <input class="ns-newsletter-input" type="email" id="newsletterEmail" name="newsletterEmail" placeholder="Email address" autocomplete="email">
+                <button class="btn btn-lime" type="submit" id="newsletterSubmit">Subscribe</button>
+                <div class="ns-newsletter-status" id="newsletterStatus">You can use the same details you submitted on the previous form.</div>
+              </form>
+            </div>
+          </li>
+
+          <li class="ns-step-card tone-2 reveal">
+            <div class="ns-step-number">02</div>
+            <div class="ns-step-main">
+              <span class="ns-step-kicker">Webinar</span>
+              <h3>Watch the Blue Ocean Admissions Playbook</h3>
+              <p>See how we approach profile positioning, school strategy, essays, and scholarship planning, in one session.</p>
+              <div class="ns-step-actions">
+                <a class="btn btn-lime" href="https://event.webinarjam.com/r0wx01/register/6mn5myb7?webinar_id=3" target="_blank" rel="noopener noreferrer">Watch the Webinar</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="ns-step-card tone-3 reveal">
+            <div class="ns-step-number">03</div>
+            <div class="ns-step-main">
+              <span class="ns-step-kicker">Reading</span>
+              <h3>Read the Article Closest to Your Question</h3>
+              <p>Pick the topic closest to where you are right now. Each one opens in a new tab.</p>
+              <div class="ns-blog-links">
+                <a class="ns-blog-link" href="https://blueocean.education/blog/us-universities-from-india" target="_blank" rel="noopener noreferrer">US Admissions</a>
+                <a class="ns-blog-link" href="https://blueocean.education/blog/uk-universities-from-india" target="_blank" rel="noopener noreferrer">UK Admissions</a>
+                <a class="ns-blog-link" href="https://blueocean.education/blog/scholarships-indian-students" target="_blank" rel="noopener noreferrer">Scholarships</a>
+                <a class="ns-blog-link" href="https://blueocean.education/blog/study-abroad-consultants" target="_blank" rel="noopener noreferrer">Consultants</a>
+                <a class="ns-blog-link" href="https://blueocean.education/blog/college-application-essentials" target="_blank" rel="noopener noreferrer">College Applications</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="ns-step-card tone-4 reveal">
+            <div class="ns-step-number">04</div>
+            <div class="ns-step-main">
+              <span class="ns-step-kicker">Community</span>
+              <h3>Join the Blue Ocean WhatsApp Group</h3>
+              <p>Get reminders, event announcements, and admissions updates directly from our team.</p>
+              <div class="ns-step-actions">
+                <a class="btn btn-lime" href="https://tr.ee/NTG0oL-RSU" target="_blank" rel="noopener noreferrer">Join WhatsApp</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="ns-step-card tone-5 reveal">
+            <div class="ns-step-number">05</div>
+            <div class="ns-step-main">
+              <span class="ns-step-kicker">Instagram</span>
+              <h3>Follow Blue Ocean on Instagram</h3>
+              <p>Real admit results, scholarship updates, and short explainers from our advisors.</p>
+              <div class="ns-step-actions">
+                <a class="btn btn-ink" href="https://www.instagram.com/blueocean.education/" target="_blank" rel="noopener noreferrer">Follow on Instagram</a>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <p class="ns-foot-note">Blue Ocean Education is not affiliated with, endorsed by, or associated with any university or institution referenced on this page.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="brand footer-brand" href="https://blueoceanedu.com/" aria-label="Blue Ocean Education home">
+            <span class="brand-mark" aria-hidden="true">
+              <svg width="40" height="40" viewBox="0 0 32 32" fill="none">
+                <circle cx="16" cy="16" r="13.5" stroke="currentColor" stroke-width="1" stroke-opacity="0.45"/>
+                <path d="M16 5 L18 16 L14 16 Z" fill="var(--moss)"/>
+                <path d="M16 27 L18 16 L14 16 Z" fill="var(--paper)"/>
+                <circle cx="16" cy="16" r="1.5" fill="currentColor" fill-opacity="0.35"/>
+              </svg>
+            </span>
+            <span class="brand-word">
+              <strong>Blue Ocean</strong>
+              <span>Education</span>
+            </span>
+          </a>
+          <p>A founder-led advisory helping hardworking Indian students build the profiles required for Harvard, Yale, Oxford, Cambridge, and the world's most selective universities.</p>
+        </div>
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="https://blueoceanedu.com/method.html">Method</a></li>
+            <li><a href="https://blueoceanedu.com/results.html">Results</a></li>
+            <li><a href="https://blueoceanedu.com/fit.html">Right Fit</a></li>
+            <li><a href="https://blueoceanedu.com/team.html">Team</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <ul>
+            <li><a href="tel:+919821118128">+91 98211 18128</a></li>
+            <li><a href="mailto:admissions@blueoceanedu.com">admissions@blueoceanedu.com</a></li>
+            <li>6, School Lane, Connaught Place</li>
+            <li>New Delhi, 110001</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Blue Ocean Education Consulting. All rights reserved.</span>
+        <span>Private Admissions Advisory</span>
+        <button class="theme-toggle" id="themeToggle" aria-label="Switch colour theme" title="Switch colour theme">
+          <span class="td td-green"></span>
+          <span class="td td-blue"></span>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* Theme */
+    const themeToggle = document.getElementById('themeToggle');
+    function applyTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+    }
+    applyTheme(localStorage.getItem('boTheme') || 'blue');
+    themeToggle.addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'blue' ? 'green' : 'blue';
+      applyTheme(next);
+      localStorage.setItem('boTheme', next);
+    });
+
+    /* Reveal */
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* Personalize from the form just submitted */
+    function getStoredLead() {
+      try {
+        const rawLead = sessionStorage.getItem('blueOceanLead');
+        return rawLead ? JSON.parse(rawLead) : null;
+      } catch (error) {
+        console.warn('Unable to read saved lead details:', error);
+        return null;
+      }
+    }
+
+    const savedLead = getStoredLead();
+    const nsTitle = document.getElementById('nsTitle');
+    const nsStatus = document.getElementById('nsStatus');
+    const newsletterForm = document.getElementById('newsletterForm');
+    const newsletterFirstName = document.getElementById('newsletterFirstName');
+    const newsletterEmail = document.getElementById('newsletterEmail');
+    const newsletterSubmit = document.getElementById('newsletterSubmit');
+    const newsletterStatus = document.getElementById('newsletterStatus');
+
+    if (savedLead && savedLead.first_name) {
+      nsTitle.textContent = savedLead.first_name + ', here are your next steps.';
+      nsStatus.textContent = 'A Blue Ocean advisor will follow up with ' + savedLead.first_name + ' within one business day.';
+      newsletterFirstName.value = savedLead.first_name;
+    }
+    if (savedLead && savedLead.email) {
+      newsletterEmail.value = savedLead.email;
+    }
+
+    /* Newsletter signup, posts to the same sheet as the main form */
+    const SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxzYB2CtlMlPP0H9zCeEJAElhuSRWnF5RdyiL75JH_G2PcOn7ExTbxdc6kDev63ssMo8w/exec';
+
+    function setNewsletterState(isSubmitting, message, tone) {
+      newsletterSubmit.disabled = isSubmitting;
+      newsletterSubmit.textContent = isSubmitting ? 'Subscribing…' : 'Subscribe';
+      newsletterSubmit.style.opacity = isSubmitting ? '0.82' : '1';
+      if (message) {
+        newsletterStatus.textContent = message;
+        newsletterStatus.classList.remove('ok', 'error');
+        if (tone) newsletterStatus.classList.add(tone);
+      }
+    }
+
+    async function postNewsletterLead(firstName, email) {
+      const payload = {
+        timestamp: new Date().toISOString(),
+        form_source: 'newsletter_next_steps',
+        user_type: savedLead?.user_type || '',
+        first_name: firstName,
+        last_name: savedLead?.last_name || '',
+        email: email,
+        phone: savedLead?.phone || '',
+        grade: savedLead?.grade || '',
+        school_name: savedLead?.school_name || '',
+        financial_aid: savedLead?.financial_aid || '',
+        page_url: window.location.href,
+        page_title: document.title
+      };
+      const body = new URLSearchParams();
+      Object.entries(payload).forEach(([key, value]) => body.append(key, value ?? ''));
+      await fetch(SHEET_WEBHOOK_URL, { method: 'POST', mode: 'no-cors', keepalive: true, body });
+    }
+
+    newsletterForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const firstName = newsletterFirstName.value.trim();
+      const email = newsletterEmail.value.trim();
+      if (!firstName) {
+        setNewsletterState(false, 'Please enter your first name to subscribe.', 'error');
+        return;
+      }
+      if (!email || !email.includes('@')) {
+        setNewsletterState(false, 'Please enter a valid email address to subscribe.', 'error');
+        return;
+      }
+      setNewsletterState(true, 'Saving your subscription…', null);
+      try {
+        await postNewsletterLead(firstName, email);
+        setNewsletterState(false, 'Done. You are subscribed to the Blue Ocean Admissions Newsletter.', 'ok');
+      } catch (error) {
+        console.error('Newsletter signup capture failed:', error);
+        setNewsletterState(false, 'There was a problem saving your subscription. Please try again.', 'error');
+      }
+    });
+  </script>
+
+</body>
+</html>
