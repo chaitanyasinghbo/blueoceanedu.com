@@ -1,23 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- @analytics — GA4 and the Meta pixel, one block, same on every page.
+
+       The dataLayer event on line 8 is the only line that changes per page:
+       tools/build-landing-pages.py swaps SITE_PAGEVIEW for the landing
+       page's own event name. Keep the block byte-identical everywhere else
+       or that swap silently stops matching. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2STB24PJGQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2STB24PJGQ');
+    dataLayer.push({ "event": "SITE_PAGEVIEW" });
+  </script>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '754270597536586');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=754270597536586&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <!-- /@analytics -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prateek's Story | Blue Ocean Education</title>
   <meta name="description" content="How Prateek earned an offer from Harvard with Blue Ocean Education.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="case-study.css">
+  <link rel="stylesheet" href="../ocean-ember.css">
 </head>
 <body>
   <nav class="case-nav" aria-label="Case study navigation">
     <div class="wrap">
-      <a class="brand" href="../mock.html">
+      <a class="brand" href="../index.html">
         <strong>Blue Ocean Education</strong>
         <span>Private admissions advisory</span>
       </a>
-      <a class="back-link" href="../mock.html#stories">Back to student stories</a>
+      <a class="back-link" href="../index.html#stories">Back to student stories</a>
     </div>
   </nav>
 
@@ -90,7 +120,7 @@
         <h2>Build the file before the deadline arrives.</h2>
         <p>Blue Ocean works with serious students and families who understand that elite outcomes come from depth, clarity, and sustained work.</p>
       </div>
-      <a class="cta-link" href="mailto:hello@blueoceanedu.in">Start a conversation</a>
+      <a class="cta-link" href="mailto:admissions@blueoceanedu.com">Start a conversation</a>
     </div>
   </section>
 </body>

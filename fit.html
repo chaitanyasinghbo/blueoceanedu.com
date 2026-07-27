@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- @analytics — GA4 and the Meta pixel, one block, same on every page.
+
+       The dataLayer event on line 8 is the only line that changes per page:
+       tools/build-landing-pages.py swaps SITE_PAGEVIEW for the landing
+       page's own event name. Keep the block byte-identical everywhere else
+       or that swap silently stops matching. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2STB24PJGQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2STB24PJGQ');
+    dataLayer.push({ "event": "SITE_PAGEVIEW" });
+  </script>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '754270597536586');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=754270597536586&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <!-- /@analytics -->
   <meta charset="UTF-8">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Right Fit | Blue Ocean Education</title>
   <meta name="description" content="Blue Ocean is selective by design. The model works when the student, family, counselor, and mentor all take the work seriously.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="main.css">
   <style>
     .theme-toggle {
@@ -78,6 +107,7 @@
       .mobile-panel-phone:hover { color: color-mix(in oklch, var(--paper) 62%, var(--forest)); }
     }
   </style>
+  <link rel="stylesheet" href="ocean-ember.css">
 </head>
 <body>
   <header class="site-header">
@@ -99,6 +129,7 @@
 
       <ul class="nav-links" id="navLinks">
         <li><a href="method.html">Method</a></li>
+        <li><a href="founder.html">Founder</a></li>
         <li><a href="results.html">Results</a></li>
         <li><a href="fit.html">Right Fit</a></li>
         <li><a href="team.html">Team</a></li>
@@ -119,6 +150,7 @@
   <div class="mobile-panel" id="mobilePanel">
     <ul class="mobile-panel-links">
       <li><a href="method.html">Method</a></li>
+      <li><a href="founder.html">Founder</a></li>
       <li><a href="results.html">Results</a></li>
       <li><a href="fit.html">Right Fit</a></li>
       <li><a href="team.html">Team</a></li>
@@ -196,6 +228,57 @@
       </div>
     </section>
 
+    <section class="section paper-low" aria-labelledby="join-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">How to join</p>
+            <h2 class="section-title" id="join-title">Admission is selective, and the process is short.</h2>
+          </div>
+          <p class="section-copy">We take on a small number of students each year, because Dr. Sanjay works directly with every one of them. Selection is about fit, in both directions.</p>
+        </div>
+
+        <div class="join-steps reveal">
+          <div class="join-step">
+            <span class="join-num">01</span>
+            <div>
+              <h3>Diagnostic call</h3>
+              <p>Parents, friends, and teachers have years of context on the student that we do not. This call closes that gap. We ask about the student and their current situation in depth, because two questions decide everything that follows. Would we be the best team for this student, and can the student handle our rigour.</p>
+            </div>
+          </div>
+          <div class="join-step">
+            <span class="join-num">02</span>
+            <div>
+              <h3>Student essay</h3>
+              <p>The student writes a short application essay. It shows us how the student thinks, how far the critical thinking goes, and who they are beyond what any call can surface. We read for seriousness and curiosity, never for polish.</p>
+            </div>
+          </div>
+          <div class="join-step">
+            <span class="join-num">03</span>
+            <div>
+              <h3>Strategy call</h3>
+              <p>If the student is selected, we come back with specifics. Given everything the diagnostic call surfaced, we walk you through exactly how we would help this student. If we are not the right fit, we say so plainly.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="join-pair reveal">
+          <div class="join-panel">
+            <h3>After a yes</h3>
+            <p>The first month is mostly listening. We want to understand what the student has built, what they are curious about, and what they want the next years to look like. Then the plan gets specific. It names projects, deadlines, and the people the student will work with. We meet weekly from there.</p>
+          </div>
+          <div class="join-panel">
+            <h3>What we never do</h3>
+            <p>We do not promise admits, and any consultancy that does is not telling you the truth. What we promise is the work, the process, and the care. The results on our results page came from exactly that.</p>
+          </div>
+        </div>
+
+        <div class="join-fee reveal">
+          <p>One fee covers everything described on this site. Mentorship, evaluation, projects, workshops, essays, applications, and every check-in between. It follows the April to March academic year and scales with the length of the program, so a student joining in grade 8 pays less each year than one joining in grade 12. We share the exact figures on the strategy call, once we know what the student actually needs.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="cta-section" aria-labelledby="cta-title">
       <div class="wrap cta-grid reveal">
         <div>
@@ -234,6 +317,7 @@
           <h3>Explore</h3>
           <ul>
             <li><a href="method.html">Method</a></li>
+            <li><a href="founder.html">Founder</a></li>
             <li><a href="results.html">Results</a></li>
             <li><a href="fit.html">Right Fit</a></li>
             <li><a href="team.html">Team</a></li>

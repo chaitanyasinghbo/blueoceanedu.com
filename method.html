@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- @analytics — GA4 and the Meta pixel, one block, same on every page.
+
+       The dataLayer event on line 8 is the only line that changes per page:
+       tools/build-landing-pages.py swaps SITE_PAGEVIEW for the landing
+       page's own event name. Keep the block byte-identical everywhere else
+       or that swap silently stops matching. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2STB24PJGQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2STB24PJGQ');
+    dataLayer.push({ "event": "SITE_PAGEVIEW" });
+  </script>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '754270597536586');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=754270597536586&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <!-- /@analytics -->
   <meta charset="UTF-8">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Method | Blue Ocean Education</title>
-  <meta name="description" content="Seven disciplines built around the student. Blue Ocean's Profile Architecture develops genuine depth, originality, and discipline for India's most ambitious university applicants.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <meta name="description" content="Four layers and the line that holds them. Blue Ocean builds the Spike from diagnosis upward, so genuine depth, originality, and discipline are already there when the application opens.">
   <link rel="stylesheet" href="main.css">
   <style>
     .theme-toggle {
@@ -44,6 +73,111 @@
       --paper-deep:    oklch(89% 0.030 226);
       --line:          oklch(84% 0.018 228);
     }
+    /* ── Method page only: pyramid instead of the card scroll ──────
+       index.html keeps the stock arrangement, sticky copy on the left
+       and a column of illustration cards scrolling past it. Here the
+       five layers carry their own copy and scroll on the left, and the
+       right holds the pyramid, which lights the layer being read. The
+       overrides are scoped to .services-pyramid-right so nothing in
+       main.css has to change and index.html is untouched. */
+    .services-pyramid-right .services-layout {
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 0.46fr);
+      gap: clamp(40px, 6vw, 96px);
+    }
+
+    .services-pyramid-right .services-cards-col {
+      gap: clamp(48px, 8svh, 100px);
+    }
+
+    /* Each row is roughly half a viewport, so the band above has time
+       to change before the next row reaches the centre line. */
+    .services-pyramid-right .service-row {
+      display: flex;
+      align-items: center;
+      min-height: 52svh;
+      opacity: 0.44;
+      transition: opacity 420ms cubic-bezier(0.25, 0, 0.15, 1);
+    }
+
+    .services-pyramid-right .service-row.is-active {
+      opacity: 1;
+    }
+
+    .services-pyramid-right .service-row-text {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .services-pyramid-right .service-row-text h3 {
+      margin: 0;
+      font-size: clamp(24px, 2.7vw, 42px);
+      font-weight: 900;
+      line-height: 1.03;
+      letter-spacing: -0.01em;
+      color: var(--paper);
+    }
+
+    .services-pyramid-right .service-row-text p {
+      margin: 0;
+      max-width: 620px;
+      font-size: clamp(16px, 1.25vw, 18px);
+      line-height: 1.62;
+      color: color-mix(in oklch, var(--paper) 72%, var(--forest));
+    }
+
+    /* Parked below the header, near the height the rows pass through. */
+    .services-pyramid-right .services-text-sticky {
+      top: 24svh;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .services-pyramid-right .pyramid {
+      margin-bottom: 0;
+      width: 100%;
+    }
+
+    .services-pyramid-right .pyramid svg {
+      margin: 0 auto;
+    }
+
+    /* Below 980px the pyramid is hidden by main.css, so the rows take
+       the full width and separate with a rule instead of a column. */
+    @media (max-width: 980px) {
+      .services-pyramid-right .services-layout {
+        display: block;
+      }
+
+      .services-pyramid-right .services-text-sticky {
+        display: none;
+      }
+
+      /* Rows carry their own padding and rule down here, so the
+         column gap would only double the spacing. */
+      .services-pyramid-right .services-cards-col {
+        gap: 0;
+      }
+
+      .services-pyramid-right .service-row {
+        display: block;
+        min-height: 0;
+        opacity: 1;
+        padding: clamp(28px, 5vw, 46px) 0;
+        border-bottom: 1px solid var(--line-dark);
+      }
+
+      .services-pyramid-right .service-row:last-child {
+        border-bottom: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .services-pyramid-right .service-row {
+        transition: none;
+      }
+    }
+
     .mobile-panel { display: none; }
     @media (max-width: 920px) {
       body.menu-open .nav-links { display: none !important; }
@@ -78,6 +212,7 @@
       .mobile-panel-phone:hover { color: color-mix(in oklch, var(--paper) 62%, var(--forest)); }
     }
   </style>
+  <link rel="stylesheet" href="ocean-ember.css">
 </head>
 <body>
   <header class="site-header">
@@ -99,6 +234,7 @@
 
       <ul class="nav-links" id="navLinks">
         <li><a href="method.html">Method</a></li>
+        <li><a href="founder.html">Founder</a></li>
         <li><a href="results.html">Results</a></li>
         <li><a href="fit.html">Right Fit</a></li>
         <li><a href="team.html">Team</a></li>
@@ -119,6 +255,7 @@
   <div class="mobile-panel" id="mobilePanel">
     <ul class="mobile-panel-links">
       <li><a href="method.html">Method</a></li>
+      <li><a href="founder.html">Founder</a></li>
       <li><a href="results.html">Results</a></li>
       <li><a href="fit.html">Right Fit</a></li>
       <li><a href="team.html">Team</a></li>
@@ -134,235 +271,427 @@
       <div class="wrap">
         <p class="eyebrow light">The Blue Ocean Method</p>
         <h1 class="section-title" style="font-size: clamp(2rem, 5vw, 3.25rem); max-width: 720px;">Develop the student. Admissions follow.</h1>
-        <p class="section-copy" style="margin-top: 1.25rem; max-width: 560px;">Seven interdependent disciplines built around each student's genuine strengths.</p>
+        <p class="section-copy" style="margin-top: 1.25rem; max-width: 560px;">Four layers built in order, and one line that holds the shape, around each student's genuine strengths.</p>
       </div>
     </section>
 
-    <section class="section belief-section" id="about" aria-labelledby="belief-title">
+    <section class="section" aria-labelledby="problem-title">
       <div class="wrap">
-        <div class="belief-model belief-scroll-shell reveal" data-belief-model>
-          <div class="belief-scroll-sticky">
-          <div class="belief-model-head">
-            <div>
-              <p class="eyebrow light">The core belief</p>
-              <h2 id="belief-title">The Blue Ocean development model</h2>
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">The problem</p>
+            <h2 class="section-title" id="problem-title">What families are up against.</h2>
+          </div>
+          <p class="section-copy">Three shifts define selective admissions today. Each one is measurable, and each one changes what a family has to do. The numbers come from published university data, US federal court records, and national surveys.</p>
+        </div>
+
+        <div class="problem-band reveal">
+          <div class="problem-figure">
+            <h3><span class="problem-num">01</span>Top universities admit a smaller share every year</h3>
+            <svg viewBox="0 0 468 200" role="img" aria-label="Share of applicants admitted at Harvard, Yale, Princeton and Columbia, Classes of 2019 to 2028, roughly halving over the decade">
+              <line x1="42" y1="12" x2="380" y2="12" stroke="var(--line)" stroke-width="1"/>
+              <line x1="42" y1="56" x2="380" y2="56" stroke="var(--line)" stroke-width="1"/>
+              <line x1="42" y1="100" x2="380" y2="100" stroke="var(--line)" stroke-width="1"/>
+              <line x1="42" y1="144" x2="380" y2="144" stroke="var(--line)" stroke-width="1"/>
+              <text x="36" y="15" text-anchor="end" class="pc-ax">10%</text>
+              <text x="36" y="59" text-anchor="end" class="pc-ax">8</text>
+              <text x="36" y="103" text-anchor="end" class="pc-ax">6</text>
+              <text x="36" y="147" text-anchor="end" class="pc-ax">4</text>
+              <text x="42" y="184" class="pc-ax">Class of 2019</text>
+              <text x="267" y="184" text-anchor="middle" class="pc-ax">2025</text>
+              <text x="380" y="184" text-anchor="end" class="pc-ax">2028</text>
+              <polyline fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="var(--moss)" points="42,78 79.6,89 117.1,97.8 154.7,111 192.2,104.4 229.8,108.8 267.3,144 304.9,106.8 342.4,133 380,130.4"/>
+              <polyline fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="var(--forest-soft)" points="42,89 79.6,93.4 117.1,80.2 154.7,93.4 192.2,102.2 229.8,89 267.3,130.8 304.9,133.7 342.4,136.3 380,150"/>
+              <polyline fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="var(--forest)" points="42,97.8 79.6,100 117.1,104.4 154.7,111 192.2,119.8 229.8,97.8 267.3,150.6 304.9,150 342.4,145.5 380,147.1"/>
+              <polyline fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="var(--clay)" points="42,115.4 79.6,117.6 117.1,117.6 154.7,130.8 192.2,133 229.8,124.2 267.3,157.2 304.9,161.8 342.4,157 380,155.2"/>
+              <text x="386" y="128" class="pc-key" fill="var(--moss)">Princeton 4.6%</text>
+              <text x="386" y="141" class="pc-key" fill="var(--forest-soft)">Columbia 3.9%</text>
+              <text x="386" y="153" class="pc-key" fill="var(--forest)">Yale 3.7%</text>
+              <text x="386" y="165" class="pc-key" fill="var(--clay)">Harvard 3.5%</text>
+            </svg>
+            <p class="problem-src">Share of applicants admitted, Classes of 2019 to 2028, as published by each university.</p>
+          </div>
+          <div class="problem-implication">
+            <p class="problem-tag">The implication</p>
+            <p>Roughly half as many applicants get in as a decade ago. Preparation has to begin years before the application is written.</p>
+          </div>
+        </div>
+        <div class="problem-band reveal">
+          <div class="problem-figure">
+            <h3><span class="problem-num">02</span>Good academics are no longer enough</h3>
+            <div class="scale-row" role="img" aria-label="Harvard's Class of 2019 counted in federal court: over 37,000 applicants, about 8,000 with a perfect GPA, about 1,660 places">
+              <div class="scale-bar"><span>37,000+ applicants</span><i style="--w: 100%; --sc: var(--forest);"></i></div>
+              <div class="scale-bar"><span>About 8,000 held a perfect GPA</span><i style="--w: 21.6%; --sc: var(--moss);"></i></div>
+              <div class="scale-bar"><span>About 1,660 places in the class</span><i style="--w: 4.5%; --sc: var(--clay);"></i></div>
             </div>
-            <p>Most admissions companies start with the application. Blue Ocean starts with the student. When students are developed to the height of their potential, admissions follow.</p>
+            <p class="problem-src">Widths to scale. Harvard, Class of 2019, counted in federal court. Another 3,400 applicants held a perfect SAT maths score, and four of five applicants with perfect grades were turned away.</p>
           </div>
-
-          <div class="belief-scroll-grid" aria-label="The three parts of the Blue Ocean development model">
-            <div class="belief-step-list">
-            <article class="belief-step is-active" data-belief-step>
-              <span class="belief-model-number">1.</span>
-              <div class="belief-step-copy">
-                <h3>Develop the student</h3>
-                <p>We begin with natural strengths, intellectual appetite, and the kind of guidance that helps a student become more serious over time.</p>
+          <div class="problem-implication">
+            <p class="problem-tag">The implication</p>
+            <p>Perfect marks only qualify a student for consideration. The seat is won by what the student has built beyond the classroom.</p>
+          </div>
+        </div>
+        <div class="problem-band reveal">
+          <div class="problem-figure">
+            <h3><span class="problem-num">03</span>Indian students are navigating without trusted guidance</h3>
+            <div class="guidance-pair">
+              <div class="guidance-panel">
+                <p>Without guidance</p>
+                <ul class="guidance-scatter">
+                  <li>rankings</li><li>relatives</li><li>forums</li><li>agents</li>
+                  <li>coaching ads</li><li>a dozen more</li>
+                </ul>
+                <p>Over a dozen factors to weigh, advice from every direction, and one trained counsellor for every 3,000 students.</p>
               </div>
-            </article>
-
-            <article class="belief-step" data-belief-step>
-              <span class="belief-model-number">2.</span>
-              <div class="belief-step-copy">
-                <h3>Build real evidence</h3>
-                <p>Academic projects, competitions, community work, and communication training become proof of depth rather than resume decoration.</p>
+              <div class="guidance-panel">
+                <p>With trusted guidance</p>
+                <ul class="guidance-path">
+                  <li>Diagnosis</li><li>Foundations</li><li>Distinction</li><li>Presentation</li><li>An offer earned</li>
+                </ul>
+                <p>One direction chosen early, years of real work, and an application that only has to describe it. 82% of students call structured counselling essential.</p>
               </div>
-            </article>
-
-            <article class="belief-step" data-belief-step>
-              <span class="belief-model-number">3.</span>
-              <div class="belief-step-copy">
-                <h3>Architect the application</h3>
-                <p>Only then do we shape university strategy, positioning, essays, recommendations, interviews, and the final admissions architecture.</p>
-              </div>
-            </article>
             </div>
+          </div>
+          <div class="problem-implication">
+            <p class="problem-tag">The implication</p>
+            <p>Most families face the hardest admissions market on their own. Trusted professional guidance, found early, is a real advantage.</p>
+          </div>
+        </div>
 
-            <aside class="belief-visual" aria-label="Reserved space for method photography">
-              <div class="belief-visual-frame" aria-hidden="true">
-                <span class="belief-visual-image belief-visual-image-1 is-active" data-belief-image>
-                  <svg class="belief-visual-symbol" viewBox="0 0 64 64" focusable="false">
-                    <circle cx="24" cy="20" r="7"></circle>
-                    <path d="M11 46c2.5-9 8-13.5 16.5-13.5S41 37 43 46"></path>
-                    <path d="M38 17c7.5-.5 13 4.8 13 12.2 0 8.8-7.2 15.8-17 16.8"></path>
-                    <path d="M45 12v8"></path>
-                    <path d="M41 16h8"></path>
-                  </svg>
-                </span>
-                <span class="belief-visual-image belief-visual-image-2" data-belief-image>
-                  <svg class="belief-visual-symbol" viewBox="0 0 64 64" focusable="false">
-                    <path d="M18 10h23l7 7v37H18z"></path>
-                    <path d="M41 10v8h8"></path>
-                    <path d="M25 27h17"></path>
-                    <path d="M25 36h11"></path>
-                    <path d="M24 46l5 5 11-14"></path>
-                  </svg>
-                </span>
-                <span class="belief-visual-image belief-visual-image-3" data-belief-image>
-                  <svg class="belief-visual-symbol" viewBox="0 0 64 64" focusable="false">
-                    <path d="M14 52h36"></path>
-                    <path d="M18 52V34c0-12.2 6.2-22 14-22s14 9.8 14 22v18"></path>
-                    <path d="M26 52V35c0-4.6 2.7-8 6-8s6 3.4 6 8v17"></path>
-                    <path d="M22 24h20"></path>
-                    <path d="M32 12v-5"></path>
-                  </svg>
-                </span>
+        <p class="problem-notes reveal">
+          Admissions statistics published by Harvard, Yale, Princeton, and Columbia, Classes of 2019 to 2028.<br>
+          Findings of fact, Students for Fair Admissions v. Harvard, US District Court, District of Massachusetts, 2019.<br>
+          NACAC, State of College Admission. IC3 Institute, Student Quest Survey, 2021 and 2022.
+        </p>
+      </div>
+    </section>
+
+    <section class="section paper-low" aria-labelledby="spike-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Our answer</p>
+            <h2 class="section-title" id="spike-title">Our answer is the Spike.</h2>
+          </div>
+          <p class="section-copy">Admissions officers call it a spike, the one sharp point a student is known for. A point only stands when there is a pyramid beneath it, and pyramids survive because they are built in the right order.</p>
+        </div>
+
+        <div class="spike-layout reveal">
+          <div class="spike-figure">
+            <svg viewBox="0 0 520 430" role="img" aria-labelledby="spike-fig-title">
+              <title id="spike-fig-title">The Blue Ocean pyramid: Diagnosis at the base, then Foundations, then Distinction, with Presentation at the point, and Management as a line running around the whole shape</title>
+
+              <path d="M260 14 L506 372 L506 392 L14 392 L14 372 Z" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="7 6"/>
+              <text x="260" y="410" text-anchor="middle" class="spike-svg-line">MANAGEMENT, WEEK AFTER WEEK</text>
+
+              <polygon points="95,280 425,280 480,360 40,360" fill="var(--forest)"/>
+              <polygon points="150,200 370,200 425,280 95,280" fill="var(--forest-soft)"/>
+              <polygon points="205,120 315,120 370,200 150,200" fill="var(--moss)"/>
+              <polygon points="260,40 315,120 205,120" fill="var(--clay)"/>
+
+              <text x="260" y="325" text-anchor="middle" class="spike-svg-num">01</text>
+              <text x="260" y="248" text-anchor="middle" class="spike-svg-num">02</text>
+              <text x="260" y="170" text-anchor="middle" class="spike-svg-num">03</text>
+              <text x="260" y="106" text-anchor="middle" class="spike-svg-num is-dark">04</text>
+            </svg>
+          </div>
+          <div class="spike-legend">
+            <div class="spike-item">
+              <span class="spike-swatch" style="--sw: var(--clay);" aria-hidden="true"></span>
+              <div>
+                <h3>04 Presentation</h3>
+                <p>The point everyone sees. Essays, the school list, interviews, scholarships, decisions.</p>
               </div>
-            </aside>
+            </div>
+            <div class="spike-item">
+              <span class="spike-swatch" style="--sw: var(--moss);" aria-hidden="true"></span>
+              <div>
+                <h3>03 Distinction</h3>
+                <p>What makes the file rare. Research, competitions, internships, leadership, community service.</p>
+              </div>
+            </div>
+            <div class="spike-item">
+              <span class="spike-swatch" style="--sw: var(--forest-soft);" aria-hidden="true"></span>
+              <div>
+                <h3>02 Foundations</h3>
+                <p>What keeps doors open. Grades, board choice, subjects, SAT or ACT, AP exams.</p>
+              </div>
+            </div>
+            <div class="spike-item">
+              <span class="spike-swatch" style="--sw: var(--forest);" aria-hidden="true"></span>
+              <div>
+                <h3>01 Diagnosis</h3>
+                <p>The layer under everything. Psychometrics, real exposure, the written roadmap.</p>
+              </div>
+            </div>
+            <div class="spike-item is-line">
+              <span class="spike-swatch" aria-hidden="true"></span>
+              <div>
+                <h3>The line around it</h3>
+                <p>Management. Deadlines, documentation, publication, and review, week after week.</p>
+              </div>
+            </div>
           </div>
-          </div>
-          <div class="belief-scroll-track" aria-hidden="true"></div>
+        </div>
 
+        <div class="spike-argument reveal">
+          <p>A pyramid is built in one order. The base goes down first, wide and unglamorous, and every layer above it borrows its strength from the one below. Nobody starts at the top. A strong application is built the same way. Diagnosis tells us where to dig. Grades, boards, and tests form the wide base that keeps every door open. Research, leadership, and service rise on that base and give the file its shape.</p>
+          <p>Two things hold the shape. The first is the dashed line around the pyramid, the management that tracks deadlines, documents the work, and reviews the whole structure week after week. The second is time. Layers laid in a hurry crack under scrutiny, which is why we start years early. Families sometimes ask us to begin at the peak, with the essays. We decline, kindly. The peak is the one part that cannot be built first.</p>
         </div>
       </div>
     </section>
 
-<section class="services-section" id="method" aria-labelledby="services-title">
+<section class="services-section services-pyramid-right" id="method" aria-labelledby="services-title">
 
       <!-- Section header -->
       <div class="services-header wrap">
-        <p class="eyebrow">Blue Ocean Profile Architecture</p>
+        <p class="eyebrow">The pyramid, layer by layer</p>
         <h2 class="services-heading" id="services-title">
           <em>Develop the student.</em>
           <strong>Admissions follow.</strong>
         </h2>
       </div>
 
-      <!-- Two-column layout: sticky text left, scrolling cards right -->
+      <!-- Two-column layout: the five layers scroll on the left, the
+           pyramid holds the right and lights the layer being read. -->
       <div class="services-layout wrap">
 
-        <!-- Left: sticky animated text -->
-        <div class="services-text-sticky">
-          <div class="services-text-well">
-
-            <div class="service-text-block is-active" data-index="0">
-              <p class="method-kicker">01 / Academic Project Development</p>
-              <h3>Build Intellectual Work That Belongs in Your Application</h3>
-              <p>We help students develop serious academic projects — work that reflects genuine curiosity, depth, and initiative. Not a school assignment. Not a resume filler. Something original that stands as primary evidence of who they are intellectually.</p>
-            </div>
-
-            <div class="service-text-block" data-index="1">
-              <p class="method-kicker">02 / Competition Strategy</p>
-              <h3>Compete Where Winning Carries Real Weight</h3>
-              <p>We identify competitions, fellowships, and prizes in your child's domain where results move admissions committees. Then we build a preparation strategy so the outcome becomes a meaningful part of the application story.</p>
-            </div>
-
-            <div class="service-text-block" data-index="2">
-              <p class="method-kicker">03 / Community Impact</p>
-              <h3>Create Service That Outlasts Your Involvement</h3>
-              <p>Generic volunteering does not move selective admissions committees. We help students design genuine community initiatives that are meaningful, sustainable, and capable of growing beyond their time in school. Work that reflects character, not just participation.</p>
-            </div>
-
-            <div class="service-text-block" data-index="3">
-              <p class="method-kicker">04 / Unique Skill Development</p>
-              <h3>Find Your Distinctive Edge and Take It as Far as It Can Go</h3>
-              <p>Every student has a natural strength that most programs never develop properly. We identify what makes each student genuinely different — in performance, domain expertise, original thinking, or craft — and help them reach a level that is hard to ignore.</p>
-            </div>
-
-            <div class="service-text-block" data-index="4">
-              <p class="method-kicker">05 / Language and Argumentation</p>
-              <h3>Learn to Think, Write, and Argue With Precision</h3>
-              <p>The clearest signal of intellectual maturity is how someone reasons through a problem and defends a position. We train students to think, speak, and write with clarity — strengthening their essays, interviews, and academic work from the ground up.</p>
-            </div>
-
-            <div class="service-text-block" data-index="5">
-              <p class="method-kicker">06 / Admissions Strategy</p>
-              <h3>Connect Your Profile to the Right Universities, Worldwide</h3>
-              <p>Blue Ocean students do not apply and hope. We build a targeted university list, a clearly argued positioning, and an application architecture that connects every part of the student's profile to a coherent story across the US, UK, Singapore, and beyond.</p>
-            </div>
-
-            <div class="service-text-block" data-index="6">
-              <p class="method-kicker">07 / Ongoing Mentorship</p>
-              <h3>Work 1-1 With Our Founder-Led Team</h3>
-              <p>Every student works directly with Dr. Sanjay Kumar and a team of mentors from Harvard, MIT, and the world's top universities. Weekly sessions drive progress. Monthly strategy meetings with Dr. Sanjay keep the full profile architecture sharp.</p>
-            </div>
-
-          </div><!-- /services-text-well -->
-        </div><!-- /services-text-sticky -->
-
-        <!-- Right: service rows (visual-only on desktop; text+visual on mobile) -->
+        <!-- Left column in the grid: one row per layer, scrolling. -->
         <div class="services-cards-col">
 
           <div class="service-row" data-index="0">
             <div class="service-row-text">
-              <p class="method-kicker">01 / Academic Project Development</p>
-              <h3>Build Intellectual Work That Belongs in Your Application</h3>
-              <p>We help students develop serious academic projects — work that reflects genuine curiosity, depth, and initiative. Not a school assignment. Not a resume filler. Something original that stands as primary evidence of who they are intellectually.</p>
-            </div>
-            <div class="service-card service-card-svg">
-              <img src="green-profile-arch/1.svg" data-blue="blue-profile-arch/1.svg" alt="Academic Project Development">
+              <p class="method-kicker">01 / Diagnosis</p>
+              <h3>Measure First, So the Plan Fits the Actual Student</h3>
+              <p>Guesswork is expensive at seventeen. We measure aptitude, reasoning, emotional maturity, and working style against age norms rather than school marks. Where aptitude and interest overlap we shortlist two or three fields worth testing seriously, and the student shadows professionals and takes on real work in each one. It all lands in a written roadmap the family sees, and we measure again three times a year, because teenagers change and the plan has to keep up.</p>
             </div>
           </div>
 
           <div class="service-row" data-index="1">
             <div class="service-row-text">
-              <p class="method-kicker">02 / Competition Strategy</p>
-              <h3>Compete Where Winning Carries Real Weight</h3>
-              <p>We identify competitions, fellowships, and prizes in your child's domain where results move admissions committees. Then we build a preparation strategy so the outcome becomes a meaningful part of the application story.</p>
-            </div>
-            <div class="service-card service-card-svg">
-              <img src="green-profile-arch/2.svg" data-blue="blue-profile-arch/2.svg" alt="Competition Strategy">
+              <p class="method-kicker">02 / Foundations</p>
+              <h3>Keep Every Door Open Before You Choose One</h3>
+              <p>The base of the pyramid is wide and unglamorous. Nothing in this layer makes a file remarkable, and everything above it collapses without it. Board and subjects chosen deliberately, grades tracked term by term against what the target universities expect, real support when a subject keeps resisting, the SAT or ACT chosen on diagnostic evidence, and APs mapped to the intended major. Reading and breadth run alongside the schoolwork. The file never shows this layer directly. Interviews always do.</p>
             </div>
           </div>
 
           <div class="service-row" data-index="2">
             <div class="service-row-text">
-              <p class="method-kicker">03 / Community Impact</p>
-              <h3>Create Service That Outlasts Your Involvement</h3>
-              <p>Generic volunteering does not move selective admissions committees. We help students design genuine community initiatives that are meaningful, sustainable, and capable of growing beyond their time in school. Work that reflects character, not just participation.</p>
-            </div>
-            <div class="service-card service-card-svg">
-              <img src="green-profile-arch/3.svg" data-blue="blue-profile-arch/3.svg" alt="Community Impact">
+              <p class="method-kicker">03 / Distinction</p>
+              <h3>Build the Work That Makes the File Rare</h3>
+              <p>The long middle of the engagement, and the layer that separates our students' files. Two years of research on one question the student genuinely cares about. Competitions chosen because committees respect them, entered rarely and prepared for months. Internships with the output defined before they start. School leadership treated as a project once the role is won, and one service initiative built around a problem the student has seen up close. Nothing stands alone. A lab placement becomes a paper, an NGO stint becomes an initiative.</p>
             </div>
           </div>
 
           <div class="service-row" data-index="3">
             <div class="service-row-text">
-              <p class="method-kicker">04 / Unique Skill Development</p>
-              <h3>Find Your Distinctive Edge and Take It as Far as It Can Go</h3>
-              <p>Every student has a natural strength that most programs never develop properly. We identify what makes each student genuinely different — in performance, domain expertise, original thinking, or craft — and help them reach a level that is hard to ignore.</p>
-            </div>
-            <div class="service-card service-card-svg">
-              <img src="green-profile-arch/4.svg" data-blue="blue-profile-arch/4.svg" alt="Unique Skill Development">
+              <p class="method-kicker">04 / Presentation</p>
+              <h3>Present Years of Work Without Wasting a Word</h3>
+              <p>By the time the application opens the hard part is done, and much of it is already public. We work backwards from the careers the student has tested, to the majors that lead there, to the departments that teach them best. Students write weekly with line-level feedback for years before the essays, and practise building and defending arguments out loud. Then the school list across the US, UK, Singapore, and Europe, every essay taken through as many drafts as it takes, interviews recorded and reviewed, and scholarships run on their own calendar. We edit, question, and push. We do not write a single sentence for the student.</p>
             </div>
           </div>
 
           <div class="service-row" data-index="4">
             <div class="service-row-text">
-              <p class="method-kicker">05 / Language and Argumentation</p>
-              <h3>Learn to Think, Write, and Argue With Precision</h3>
-              <p>The clearest signal of intellectual maturity is how someone reasons through a problem and defends a position. We train students to think, speak, and write with clarity — strengthening their essays, interviews, and academic work from the ground up.</p>
-            </div>
-            <div class="service-card service-card-svg">
-              <img src="green-profile-arch/5.svg" data-blue="blue-profile-arch/5.svg" alt="Language and Argumentation">
-            </div>
-          </div>
-
-          <div class="service-row" data-index="5">
-            <div class="service-row-text">
-              <p class="method-kicker">06 / Admissions Strategy</p>
-              <h3>Connect Your Profile to the Right Universities, Worldwide</h3>
-              <p>Blue Ocean students do not apply and hope. We build a targeted university list, a clearly argued positioning, and an application architecture that connects every part of the student's profile to a coherent story across the US, UK, Singapore, and beyond.</p>
-            </div>
-            <div class="service-card service-card-svg">
-              <img src="green-profile-arch/6.svg" data-blue="blue-profile-arch/6.svg" alt="Admissions Strategy">
-            </div>
-          </div>
-
-          <div class="service-row" data-index="6">
-            <div class="service-row-text">
-              <p class="method-kicker">07 / Ongoing Mentorship</p>
-              <h3>Work 1-1 With Our Founder-Led Team</h3>
-              <p>Every student works directly with Dr. Sanjay Kumar and a team of mentors from Harvard, MIT, and the world's top universities. Weekly sessions drive progress. Monthly strategy meetings with Dr. Sanjay keep the full profile architecture sharp.</p>
-            </div>
-            <div class="service-card service-card-svg">
-              <img src="green-profile-arch/7.svg" data-blue="blue-profile-arch/7.svg" alt="Ongoing Mentorship">
+              <p class="method-kicker">05 / Management</p>
+              <h3>Hold the Whole Plan Together, Week After Week</h3>
+              <p>Plans rarely fail loudly. They fail quietly, one slipped week at a time. So a line runs around the whole pyramid. Board exams, test windows, competition deadlines, and submissions live on one calendar that we own. Everything is filed the week it happens, so nothing has to be reconstructed in grade 12. Once a week the whole structure is reviewed. And every finished piece goes public when it is finished, so by the application year the world is taking its second look at the student.</p>
             </div>
           </div>
 
         </div><!-- /services-cards-col -->
 
+        <!-- Right column in the grid, sticky. Scroll-linked: the layer
+             whose row is nearest the viewport centre lights up, and
+             data-active is set by the sticky-services script below.
+             Layer 4 is Management, which lights the dashed line
+             instead of a band. -->
+        <div class="services-text-sticky">
+          <div class="pyramid" id="methodPyramid" data-active="0">
+            <svg viewBox="0 0 320 250" role="img" aria-labelledby="pyramid-title">
+              <title id="pyramid-title">The Blue Ocean pyramid. Diagnosis at the base, then Foundations, then Distinction, with Presentation at the point, and Management as a line running around the whole shape.</title>
+
+              <path class="pyr-line" data-layer="4" d="M160 10 L308 218 L308 232 L12 232 L12 218 Z"/>
+
+              <polygon class="pyr-band" data-layer="0" points="58,166 262,166 296,212 24,212"/>
+              <polygon class="pyr-band" data-layer="1" points="92,120 228,120 262,166 58,166"/>
+              <polygon class="pyr-band" data-layer="2" points="126,74 194,74 228,120 92,120"/>
+              <polygon class="pyr-band" data-layer="3" points="160,28 194,74 126,74"/>
+
+              <text class="pyr-num" data-layer="0" x="160" y="196" text-anchor="middle">01</text>
+              <text class="pyr-num" data-layer="1" x="160" y="150" text-anchor="middle">02</text>
+              <text class="pyr-num" data-layer="2" x="160" y="104" text-anchor="middle">03</text>
+              <text class="pyr-num is-apex" data-layer="3" x="160" y="66" text-anchor="middle">04</text>
+            </svg>
+            <p class="pyramid-caption">
+              <span data-layer="0">Diagnosis</span>
+              <span data-layer="1">Foundations</span>
+              <span data-layer="2">Distinction</span>
+              <span data-layer="3">Presentation</span>
+              <span data-layer="4">Management</span>
+            </p>
+          </div>
+        </div><!-- /services-text-sticky -->
+
       </div><!-- /services-layout -->
 
+    </section>
+
+    <section class="section paper-low" aria-labelledby="early-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">The case for starting early</p>
+            <h2 class="section-title" id="early-title">The longer the runway, the better the take-off.</h2>
+          </div>
+          <p class="section-copy">ACT followed the same students from grade 8 to the end of school. Those on target entering grade 9 were ready for college-level work by graduation. Those who had just missed it, on average, never caught up.</p>
+        </div>
+        <div class="early-layout reveal">
+          <div class="problem-figure">
+            <svg viewBox="0 0 440 250" role="img" aria-label="ACT tracked students from grade 8 to grade 12. Those on target entering grade 9 reached college readiness. Those who just missed it never caught up.">
+              <line x1="52" y1="40" x2="410" y2="40" stroke="var(--line)" stroke-width="1" stroke-dasharray="5 5"/>
+              <text x="52" y="30" class="pc-ax">Ready for college-level work</text>
+              <line x1="52" y1="200" x2="410" y2="200" stroke="var(--line)" stroke-width="1"/>
+              <text x="52" y="220" class="pc-ax">Grade 8</text>
+              <text x="231" y="220" text-anchor="middle" class="pc-ax">Grade 10</text>
+              <text x="410" y="220" text-anchor="end" class="pc-ax">Grade 12</text>
+              <polyline fill="none" stroke="var(--moss)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="52,132 141,108 231,84 320,60 410,40"/>
+              <polyline fill="none" stroke="var(--clay)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="52,160 141,150 231,142 320,136 410,132"/>
+              <circle cx="410" cy="40" r="4" fill="var(--moss)"/>
+              <circle cx="410" cy="132" r="4" fill="var(--clay)"/>
+            </svg>
+            <ul class="chart-key">
+              <li style="--sc: var(--moss);">On target entering grade 9</li>
+              <li style="--sc: var(--clay);">Just missed, entering grade 9</li>
+            </ul>
+            <p class="problem-src">An illustration of the central finding of ACT's study The Forgotten Middle, 2008.</p>
+          </div>
+          <div class="early-copy">
+            <p>What a student has achieved by eighth grade, ACT found, has a larger impact on their college and career readiness than anything that happens academically in high school. That head start was worth up to three times more than the best single high-school improvement, honours courses and better grades included.</p>
+            <p>So whatever grade a student joins us in, we start at the base of the pyramid. The earlier the start, the longer the runway, and the better the take-off. We have never met a family who started too early. We meet the other kind every December.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" aria-labelledby="breadth-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow light">The case for breadth</p>
+            <h2 class="section-title" id="breadth-title">Most of the file is the person.</h2>
+          </div>
+          <p class="section-copy">Most of a selective application asks who the student is, and committees read far past the marks. What carries those pages is range, and range cannot be crammed. It is built the way muscle is built, in small scheduled doses over years. So we put it on the calendar.</p>
+        </div>
+        <div class="breadth-grid reveal">
+          <div class="breadth-item"><h3>Workshops</h3><p>Small groups through the year, each ending with something finished. An argument defended, a research draft, a submitted application.</p></div>
+          <div class="breadth-item"><h3>Reading and podcasts</h3><p>Assigned each cycle alongside schoolwork, then discussed in session, so ideas get argued about rather than collected.</p></div>
+          <div class="breadth-item"><h3>Argument, out loud</h3><p>Students practise building and defending positions in conversation, years before an interviewer asks them to do exactly that.</p></div>
+          <div class="breadth-item"><h3>The Blue Ocean newsletter</h3><p>Ideas worth arguing about, opportunities worth taking, and student work worth reading, on a regular rhythm.</p></div>
+        </div>
+        <div class="breadth-feeds reveal" aria-label="One habit of range feeds four parts of the file">
+          <span>Essays with material</span>
+          <span>Interviews with opinions</span>
+          <span>Research with questions</span>
+          <span>Referees with stories</span>
+        </div>
+        <p class="problem-src reveal" style="max-width: 74ch;">Stanford calls it intellectual vitality. Oxford tests it live, at interview, for twenty minutes at a time.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="year-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">The rhythm</p>
+            <h2 class="section-title" id="year-title">What a year with us looks like.</h2>
+          </div>
+          <p class="section-copy">Long-term development is a schedule before it is anything else. Three times a year we diagnose the student and rewrite the roadmap, stream by stream. The months between are for execution. Here is the whole year on one grid.</p>
+        </div>
+        <div class="year-scroll reveal">
+          <div class="year-grid">
+          <div class="year-head">Five streams</div>
+          <div class="year-head is-diagnose">Apr</div>
+          <div class="year-head">May</div>
+          <div class="year-head">Jun</div>
+          <div class="year-head">Jul</div>
+          <div class="year-head is-diagnose">Aug</div>
+          <div class="year-head">Sep</div>
+          <div class="year-head">Oct</div>
+          <div class="year-head">Nov</div>
+          <div class="year-head is-diagnose">Dec</div>
+          <div class="year-head">Jan</div>
+          <div class="year-head">Feb</div>
+          <div class="year-head">Mar</div>
+          <div class="year-stream"><strong>01 Academics</strong><span>Competitive exams, grade targets for each university in view, and any learning issue that needs fixing.</span></div>
+          <div class="year-cell is-on" style="--sc: var(--forest);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest);"></div>
+          <div class="year-stream"><strong>02 Projects and the spike</strong><span>Research, academic projects, competitions, internships, and community service.</span></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-stream"><strong>03 Reading and breadth</strong><span>Podcasts, workshops, books and articles, put on the calendar rather than left to chance.</span></div>
+          <div class="year-cell is-on" style="--sc: var(--forest-soft);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest-soft);"></div>
+          <div class="year-cell"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest-soft);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest-soft);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest-soft);"></div>
+          <div class="year-cell"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest-soft);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest-soft);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest-soft);"></div>
+          <div class="year-cell is-on" style="--sc: var(--forest-soft);"></div>
+          <div class="year-cell"></div>
+          <div class="year-stream"><strong>04 College counselling</strong><span>Career direction, essay training, and the summer and winter programs worth applying to.</span></div>
+          <div class="year-cell"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell is-on" style="--sc: var(--moss);"></div>
+          <div class="year-cell"></div>
+          <div class="year-cell"></div>
+          <div class="year-stream"><strong>05 Presentation</strong><span>LinkedIn posts, website updates, and which finished pieces go public next.</span></div>
+          <div class="year-cell"></div>
+          <div class="year-cell"></div>
+          <div class="year-cell is-on" style="--sc: var(--clay);"></div>
+          <div class="year-cell"></div>
+          <div class="year-cell is-on" style="--sc: var(--clay);"></div>
+          <div class="year-cell"></div>
+          <div class="year-cell is-on" style="--sc: var(--clay);"></div>
+          <div class="year-cell"></div>
+          <div class="year-cell is-on" style="--sc: var(--clay);"></div>
+          <div class="year-cell"></div>
+          <div class="year-cell is-on" style="--sc: var(--clay);"></div>
+          <div class="year-cell"></div>
+          </div>
+        </div>
+        <p class="year-legend">The three shaded months are the diagnosis points. The academic year runs April to March.</p>
+      </div>
     </section>
 
     <section class="cta-section" aria-labelledby="cta-title">
@@ -403,6 +732,7 @@
           <h3>Explore</h3>
           <ul>
             <li><a href="method.html">Method</a></li>
+            <li><a href="founder.html">Founder</a></li>
             <li><a href="results.html">Results</a></li>
             <li><a href="fit.html">Right Fit</a></li>
             <li><a href="team.html">Team</a></li>
@@ -498,97 +828,26 @@
       }, { threshold: 0 }).observe(firstSection);
     }
 
+    // The pyramid tracks whichever layer row is closest to the centre
+    // of the viewport. One index drives everything: the lit band, the
+    // caption under it, and which row is at full opacity.
     (function () {
-      var model = document.querySelector('[data-belief-model]');
-      if (!model) return;
-
-      var steps = Array.from(model.querySelectorAll('[data-belief-step]'));
-      var visualFrame = model.querySelector('.belief-visual-frame');
-      var visualImages = Array.from(model.querySelectorAll('[data-belief-image]'));
-      var mobileModel = window.matchMedia('(max-width: 920px)');
+      var rows = Array.from(document.querySelectorAll('.services-pyramid-right .service-row'));
+      var pyramid = document.getElementById('methodPyramid');
       var currentIndex = -1;
       var frame = null;
 
-      function setActive(index) {
-        if (index === currentIndex || !steps[index]) return;
-        currentIndex = index;
-        steps.forEach(function (step, i) {
-          step.classList.toggle('is-active', i === index);
-        });
-        visualImages.forEach(function (image, i) {
-          image.classList.toggle('is-active', i === index);
-        });
-      }
-
-      function getMobileIndex() {
-        var target = visualFrame
-          ? visualFrame.getBoundingClientRect().bottom + 86
-          : window.innerHeight * 0.42;
-        var bestIndex = 0;
-        var bestDistance = Infinity;
-
-        steps.forEach(function (step, index) {
-          var rect = step.getBoundingClientRect();
-          var anchor = rect.top + Math.min(rect.height * 0.5, 120);
-          var distance = Math.abs(anchor - target);
-
-          if (distance < bestDistance) {
-            bestDistance = distance;
-            bestIndex = index;
-          }
-        });
-
-        return bestIndex;
-      }
-
-      function update() {
-        frame = null;
-
-        if (mobileModel.matches) {
-          setActive(getMobileIndex());
-          return;
-        }
-
-        var rect = model.getBoundingClientRect();
-        var range = Math.max(1, rect.height - window.innerHeight);
-        var progress = Math.min(1, Math.max(0, -rect.top / range));
-        var nextIndex = Math.min(steps.length - 1, Math.floor(progress * steps.length));
-        setActive(nextIndex);
-      }
-
-      function requestUpdate() {
-        if (frame === null) frame = requestAnimationFrame(update);
-      }
-
-      window.addEventListener('scroll', requestUpdate, { passive: true });
-      window.addEventListener('resize', requestUpdate);
-      if (mobileModel.addEventListener) mobileModel.addEventListener('change', requestUpdate);
-      update();
-    }());
-
-    // Sticky services: left text tracks whichever card is closest to viewport center
-    (function () {
-      var textBlocks = Array.from(document.querySelectorAll('.service-text-block'));
-      var cards = Array.from(document.querySelectorAll('.service-card'));
-      var dots = Array.from(document.querySelectorAll('.services-dot'));
-      var activeNumEl = document.getElementById('servicesActive');
-      var currentIndex = -1;
-      var frame = null;
-
-      if (!textBlocks.length || !cards.length) return;
+      if (!rows.length || !pyramid) return;
 
       function setActive(index) {
         if (index === currentIndex) return;
         currentIndex = index;
-        textBlocks.forEach(function (block, i) {
-          block.classList.remove('is-active', 'is-prev');
-          if (i < index) block.classList.add('is-prev');
-          else if (i === index) block.classList.add('is-active');
+        rows.forEach(function (row, i) {
+          row.classList.toggle('is-active', i === index);
         });
-        dots.forEach(function (dot, i) {
-          dot.classList.toggle('is-active', i === index);
-        });
-        if (activeNumEl) activeNumEl.textContent = String(index + 1);
+        // CSS reads data-active and does the rest: layers 0 to 3 light
+        // a band, layer 4 lights the dashed management line.
+        pyramid.setAttribute('data-active', String(index));
       }
 
       function update() {
@@ -596,8 +855,8 @@
         var center = window.innerHeight * 0.5;
         var best = 0;
         var bestDist = Infinity;
-        cards.forEach(function (card, i) {
-          var rect = card.getBoundingClientRect();
+        rows.forEach(function (row, i) {
+          var rect = row.getBoundingClientRect();
           var dist = Math.abs(rect.top + rect.height * 0.5 - center);
           if (dist < bestDist) { bestDist = dist; best = i; }
         });
@@ -607,13 +866,6 @@
       function requestUpdate() {
         if (frame === null) frame = requestAnimationFrame(update);
       }
-
-      dots.forEach(function (dot, i) {
-        dot.addEventListener('click', function () {
-          var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          cards[i].scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
-        });
-      });
 
       window.addEventListener('scroll', requestUpdate, { passive: true });
       window.addEventListener('resize', requestUpdate);

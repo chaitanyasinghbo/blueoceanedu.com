@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- @analytics — GA4 and the Meta pixel, one block, same on every page.
+
+       The dataLayer event on line 8 is the only line that changes per page:
+       tools/build-landing-pages.py swaps SITE_PAGEVIEW for the landing
+       page's own event name. Keep the block byte-identical everywhere else
+       or that swap silently stops matching. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2STB24PJGQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2STB24PJGQ');
+    dataLayer.push({ "event": "SITE_PAGEVIEW" });
+  </script>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '754270597536586');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=754270597536586&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <!-- /@analytics -->
   <meta charset="UTF-8">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home | Blue Ocean Education</title>
   <meta name="description" content="A founder-led advisory for ambitious Indian students building distinctive profiles for Harvard, Yale, Oxford, Cambridge, and the world's most selective universities.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="main.css">
   <style>
     /* ── Theme toggle ───────────────────────────────── */
@@ -170,8 +199,43 @@
       position: absolute;
       inset: 0;
       background: url('back copy.png') center 35% / cover no-repeat;
-      opacity: 0.13;
+      opacity: 0.46;
       mix-blend-mode: luminosity;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* The wash carries the campus at 0.46 rather than the 0.13 it
+       started on, which puts the dome and the winter sky behind the
+       copy instead of a texture nobody reads as a building. The sky is
+       the bright end of that picture and it sits directly under the h1,
+       so the copy side takes a scrim back down toward Core-deep.
+
+       The scrim is one flat value over the whole hero. It has been a
+       96deg ramp and a 180deg ramp and a flat value that cleared at
+       70%, and every partial version had the same fault: the picture
+       came through at different strengths in different places, so the
+       type was legible in one band and sitting on a lit dome in the
+       next. Uneven ground under type is what makes it hard to read,
+       more than any single value is. One value everywhere means the
+       copy has one background. 72% was where cream at 18px first held
+       on the brightest part of the picture; 82% is where it sits now,
+       clear of that margin, and it leaves the campus as a ground rather
+       than a subject. The frame is where the picture is the subject.
+
+       There is no media query on it. A phone and a desktop show the
+       same picture at the same strength, and there is nothing about a
+       narrower screen that changes what type needs underneath it.
+
+       Both layers are z-index 0 and .hero-grid is z-index 1, so this
+       darkens the hero's ground only. The framed photograph sits above
+       it and is unaffected, which is what keeps the tinted copy and the
+       clean copy of the same picture distinct at any opacity. */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: color-mix(in oklch, var(--forest-strong) 82%, transparent);
       z-index: 0;
       pointer-events: none;
     }
@@ -182,6 +246,7 @@
       z-index: 1;
     }
   </style>
+  <link rel="stylesheet" href="ocean-ember.css">
 </head>
 <body>
   <header class="site-header">
@@ -203,6 +268,7 @@
 
       <ul class="nav-links" id="navLinks">
         <li><a href="method.html">Method</a></li>
+        <li><a href="founder.html">Founder</a></li>
         <li><a href="results.html">Results</a></li>
         <li><a href="fit.html">Right Fit</a></li>
         <li><a href="team.html">Team</a></li>
@@ -223,6 +289,7 @@
   <div class="mobile-panel" id="mobilePanel">
     <ul class="mobile-panel-links">
       <li><a href="method.html">Method</a></li>
+      <li><a href="founder.html">Founder</a></li>
       <li><a href="results.html">Results</a></li>
       <li><a href="fit.html">Right Fit</a></li>
       <li><a href="team.html">Team</a></li>
@@ -242,55 +309,54 @@
           <div class="hero-alumni" aria-label="Built by alumni from">
             <div class="hero-alumni-label">Built by alumni from:</div>
             <div class="hero-logo-row">
-              <div class="hero-logo-slot logo-wide" aria-label="Harvard Business School">
-                <img src="hero-logos/HBS.png" alt="">
-              </div>
-              <div class="hero-logo-slot logo-seal" aria-label="Harvard Kennedy School">
-                <img src="hero-logos/HKS.png" alt="">
-              </div>
-              <div class="hero-logo-slot logo-wide" aria-label="Harvard University">
-                <img src="hero-logos/harvard.png" alt="">
-              </div>
-              <div class="hero-logo-slot logo-wide" aria-label="Massachusetts Institute of Technology">
-                <img src="hero-logos/MIT-Logo.png" alt="">
-              </div>
-              <div class="hero-logo-slot logo-seal" aria-label="IIT Kharagpur">
-                <img src="hero-logos/Iit-Kharagpur-Logo.webp" alt="">
-              </div>
+              <div class="hero-logo-slot" style="--mark: 0.70"><img src="alumni-logos/hbs.png" alt="Harvard Business School"></div>
+              <div class="hero-logo-slot" style="--mark: 0.93"><img src="alumni-logos/hks.png" alt="Harvard Kennedy School"></div>
+              <div class="hero-logo-slot" style="--mark: 0.73"><img src="alumni-logos/harvard.png" alt="Harvard University"></div>
+              <div class="hero-logo-slot" style="--mark: 0.65"><img src="alumni-logos/mit.png" alt="Massachusetts Institute of Technology"></div>
+              <div class="hero-logo-slot" style="--mark: 1"><img src="alumni-logos/iit-kharagpur.png" alt="IIT Kharagpur"></div>
             </div>
           </div>
         </div>
 
         <div class="hero-media reveal">
           <div class="campus-frame">
-            <img src="back copy.png" alt="MIT campus building in winter light">
+            <div class="campus-plate">
+              <img src="back copy.png" alt="MIT campus building in winter light">
+              <img class="student-figure" src="Untitled design.png" alt="Blue Ocean student wearing a Yale sweatshirt">
+            </div>
           </div>
-          <img class="student-figure" src="Untitled design.png" alt="Blue Ocean student wearing a Yale sweatshirt">
         </div>
       </div>
 
-      <div class="trust-band" aria-label="Recognition and media">
+      <div class="trust-band">
         <div class="trust-inner">
-          <div class="trust-label">Executive team recognized by</div>
-          <div class="trust-items" aria-hidden="true">
-            <span class="trust-logo wide"><img src="exec-team/harvard-lakshmi.png" alt=""></span>
-            <span class="trust-logo wide"><img src="exec-team/NDTV.png" alt=""></span>
-            <span class="trust-logo"><img src="exec-team/times-of-india.png" alt=""></span>
-            <span class="trust-logo wide"><img src="exec-team/hindustan-times.png" alt=""></span>
-            <span class="trust-logo"><img src="exec-team/mint.webp" alt=""></span>
-            <span class="trust-logo wide"><img src="exec-team/business-standard-logo-2.png" alt=""></span>
-            <span class="trust-logo"><img src="exec-team/Forbes.png" alt=""></span>
-            <span class="trust-logo tall"><img src="exec-team/The Indian Express.svg" alt=""></span>
-            <span class="trust-logo tall"><img src="exec-team/penguin.png" alt=""></span>
-            <span class="trust-logo wide"><img src="exec-team/harvard-lakshmi.png" alt=""></span>
-            <span class="trust-logo wide"><img src="exec-team/NDTV.png" alt=""></span>
-            <span class="trust-logo"><img src="exec-team/times-of-india.png" alt=""></span>
-            <span class="trust-logo wide"><img src="exec-team/hindustan-times.png" alt=""></span>
-            <span class="trust-logo"><img src="exec-team/mint.webp" alt=""></span>
-            <span class="trust-logo wide"><img src="exec-team/business-standard-logo-2.png" alt=""></span>
-            <span class="trust-logo"><img src="exec-team/Forbes.png" alt=""></span>
-            <span class="trust-logo tall"><img src="exec-team/The Indian Express.svg" alt=""></span>
-            <span class="trust-logo tall"><img src="exec-team/penguin.png" alt=""></span>
+          <div class="trust-head">
+            <p class="trust-label">In print, and on air</p>
+            <p class="trust-note">Coverage of the founder and the board of advisors, selected.</p>
+          </div>
+          <!-- The set runs twice. The marquee travels half the track's
+               width, so the second copy has to be an exact duplicate or
+               the loop shows a seam. Only the first copy is read out. -->
+          <div class="trust-wall">
+            <div class="trust-track">
+              <span class="trust-tile" style="--mark: 0.78"><img src="press-logos/ndtv.png" alt="NDTV"></span>
+              <span class="trust-tile" style="--mark: 1.22"><img src="press-logos/times-of-india.png" alt="The Times of India"></span>
+              <span class="trust-tile" style="--mark: 0.97"><img src="press-logos/hindustan-times.png" alt="Hindustan Times"></span>
+              <span class="trust-tile" style="--mark: 1.05"><img src="press-logos/indian-express.svg" alt="The Indian Express"></span>
+              <span class="trust-tile" style="--mark: 0.95"><img src="press-logos/mint.png" alt="Mint"></span>
+              <span class="trust-tile" style="--mark: 1.08"><img src="press-logos/business-standard.png" alt="Business Standard"></span>
+              <span class="trust-tile" style="--mark: 0.90"><img src="press-logos/forbes.png" alt="Forbes"></span>
+              <span class="trust-tile" style="--mark: 1.45"><img src="press-logos/penguin.png" alt="Penguin"></span>
+
+              <span class="trust-tile" style="--mark: 0.78" aria-hidden="true"><img src="press-logos/ndtv.png" alt=""></span>
+              <span class="trust-tile" style="--mark: 1.22" aria-hidden="true"><img src="press-logos/times-of-india.png" alt=""></span>
+              <span class="trust-tile" style="--mark: 0.97" aria-hidden="true"><img src="press-logos/hindustan-times.png" alt=""></span>
+              <span class="trust-tile" style="--mark: 1.05" aria-hidden="true"><img src="press-logos/indian-express.svg" alt=""></span>
+              <span class="trust-tile" style="--mark: 0.95" aria-hidden="true"><img src="press-logos/mint.png" alt=""></span>
+              <span class="trust-tile" style="--mark: 1.08" aria-hidden="true"><img src="press-logos/business-standard.png" alt=""></span>
+              <span class="trust-tile" style="--mark: 0.90" aria-hidden="true"><img src="press-logos/forbes.png" alt=""></span>
+              <span class="trust-tile" style="--mark: 1.45" aria-hidden="true"><img src="press-logos/penguin.png" alt=""></span>
+            </div>
           </div>
         </div>
       </div>
@@ -387,34 +453,6 @@
               </div>
 
               <div class="acceptance-row">
-                <div class="acceptance-school">UPenn</div>
-                <div class="acceptance-bars">
-                  <div class="acceptance-mini-bar">
-                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 8.2%;"></span></div>
-                    <span class="acceptance-value">4.9%</span>
-                  </div>
-                  <div class="acceptance-main-bar">
-                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 49%;"></span></div>
-                    <span class="acceptance-value">29.4%</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="acceptance-row">
-                <div class="acceptance-school">Dartmouth</div>
-                <div class="acceptance-bars">
-                  <div class="acceptance-mini-bar">
-                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 9.7%;"></span></div>
-                    <span class="acceptance-value">5.8%</span>
-                  </div>
-                  <div class="acceptance-main-bar">
-                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 58%;"></span></div>
-                    <span class="acceptance-value">34.8%</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="acceptance-row">
                 <div class="acceptance-school">Princeton</div>
                 <div class="acceptance-bars">
                   <div class="acceptance-mini-bar">
@@ -455,7 +493,65 @@
                   </div>
                 </div>
               </div>
+
+              <div class="acceptance-row">
+                <div class="acceptance-school">Brown</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 9.2%;"></span></div>
+                    <span class="acceptance-value">5.5%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 55%;"></span></div>
+                    <span class="acceptance-value">33.0%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="acceptance-row">
+                <div class="acceptance-school">Johns Hopkins</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 10%;"></span></div>
+                    <span class="acceptance-value">6.0%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 60%;"></span></div>
+                    <span class="acceptance-value">36.0%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="acceptance-row">
+                <div class="acceptance-school">Oxford</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 26.7%;"></span></div>
+                    <span class="acceptance-value">16.0%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 55.3%;"></span></div>
+                    <span class="acceptance-value">33.2%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="acceptance-row">
+                <div class="acceptance-school">Cambridge</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 31.7%;"></span></div>
+                    <span class="acceptance-value">19.0%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 59.5%;"></span></div>
+                    <span class="acceptance-value">35.7%</span>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <p class="acceptance-source">General admit rates are the figures each university publishes for its most recent cycles. Blue Ocean rates are the admit rates of our students applying to that university across recent cycles.</p>
           </div>
         </div>
       </div>
@@ -648,7 +744,6 @@
               <h3>Work 1-1 With Our Founder-Led Team</h3>
               <p>Every student works directly with Dr. Sanjay Kumar and a team of mentors from Harvard, MIT, and the world's top universities. Weekly sessions drive progress. Monthly strategy meetings with Dr. Sanjay keep the full profile architecture sharp.</p>
             </div>
-
           </div><!-- /services-text-well -->
         </div><!-- /services-text-sticky -->
 
@@ -662,7 +757,7 @@
               <p>We help students develop serious academic projects — work that reflects genuine curiosity, depth, and initiative. Not a school assignment. Not a resume filler. Something original that stands as primary evidence of who they are intellectually.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="green-profile-arch/1.svg" data-blue="blue-profile-arch/1.svg" alt="Academic Project Development">
+              <img loading="lazy" src="blue-profile-arch/1.svg" alt="Academic Project Development">
             </div>
           </div>
 
@@ -673,7 +768,7 @@
               <p>We identify competitions, fellowships, and prizes in your child's domain where results move admissions committees. Then we build a preparation strategy so the outcome becomes a meaningful part of the application story.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="green-profile-arch/2.svg" data-blue="blue-profile-arch/2.svg" alt="Competition Strategy">
+              <img loading="lazy" src="blue-profile-arch/2.svg" alt="Competition Strategy">
             </div>
           </div>
 
@@ -684,7 +779,7 @@
               <p>Generic volunteering does not move selective admissions committees. We help students design genuine community initiatives that are meaningful, sustainable, and capable of growing beyond their time in school. Work that reflects character, not just participation.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="green-profile-arch/3.svg" data-blue="blue-profile-arch/3.svg" alt="Community Impact">
+              <img loading="lazy" src="blue-profile-arch/3.svg" alt="Community Impact">
             </div>
           </div>
 
@@ -695,7 +790,7 @@
               <p>Every student has a natural strength that most programs never develop properly. We identify what makes each student genuinely different — in performance, domain expertise, original thinking, or craft — and help them reach a level that is hard to ignore.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="green-profile-arch/4.svg" data-blue="blue-profile-arch/4.svg" alt="Unique Skill Development">
+              <img loading="lazy" src="blue-profile-arch/4.svg" alt="Unique Skill Development">
             </div>
           </div>
 
@@ -706,7 +801,7 @@
               <p>The clearest signal of intellectual maturity is how someone reasons through a problem and defends a position. We train students to think, speak, and write with clarity — strengthening their essays, interviews, and academic work from the ground up.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="green-profile-arch/5.svg" data-blue="blue-profile-arch/5.svg" alt="Language and Argumentation">
+              <img loading="lazy" src="blue-profile-arch/5.svg" alt="Language and Argumentation">
             </div>
           </div>
 
@@ -717,7 +812,7 @@
               <p>Blue Ocean students do not apply and hope. We build a targeted university list, a clearly argued positioning, and an application architecture that connects every part of the student's profile to a coherent story across the US, UK, Singapore, and beyond.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="green-profile-arch/6.svg" data-blue="blue-profile-arch/6.svg" alt="Admissions Strategy">
+              <img loading="lazy" src="blue-profile-arch/6.svg" alt="Admissions Strategy">
             </div>
           </div>
 
@@ -728,10 +823,9 @@
               <p>Every student works directly with Dr. Sanjay Kumar and a team of mentors from Harvard, MIT, and the world's top universities. Weekly sessions drive progress. Monthly strategy meetings with Dr. Sanjay keep the full profile architecture sharp.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="green-profile-arch/7.svg" data-blue="blue-profile-arch/7.svg" alt="Ongoing Mentorship">
+              <img loading="lazy" src="blue-profile-arch/7.svg" alt="Ongoing Mentorship">
             </div>
           </div>
-
         </div><!-- /services-cards-col -->
 
       </div><!-- /services-layout -->
@@ -745,14 +839,14 @@
             <p class="eyebrow">Outcomes</p>
             <h2 class="section-title">Where our students end up.</h2>
           </div>
-          <p class="section-copy">Blue Ocean students have earned offers from the most selective universities in the world. The names matter, but so does how the student got there.</p>
+          <p class="section-copy">Blue Ocean students have earned offers from the most selective universities in the world, and an average of Rs 1 Cr each in scholarship. The names matter, but so does how the student got there.</p>
         </div>
 
         <div class="outcome-carousel reveal">
           <div class="outcome-track" id="outcomeTrack">
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-green/arunima.svg" data-blue="admits-blue/arunima.svg" alt="Arunima, admitted to Harvard University">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/arunima.svg" alt="Arunima, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Arunima</strong>
@@ -765,7 +859,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-green/prateek.svg" data-blue="admits-blue/prateek.svg" alt="Prateek, admitted to Harvard University">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/prateek.svg" alt="Prateek, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Prateek</strong>
@@ -778,7 +872,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-green/adya.svg" data-blue="admits-blue/adya.svg" alt="Adya, admitted to Harvard University">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/adya.svg" alt="Adya, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Adya</strong>
@@ -791,7 +885,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-green/tathagata.svg" data-blue="admits-blue/tathagata.svg" alt="Tathagata, admitted to Cornell and Johns Hopkins">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/tathagata.svg" alt="Tathagata, admitted to Cornell and Johns Hopkins">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Tathagata</strong>
@@ -805,7 +899,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-green/seema.svg" data-blue="admits-blue/seema.svg" alt="Seema, admitted to Harvard University">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/seema.svg" alt="Seema, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Seema</strong>
@@ -818,7 +912,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-green/palakshi.svg" data-blue="admits-blue/palakshi.svg" alt="Palakshi, admitted to Harvard University">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/palakshi.svg" alt="Palakshi, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Palakshi</strong>
@@ -831,7 +925,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-green/shreejeet.svg" data-blue="admits-blue/shreejeet.svg" alt="Shreejeet, admitted to Northeastern, University of Toronto, and Boston University">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/shreejeet.svg" alt="Shreejeet, admitted to Northeastern, University of Toronto, and Boston University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Shreejeet</strong>
@@ -846,7 +940,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-green/manya.svg" data-blue="admits-blue/manya.svg" alt="Manya, admitted to Brown University and Carnegie Mellon">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/manya.svg" alt="Manya, admitted to Brown University and Carnegie Mellon">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Manya</strong>
@@ -992,16 +1086,17 @@
         <div class="team-grid">
           <div class="team-header reveal">
             <div>
-              <p class="eyebrow">Team</p>
+              <p class="eyebrow">The founder</p>
               <h2>Founder led. Intentionally limited.</h2>
             </div>
-            <p>Every student works with Dr. Sanjay Kumar and a carefully selected mentor network from Ivy League and top-30 global universities. The model requires personal attention, so we keep it limited.</p>
+            <p>Dr. Sanjay Kumar works directly with every student, and no plan is set without him. The model requires that kind of attention, so we cap the cohort each year.</p>
           </div>
 
-          <div class="team-people-grid reveal">
-            <article class="team-person team-founder">
+          <div class="team-people-grid is-solo reveal">
+            <article class="team-person team-founder is-wide">
               <div class="team-photo" role="img" aria-label="Dr. Sanjay Kumar">
-                <img loading="lazy" src="exec-team-pics/sanjay.svg" data-blue="exec-team-pics-blue/sanjay.svg" alt="Dr. Sanjay Kumar">
+                <img loading="lazy" src="founder/sanjay.webp" alt="Dr. Sanjay Kumar">
+                <img class="team-photo-crest" loading="lazy" src="counsel-logos/harvard.png" alt="Harvard University">
               </div>
               <div class="team-person-copy">
                 <p class="team-role">Founder &amp; Strategic Director</p>
@@ -1010,81 +1105,98 @@
                     <h3>Dr. Sanjay Kumar</h3>
                     <a class="team-li-btn" href="https://www.linkedin.com/in/sanjay-kumar-phd-61142579/" target="_blank" rel="noopener" aria-label="Dr. Sanjay Kumar on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
                   </div>
-                  <div class="team-inst-badges" aria-label="Dr. Sanjay Kumar institutions">
-                    <span class="team-inst-badge">
-                      <img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=hks.harvard.edu" alt="Harvard Kennedy School">
-                    </span>
-                    <span class="team-inst-badge">
-                      <img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt="Harvard Mittal South Asia Institute">
-                    </span>
-                    <span class="team-inst-badge">
-                      <img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=upgrad.com" alt="upGrad">
-                    </span>
-                    <span class="team-inst-badge">
-                      <img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=utoronto.ca" alt="University of Toronto">
-                    </span>
-                    <span class="team-inst-badge">
-                      <img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=sewabharat.org" alt="SEWA Bharat">
-                    </span>
-                  </div>
                 </div>
                 <p>Harvard Kennedy School alumnus and former India Country Director, Harvard Lakshmi Mittal South Asia Institute. Leads admissions strategy and personally shapes each student's direction.</p>
+                <ul class="team-creds">
+                  <li><b>MPA</b><span>Harvard Kennedy School</span></li>
+                  <li><b>PhD</b><span>Jawaharlal Nehru University</span></li>
+                  <li><b>India Country Director</b><span>Harvard Mittal South Asia Institute</span></li>
+                  <li><b>Author</b><span>Katihar to Kennedy</span></li>
+                </ul>
               </div>
             </article>
 
-            <div class="team-support-stack">
-              <article class="team-person team-support">
-                <div class="team-photo" role="img" aria-label="Rajat Sethi">
-                  <img loading="lazy" src="exec-team-pics/rajat.svg" data-blue="exec-team-pics-blue/rajat.svg" alt="Rajat Sethi">
-                </div>
-                <div class="team-person-copy">
-                  <p class="team-role">Strategic Advisory Council</p>
-                  <div class="team-name-row">
-                    <div class="team-name-li">
-                      <h3>Rajat Sethi</h3>
-                      <a class="team-li-btn" href="https://www.linkedin.com/in/sethirajat/" target="_blank" rel="noopener" aria-label="Rajat Sethi on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                    </div>
-                    <div class="team-inst-badges" aria-label="Rajat Sethi institutions">
-                      <span class="team-inst-badge">
-                        <img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt="Harvard">
-                      </span>
-                      <span class="team-inst-badge">
-                        <img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=mit.edu" alt="MIT Sloan">
-                      </span>
-                      <span class="team-inst-badge">
-                        <img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=iitkgp.ac.in" alt="IIT Kharagpur">
-                      </span>
-                    </div>
-                  </div>
-                  <p>Harvard, MIT Sloan, and IIT Kharagpur alumnus. Author, policy strategist, and co-founder of QuBeats.</p>
-                </div>
-              </article>
+          </div>
+        </div>
+      </div>
+    </section>
 
-              <article class="team-person team-support">
-                <div class="team-photo" role="img" aria-label="Rajiv Gupta">
-                  <img loading="lazy" src="exec-team-pics/rajiv.svg" data-blue="exec-team-pics-blue/rajiv.svg" alt="Rajiv Gupta">
-                </div>
-                <div class="team-person-copy">
-                  <p class="team-role">Strategic Advisory Council</p>
-                  <div class="team-name-row">
-                    <div class="team-name-li">
-                      <h3>Rajiv Gupta</h3>
-                      <a class="team-li-btn" href="https://www.linkedin.com/in/rajiv-gupta-891a25b/" target="_blank" rel="noopener" aria-label="Rajiv Gupta on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                    </div>
-                    <div class="team-inst-badges" aria-label="Rajiv Gupta institutions">
-                      <span class="team-inst-badge">
-                        <img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt="Harvard">
-                      </span>
-                      <span class="team-inst-badge">
-                        <img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=mastersunion.org" alt="Masters' Union">
-                      </span>
-                    </div>
-                  </div>
-                  <p>Chairperson, School of Family Business at Masters' Union. Author of <em>Lala Company</em> and founder of Reverentia Family Business Advisors.</p>
-                </div>
-              </article>
-
+    <section class="section dark counsel-section" aria-labelledby="counsel-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow light">The counsel</p>
+            <h2 class="section-title" id="counsel-title">The people behind the program design.</h2>
+          </div>
+          <p class="section-copy">A board that has sat on the other side of the table. They review the standard we hold students to, and the counsel we give their families.</p>
+        </div>
+        <div class="counsel-carousel reveal">
+          <div class="counsel-wall" id="counselTrack">
+            <div class="counsel-tile">
+              <img class="counsel-portrait" loading="lazy" src="counsel-portraits/ashokmittal.webp" alt="Ashok Mittal">
+              <img class="counsel-crest" loading="lazy" src="counsel-logos/harvard.png" alt="Harvard University">
+              <div class="counsel-band">
+                <strong>Ashok Mittal</strong>
+                <span>President, Harvard Club of India</span>
+              </div>
             </div>
+            <div class="counsel-tile">
+              <img class="counsel-portrait" loading="lazy" src="counsel-portraits/adwait.webp" alt="Adwait Vikram Singh">
+              <img class="counsel-crest" loading="lazy" src="counsel-logos/harvard.png" alt="Harvard University">
+              <div class="counsel-band">
+                <strong>Adwait Vikram Singh</strong>
+                <span>Vice President, Harvard Club of India</span>
+              </div>
+            </div>
+            <div class="counsel-tile">
+              <img class="counsel-portrait" loading="lazy" src="counsel-portraits/amit.webp" alt="Amit Singh Chauhan">
+              <img class="counsel-crest" loading="lazy" src="counsel-logos/harvard.png" alt="Harvard University">
+              <div class="counsel-band">
+                <strong>Amit Singh Chauhan</strong>
+                <span>Secretary, Harvard Club of India</span>
+              </div>
+            </div>
+            <div class="counsel-tile">
+              <img class="counsel-portrait" loading="lazy" src="counsel-portraits/ishira.webp" alt="Ishira Mehta">
+              <img class="counsel-crest" loading="lazy" src="counsel-logos/lse.png" alt="London School of Economics">
+              <div class="counsel-band">
+                <strong>Ishira Mehta</strong>
+                <span>Harvard &middot; LSE &middot; formerly World Bank</span>
+              </div>
+            </div>
+            <div class="counsel-tile">
+              <img class="counsel-portrait" loading="lazy" src="counsel-portraits/sunita.webp" alt="Sunita Swaraj">
+              <img class="counsel-crest" loading="lazy" src="counsel-logos/harvard.png" alt="Harvard University">
+              <div class="counsel-band">
+                <strong>Sunita Swaraj</strong>
+                <span>Harvard GSE &middot; Harvard Kennedy School</span>
+              </div>
+            </div>
+            <div class="counsel-tile">
+              <img class="counsel-portrait" loading="lazy" src="counsel-portraits/rajat.webp" alt="Rajat Sethi">
+              <img class="counsel-crest" loading="lazy" src="counsel-logos/mit.png" alt="Massachusetts Institute of Technology">
+              <div class="counsel-band">
+                <strong>Rajat Sethi</strong>
+                <span>Harvard &middot; MIT Sloan &middot; IIT Kharagpur</span>
+              </div>
+            </div>
+            <div class="counsel-tile">
+              <img class="counsel-portrait" loading="lazy" src="counsel-portraits/rajiv.webp" alt="Rajiv Gupta">
+              <img class="counsel-crest" loading="lazy" src="counsel-logos/harvard.png" alt="Harvard University">
+              <div class="counsel-band">
+                <strong>Rajiv Gupta</strong>
+                <span>Harvard Business School &middot; Masters&rsquo; Union</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="counsel-nav">
+            <button class="outcome-btn" id="counselPrev" aria-label="Previous advisors" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="outcome-btn" id="counselNext" aria-label="More advisors">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -1100,36 +1212,36 @@
           <p class="section-copy">A representative selection across the US, UK, Europe, and Canada.</p>
         </div>
         <div class="universities reveal">
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt=""><strong>Harvard</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=yale.edu" alt=""><strong>Yale</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=princeton.edu" alt=""><strong>Princeton</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=ox.ac.uk" alt=""><strong>Oxford</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=cam.ac.uk" alt=""><strong>Cambridge</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=columbia.edu" alt=""><strong>Columbia</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=upenn.edu" alt=""><strong>Penn</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=stanford.edu" alt=""><strong>Stanford</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=mit.edu" alt=""><strong>MIT</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=brown.edu" alt=""><strong>Brown</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=cornell.edu" alt=""><strong>Cornell</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=jhu.edu" alt=""><strong>Johns Hopkins</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=imperial.ac.uk" alt=""><strong>Imperial</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=lse.ac.uk" alt=""><strong>LSE</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=cmu.edu" alt=""><strong>Carnegie Mellon</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=nyu.edu" alt=""><strong>NYU</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=kcl.ac.uk" alt=""><strong>King's College</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=manchester.ac.uk" alt=""><strong>Manchester</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=warwick.ac.uk" alt=""><strong>Warwick</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=durham.ac.uk" alt=""><strong>Durham</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=tufts.edu" alt=""><strong>Tufts</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=northeastern.edu" alt=""><strong>Northeastern</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=utoronto.ca" alt=""><strong>Toronto</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=hec.edu" alt=""><strong>HEC Paris</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=essec.edu" alt=""><strong>ESSEC</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=unibocconi.it" alt=""><strong>Bocconi</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=ie.edu" alt=""><strong>IE Business</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=illinois.edu" alt=""><strong>UIUC</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=bu.edu" alt=""><strong>Boston University</strong></div>
-          <div class="university"><img loading="lazy" src="https://www.google.com/s2/favicons?sz=64&domain=psu.edu" alt=""><strong>Penn State</strong></div>
+          <div class="university" style="--tile: #A51C30;"><img loading="lazy" src="uni-logos/harvard.png" alt="Harvard University"></div>
+          <div class="university" style="--tile: #00356B;"><img loading="lazy" src="uni-logos/yale.png" alt="Yale University"></div>
+          <div class="university" style="--tile: #8C1515;"><img loading="lazy" src="uni-logos/stanford.png" alt="Stanford University"></div>
+          <div class="university" style="--tile: #E77500;"><img loading="lazy" src="uni-logos/princeton.png" alt="Princeton University"></div>
+          <div class="university" style="--tile: #A31F34;"><img loading="lazy" src="uni-logos/mit.png" alt="Massachusetts Institute of Technology"></div>
+          <div class="university" style="--tile: #1D4F91;"><img loading="lazy" src="uni-logos/columbia.png" alt="Columbia University"></div>
+          <div class="university" style="--tile: #B31B1B;"><img loading="lazy" src="uni-logos/cornell.png" alt="Cornell University"></div>
+          <div class="university" style="--tile: #011F5B;"><img loading="lazy" src="uni-logos/penn.png" alt="University of Pennsylvania"></div>
+          <div class="university" style="--tile: #4E3629;"><img loading="lazy" src="uni-logos/brown.png" alt="Brown University"></div>
+          <div class="university" style="--tile: #002D72;"><img loading="lazy" src="uni-logos/johns-hopkins.png" alt="Johns Hopkins University"></div>
+          <div class="university" style="--tile: #002147;"><img loading="lazy" src="uni-logos/oxford.png" alt="University of Oxford"></div>
+          <div class="university" style="--tile: #D40032;"><img loading="lazy" src="uni-logos/lse.png" alt="London School of Economics"></div>
+          <div class="university" style="--tile: #57806E;"><img loading="lazy" src="uni-logos/cambridge.png" alt="University of Cambridge"></div>
+          <div class="university" style="--tile: #D6001C;"><img loading="lazy" src="uni-logos/king-s-college-london.png" alt="King&#39;s College London"></div>
+          <div class="university" style="--tile: #003E74;"><img loading="lazy" src="uni-logos/imperial.png" alt="Imperial College London"></div>
+          <div class="university" style="--tile: #C41230;"><img loading="lazy" src="uni-logos/carnegie-mellon.png" alt="Carnegie Mellon University"></div>
+          <div class="university" style="--tile: #57068C;"><img loading="lazy" src="uni-logos/nyu.png" alt="New York University"></div>
+          <div class="university" style="--tile: #D41B2C;"><img loading="lazy" src="uni-logos/northeastern.png" alt="Northeastern University"></div>
+          <div class="university" style="--tile: #3E8EDE;"><img loading="lazy" src="uni-logos/tufts.png" alt="Tufts University"></div>
+          <div class="university" style="--tile: #CC0000;"><img loading="lazy" src="uni-logos/boston-university.png" alt="Boston University"></div>
+          <div class="university" style="--tile: #5F259F;"><img loading="lazy" src="uni-logos/manchester.png" alt="The University of Manchester"></div>
+          <div class="university" style="--tile: #002A5C;"><img loading="lazy" src="uni-logos/toronto.png" alt="University of Toronto"></div>
+          <div class="university" style="--tile: #68246D;"><img loading="lazy" src="uni-logos/durham.png" alt="Durham University"></div>
+          <div class="university" style="--tile: #13294B;"><img loading="lazy" src="uni-logos/uiuc.png" alt="University of Illinois Urbana-Champaign"></div>
+          <div class="university" style="--tile: #3C1053;"><img loading="lazy" src="uni-logos/warwick.png" alt="The University of Warwick"></div>
+          <div class="university" style="--tile: #041E42;"><img loading="lazy" src="uni-logos/penn-state.png" alt="Penn State"></div>
+          <div class="university" style="--tile: #1A1A1A;"><img loading="lazy" src="uni-logos/essec.png" alt="ESSEC Business School"></div>
+          <div class="university" style="--tile: #002855;"><img loading="lazy" src="uni-logos/hec-paris.png" alt="HEC Paris"></div>
+          <div class="university" style="--tile: #0033A0;"><img loading="lazy" src="uni-logos/ie.png" alt="IE University"></div>
+          <div class="university" style="--tile: #1B365D;"><img loading="lazy" src="uni-logos/bocconi.png" alt="Bocconi University"></div>
         </div>
       </div>
     </section>
@@ -1230,6 +1342,7 @@
           <h3>Explore</h3>
           <ul>
             <li><a href="method.html">Method</a></li>
+            <li><a href="founder.html">Founder</a></li>
             <li><a href="results.html">Results</a></li>
             <li><a href="fit.html">Right Fit</a></li>
             <li><a href="team.html">Team</a></li>
@@ -1408,6 +1521,38 @@
       function cardStep() {
         const card = track.querySelector('.outcome-card');
         return card ? card.offsetWidth + 14 : 300;
+      }
+
+      prevBtn.addEventListener('click', () => {
+        track.scrollBy({ left: -cardStep(), behavior: 'smooth' });
+      });
+
+      nextBtn.addEventListener('click', () => {
+        track.scrollBy({ left: cardStep(), behavior: 'smooth' });
+      });
+
+      function updateButtons() {
+        prevBtn.disabled = track.scrollLeft <= 1;
+        nextBtn.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+      }
+
+      track.addEventListener('scroll', updateButtons, { passive: true });
+      window.addEventListener('resize', updateButtons);
+      updateButtons();
+    }());
+
+    // Counsel rail
+    (function () {
+      const track = document.getElementById('counselTrack');
+      const prevBtn = document.getElementById('counselPrev');
+      const nextBtn = document.getElementById('counselNext');
+      if (!track || !prevBtn || !nextBtn) return;
+
+      function cardStep() {
+        const card = track.querySelector('.counsel-tile');
+        if (!card) return 300;
+        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        return card.offsetWidth + gap;
       }
 
       prevBtn.addEventListener('click', () => {

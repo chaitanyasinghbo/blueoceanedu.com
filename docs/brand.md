@@ -52,6 +52,69 @@ holistic, passionate, dedicated, committed, transformative, best-in-class, end-t
 
 ---
 
+## Ocean Ember (Brand Guidelines v1.0, July 2026)
+
+The identity below is the new brand system, delivered as `Blue Ocean new assets/Blue Ocean Brand Guide.pdf`. It is live across the whole site, carried by `ocean-ember.css`. The visual identity documented further down is what it replaced, kept for reference only. Do not mix the two.
+
+The voice does not change under Ocean Ember. Everything in the Voice section above still holds.
+
+### The name
+
+`Blue Ocean Education Consulting` is the full name and appears in the logo lockup, legal documents, and letterheads. In prose, write `Blue Ocean Education` on first mention and `Blue Ocean` after that. Never write BOE where a family can see it.
+
+### The six colours
+
+| Colour | Hex | Job |
+|---|---|---|
+| Core | `#243747` | The anchor. Covers, the mark, headings, dark grounds |
+| Support | `#5089B5` | The second voice. Charts, links, secondary panels |
+| Signal | `#E0600E` | The accent. The action, the number that matters |
+| Surface | `#E5DED3` | The paper. Default background for everything |
+| Ink | `#13171B` | Body copy. Always Ink on Surface |
+| Highlight | `#F49904` | Chart fills and highlights, never text |
+
+Surface carries the page, Core anchors it, Signal stays rare. Trusted pairs: Ink on Surface at 13.5:1, headings and the mark at 9.2:1, reversed panels at 9.2:1, Ink on Highlight at 8.1:1. Signal on Surface is 2.7:1, so it is allowed only at 18px bold and up, or as a graphic.
+
+On the site, Signal carries three things and nothing else: the primary button, the accented word in a display headline, and the single key number. Support and its light tints carry every other accent, including labels on Core and the qualifying checkmarks.
+
+### Third-party marks
+
+Two walls on the site are built from other organisations' logos, and they take opposite treatments on purpose.
+
+The **admits wall** gives each university its own colour, because thirty different colours are the point: the wall reads as thirty separate institutions before a single name is read.
+
+The **press strip** and the **alumni strip** give every mark the same ground, Core, with the mark knocked out in white. Eight mastheads in eight brand colours read as a banner ad, not as coverage, and the same is true of five university marks in five. One ground, one mark colour, no exceptions.
+
+The rule that separates them: **borrowed colour is allowed only where the count is the claim.** Everywhere else a third-party mark appears, it sets in one colour on a Blue Ocean ground. This is why the counsel wall carries Harvard crimson (the claim is that all seven are Harvard alumni) and why `.team-li-btn` gave up LinkedIn's blue.
+
+**Signal never carries a data series.** Charts, diagram fills, and stat rows use Core, Support, its tints, and Highlight. This is the rule that keeps a page from reading as orange: the moment two figures in one panel are Signal, neither is an accent.
+
+`.proof-stat-card strong` is the one Signal figure on the results pages, and there is exactly one such card (`6x`). If that stack ever grows, Signal has to be scoped to the headline figure and the rest moved to Support, or four orange numbers turn the accent into the background.
+
+### Type
+
+Neue Haas Grotesk, two cuts. Display for 20px and up, Text below 20px. Display never goes below 20px. Light weights never go below 14px. Body copy is sentence case, never longer than about 65 characters a line. Caps are for labels only. The Round cuts stay unused.
+
+The 20px floor is not a preference. Display at 13px sitting beside Text at 14px reads as two unrelated typefaces on the same line, which is how a stale font gets noticed. Any heading under 20px becomes a label in Text, not a small Display heading.
+
+Labels are Text Bold, uppercase, tracked. Weight is what gives a label presence on a dark ground. Lightening the colour alone leaves it thin and recessive even when the contrast ratio passes.
+
+Fallback when Haas is not installed: Arial, or Helvetica Neue on a Mac. Nothing else.
+
+The Neue Haas files in `fonts/` are trial versions. Buy the Display and Text licences before anything public ships.
+
+### The mark
+
+Three versions. The lockup is the default for websites. The BO mark is for square and social spaces where the name is already nearby. The B is for avatars, favicons, and app icons.
+
+The mark sets in one colour at a time, solid, never outlined, rotated, stretched, shadowed, or recoloured to Signal or Highlight. Both counters stay open, because the counters carry the two stories: a student in profile under a whale tail in the B, and the whale in the O. Clear space is at least half the O's height on every side. On photographs, place it on a solid panel first.
+
+Minimum sizes: lockup 120px, BO mark 36px, B 24px.
+
+### What Ocean Ember retires
+
+EB Garamond, Bricolage Grotesque, the italic serif display voice, the large italic eyebrow, oklch brand tokens, the green and blue theme toggle, and the circle-and-triangle placeholder mark.
+
 ## Visual Identity
 
 | Token | Value |

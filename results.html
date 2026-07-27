@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- @analytics — GA4 and the Meta pixel, one block, same on every page.
+
+       The dataLayer event on line 8 is the only line that changes per page:
+       tools/build-landing-pages.py swaps SITE_PAGEVIEW for the landing
+       page's own event name. Keep the block byte-identical everywhere else
+       or that swap silently stops matching. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2STB24PJGQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2STB24PJGQ');
+    dataLayer.push({ "event": "SITE_PAGEVIEW" });
+  </script>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '754270597536586');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=754270597536586&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <!-- /@analytics -->
   <meta charset="UTF-8">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Results | Blue Ocean Education</title>
   <meta name="description" content="Blue Ocean students are admitted at 6x the general applicant rate at Ivy League and top-15 universities. 100+ acceptances at Harvard, Yale, Oxford, Cambridge, and beyond.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="main.css">
   <style>
     .theme-toggle {
@@ -78,6 +107,7 @@
       .mobile-panel-phone:hover { color: color-mix(in oklch, var(--paper) 62%, var(--forest)); }
     }
   </style>
+  <link rel="stylesheet" href="ocean-ember.css">
 </head>
 <body>
   <header class="site-header">
@@ -99,6 +129,7 @@
 
       <ul class="nav-links" id="navLinks">
         <li><a href="method.html">Method</a></li>
+        <li><a href="founder.html">Founder</a></li>
         <li><a href="results.html">Results</a></li>
         <li><a href="fit.html">Right Fit</a></li>
         <li><a href="team.html">Team</a></li>
@@ -119,6 +150,7 @@
   <div class="mobile-panel" id="mobilePanel">
     <ul class="mobile-panel-links">
       <li><a href="method.html">Method</a></li>
+      <li><a href="founder.html">Founder</a></li>
       <li><a href="results.html">Results</a></li>
       <li><a href="fit.html">Right Fit</a></li>
       <li><a href="team.html">Team</a></li>
@@ -229,34 +261,6 @@
               </div>
 
               <div class="acceptance-row">
-                <div class="acceptance-school">UPenn</div>
-                <div class="acceptance-bars">
-                  <div class="acceptance-mini-bar">
-                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 8.2%;"></span></div>
-                    <span class="acceptance-value">4.9%</span>
-                  </div>
-                  <div class="acceptance-main-bar">
-                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 49%;"></span></div>
-                    <span class="acceptance-value">29.4%</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="acceptance-row">
-                <div class="acceptance-school">Dartmouth</div>
-                <div class="acceptance-bars">
-                  <div class="acceptance-mini-bar">
-                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 9.7%;"></span></div>
-                    <span class="acceptance-value">5.8%</span>
-                  </div>
-                  <div class="acceptance-main-bar">
-                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 58%;"></span></div>
-                    <span class="acceptance-value">34.8%</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="acceptance-row">
                 <div class="acceptance-school">Princeton</div>
                 <div class="acceptance-bars">
                   <div class="acceptance-mini-bar">
@@ -297,7 +301,65 @@
                   </div>
                 </div>
               </div>
+
+              <div class="acceptance-row">
+                <div class="acceptance-school">Brown</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 9.2%;"></span></div>
+                    <span class="acceptance-value">5.5%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 55%;"></span></div>
+                    <span class="acceptance-value">33.0%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="acceptance-row">
+                <div class="acceptance-school">Johns Hopkins</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 10%;"></span></div>
+                    <span class="acceptance-value">6.0%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 60%;"></span></div>
+                    <span class="acceptance-value">36.0%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="acceptance-row">
+                <div class="acceptance-school">Oxford</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 26.7%;"></span></div>
+                    <span class="acceptance-value">16.0%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 55.3%;"></span></div>
+                    <span class="acceptance-value">33.2%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="acceptance-row">
+                <div class="acceptance-school">Cambridge</div>
+                <div class="acceptance-bars">
+                  <div class="acceptance-mini-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 31.7%;"></span></div>
+                    <span class="acceptance-value">19.0%</span>
+                  </div>
+                  <div class="acceptance-main-bar">
+                    <div class="proof-bar-track"><span class="proof-bar-fill" style="--bar-width: 59.5%;"></span></div>
+                    <span class="acceptance-value">35.7%</span>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <p class="acceptance-source">General admit rates are the figures each university publishes for its most recent cycles. Blue Ocean rates are the admit rates of our students applying to that university across recent cycles.</p>
           </div>
         </div>
       </div>
@@ -310,14 +372,14 @@
             <p class="eyebrow light">Outcomes</p>
             <h2 class="section-title">Proof, handled with restraint.</h2>
           </div>
-          <p class="section-copy">Blue Ocean students have earned offers from the most selective universities in the world. The names matter, but so does how the student got there.</p>
+          <p class="section-copy">Blue Ocean students have earned offers from the most selective universities in the world, and an average of Rs 1 Cr each in scholarship. The names matter, but so does how the student got there.</p>
         </div>
 
         <div class="outcome-carousel reveal">
           <div class="outcome-track" id="outcomeTrack">
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-green/arunima.svg" data-blue="admits-blue/arunima.svg" alt="Arunima, admitted to Harvard University">
+              <img class="outcome-photo" src="admits-blue/arunima.svg" alt="Arunima, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Arunima</strong>
@@ -330,7 +392,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-green/prateek.svg" data-blue="admits-blue/prateek.svg" alt="Prateek, admitted to Harvard University">
+              <img class="outcome-photo" src="admits-blue/prateek.svg" alt="Prateek, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Prateek</strong>
@@ -343,7 +405,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-green/adya.svg" data-blue="admits-blue/adya.svg" alt="Adya, admitted to Harvard University">
+              <img class="outcome-photo" src="admits-blue/adya.svg" alt="Adya, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Adya</strong>
@@ -356,7 +418,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-green/tathagata.svg" data-blue="admits-blue/tathagata.svg" alt="Tathagata, admitted to Cornell and Johns Hopkins">
+              <img class="outcome-photo" src="admits-blue/tathagata.svg" alt="Tathagata, admitted to Cornell and Johns Hopkins">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Tathagata</strong>
@@ -370,7 +432,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-green/seema.svg" data-blue="admits-blue/seema.svg" alt="Seema, admitted to Harvard University">
+              <img class="outcome-photo" src="admits-blue/seema.svg" alt="Seema, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Seema</strong>
@@ -383,7 +445,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-green/palakshi.svg" data-blue="admits-blue/palakshi.svg" alt="Palakshi, admitted to Harvard University">
+              <img class="outcome-photo" src="admits-blue/palakshi.svg" alt="Palakshi, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Palakshi</strong>
@@ -396,7 +458,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-green/shreejeet.svg" data-blue="admits-blue/shreejeet.svg" alt="Shreejeet, admitted to Northeastern, University of Toronto, and Boston University">
+              <img class="outcome-photo" src="admits-blue/shreejeet.svg" alt="Shreejeet, admitted to Northeastern, University of Toronto, and Boston University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Shreejeet</strong>
@@ -411,7 +473,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-green/manya.svg" data-blue="admits-blue/manya.svg" alt="Manya, admitted to Brown University and Carnegie Mellon">
+              <img class="outcome-photo" src="admits-blue/manya.svg" alt="Manya, admitted to Brown University and Carnegie Mellon">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Manya</strong>
@@ -439,6 +501,207 @@
       </div>
     </section>
 
+<section class="section dark" aria-labelledby="student-voices-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow light">Student voices</p>
+            <h2 class="section-title" id="student-voices-title">In their own words.</h2>
+          </div>
+          <p class="section-copy">Students who did the work, on what the years actually felt like.</p>
+        </div>
+        <div class="voices">
+          <div class="voice-row reveal">
+            <div class="voice-copy">
+              <div class="voice-name">
+                <h3>Arunima</h3>
+                <span class="voice-meta">Admitted to Harvard</span>
+              </div>
+              <blockquote>I was honestly very nervous about the whole process. Dr. Sanjay and the team were with me at every step, pushing me when I slacked and taking my calls at odd hours before deadlines. My essays went through more drafts than I can count, and every single one came back better. Thank you Team Blue Ocean for believing in me more than I believed in myself.</blockquote>
+            </div>
+            <div class="voice-photo">
+              <img loading="lazy" src="admits-blue/arunima.svg" alt="Arunima">
+            </div>
+          </div>
+
+          <div class="voice-row alt reveal">
+            <div class="voice-copy">
+              <div class="voice-name">
+                <h3>Anushka</h3>
+                <span class="voice-meta">Admitted to Columbia and Cambridge</span>
+              </div>
+              <blockquote>When I joined, all I knew was that I wanted law. The team got me working at an actual criminal law firm, which gave me so much to write and talk about, and the mock interviews meant Cambridge did not scare me on the day. Getting Columbia and Cambridge both still feels unreal to me.</blockquote>
+            </div>
+            <div class="voice-photo">
+              <img loading="lazy" src="admits-blue/anushka.png" alt="Anushka">
+            </div>
+          </div>
+
+          <div class="voice-row reveal">
+            <div class="voice-copy">
+              <div class="voice-name">
+                <h3>Manya</h3>
+                <span class="voice-meta">Admitted to Brown and Carnegie Mellon</span>
+              </div>
+              <blockquote>I came in grade 10 with decent grades and no real direction. The team helped me find human-centric design and set up research and internships around it, and suddenly everything I did connected. Every essay draft came back within a day or two, with detailed feedback. I got Brown and Carnegie Mellon with a scholarship, and my parents still bring it up at every family function.</blockquote>
+            </div>
+            <div class="voice-photo">
+              <img loading="lazy" src="admits-blue/manya.svg" alt="Manya">
+            </div>
+          </div>
+
+          <div class="voice-row alt reveal">
+            <div class="voice-copy">
+              <div class="voice-name">
+                <h3>Tathagata</h3>
+                <span class="voice-meta">Admitted to Cornell and Johns Hopkins</span>
+              </div>
+              <blockquote>Honestly, I walked in with just a list of rankings. The team kept asking what I actually enjoyed until we found fintech, and after that everything in my profile pointed one way. The counselors took my panic calls even at 2 am before the Cornell deadline. Forever grateful to Dr. Sanjay and the whole team.</blockquote>
+            </div>
+            <div class="voice-photo">
+              <img loading="lazy" src="admits-blue/tathagata.svg" alt="Tathagata">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="parent-voices-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Parent voices</p>
+            <h2 class="section-title" id="parent-voices-title">What parents tell us.</h2>
+          </div>
+          <p class="section-copy">Families work with us for years, through report cards, rewrites, and decision days. Here is how they describe it.</p>
+        </div>
+        <div class="voices">
+          <div class="voice-row reveal">
+            <div class="voice-copy">
+              <div class="voice-name">
+                <h3>Shilpi</h3>
+                <span class="voice-meta">Shreejeet's mother</span>
+              </div>
+              <blockquote>Dr. Sanjay and his team worked wonders with my son, helping us get offers from colleges with under 5% acceptance rates. I would like to thank Team Blue Ocean for their constant guidance, handholding, and timely feedback throughout this journey. Their counselors were available 24/7 to take our calls, with swift support on every college related matter. Their help with essays was truly phenomenal, elevating the quality many times over.</blockquote>
+            </div>
+            <div class="voice-photo">
+              <img loading="lazy" src="parent-voices/shilpi.png" alt="Shilpi">
+            </div>
+          </div>
+
+          <div class="voice-row alt reveal">
+            <div class="voice-copy">
+              <div class="voice-name">
+                <h3>Udham</h3>
+                <span class="voice-meta">Randitya's father</span>
+              </div>
+              <blockquote>Dr. Sanjay and Team Blue Ocean's support has been pivotal throughout our son's entire college admission journey. The team was always accessible and approachable, and patient with all of our questions, and we had a lot. We had acceptances from almost all of our applications and received numerous scholarships. They perfected our UK application, which helped us get into every UK college we tried, and we got into our first choice, a college with an acceptance rate under 6%, which we did not think was possible with our profile. They made the whole experience easier and special for our family.</blockquote>
+            </div>
+            <div class="voice-photo">
+              <img loading="lazy" src="parent-voices/udham.png" alt="Udham">
+            </div>
+          </div>
+
+          <div class="voice-row reveal">
+            <div class="voice-copy">
+              <div class="voice-name">
+                <h3>Mamta</h3>
+                <span class="voice-meta">Ananya's mother</span>
+              </div>
+              <blockquote>Blue Ocean, under the expert guidance of Sanjay ji, was instrumental in shaping our daughter's college admissions journey. The team opened doors to opportunities tailored precisely to her goals in Economics, including a workshop in Delhi and research work. Their understanding of university admissions, exam prep, and essay strategy gave us a clear edge. She secured offers from King's College London, Warwick, Manchester, UIUC, and Wisconsin-Madison. We could not have asked for a better partner in this process.</blockquote>
+            </div>
+            <div class="voice-photo">
+              <img loading="lazy" style="--focus: center 38%;" src="parent-voices/mamta.png" alt="Mamta">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="distinction-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Distinction, proven</p>
+            <h2 class="section-title" id="distinction-title">The work leaves a record.</h2>
+          </div>
+          <p class="section-copy">Certificates are cheap, so we are selective. These are the summer programs our students have been admitted to, and the journals that have published their research.</p>
+        </div>
+
+        <p class="proof-wall-label">Summer programs our students have been admitted to</p>
+        <div class="program-wall reveal">
+          <div class="program-tile" style="--tile: #A51C30;">
+            <img loading="lazy" src="proof-logos/harvard.png" alt="Harvard University">
+            <span>Secondary School Program</span>
+          </div>
+          <div class="program-tile" style="--tile: #00356B;">
+            <img loading="lazy" src="proof-logos/yale.png" alt="Yale University">
+            <span>Young Global Scholars</span>
+          </div>
+          <div class="program-tile" style="--tile: #8C1515;">
+            <img loading="lazy" src="proof-logos/stanford.png" alt="Stanford University">
+            <span>Pre-Collegiate Studies</span>
+          </div>
+          <div class="program-tile" style="--tile: #A31F34;">
+            <img loading="lazy" src="proof-logos/mit.png" alt="MIT">
+            <span>Beaver Works Summer Institute</span>
+          </div>
+          <div class="program-tile" style="--tile: #1D4F91;">
+            <img loading="lazy" src="proof-logos/columbia.png" alt="Columbia University">
+            <span>Pre-College Program</span>
+          </div>
+          <div class="program-tile" style="--tile: #011F5B;">
+            <img loading="lazy" src="proof-logos/penn.png" alt="University of Pennsylvania">
+            <span>Wharton Global Youth Program</span>
+          </div>
+          <div class="program-tile" style="--tile: #4E3629;">
+            <img loading="lazy" src="proof-logos/brown.png" alt="Brown University">
+            <span>Pre-College Programs</span>
+          </div>
+          <div class="program-tile" style="--tile: #B31B1B;">
+            <img loading="lazy" src="proof-logos/cornell.png" alt="Cornell University">
+            <span>Precollege Studies</span>
+          </div>
+          <div class="program-tile" style="--tile: #800000;">
+            <img loading="lazy" src="proof-logos/chicago.png" alt="The University of Chicago">
+            <span>Summer Immersion</span>
+          </div>
+          <div class="program-tile" style="--tile: #002D72;">
+            <img loading="lazy" src="proof-logos/jhu.png" alt="Johns Hopkins University">
+            <span>Engineering Innovation</span>
+          </div>
+          <div class="program-tile" style="--tile: #041E42;">
+            <img loading="lazy" src="proof-logos/georgetown.png" alt="Georgetown University">
+            <span>Summer Academies</span>
+          </div>
+          <div class="program-tile" style="--tile: #0C2340;">
+            <img loading="lazy" src="proof-logos/notredame.png" alt="University of Notre Dame">
+            <span>Summer Scholars</span>
+          </div>
+        </div>
+
+        <p class="proof-wall-label">Where our students' research is published</p>
+        <div class="journal-wall reveal">
+          <div class="journal-tile">
+            <img loading="lazy" src="proof-logos/concord-review.png" alt="The Concord Review">
+            <span>History and the humanities, since 1987</span>
+          </div>
+          <div class="journal-tile">
+            <img loading="lazy" src="proof-logos/jei.png" alt="Journal of Emerging Investigators">
+            <span>Peer-reviewed science</span>
+          </div>
+          <div class="journal-tile">
+            <img loading="lazy" src="proof-logos/ijhsr.png" alt="International Journal of High School Research">
+            <span>STEM and social science</span>
+          </div>
+          <div class="journal-tile">
+            <img loading="lazy" src="proof-logos/jsr.png" alt="Journal of Student Research">
+            <span>All disciplines, peer-reviewed</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
 <section class="section compact paper-low" aria-labelledby="universities-title">
       <div class="wrap">
         <div class="section-head reveal">
@@ -449,36 +712,36 @@
           <p class="section-copy">A representative selection across the US, UK, Europe, and Canada.</p>
         </div>
         <div class="universities reveal">
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=harvard.edu" alt=""><strong>Harvard</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=yale.edu" alt=""><strong>Yale</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=princeton.edu" alt=""><strong>Princeton</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=ox.ac.uk" alt=""><strong>Oxford</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=cam.ac.uk" alt=""><strong>Cambridge</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=columbia.edu" alt=""><strong>Columbia</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=upenn.edu" alt=""><strong>Penn</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=stanford.edu" alt=""><strong>Stanford</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=mit.edu" alt=""><strong>MIT</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=brown.edu" alt=""><strong>Brown</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=cornell.edu" alt=""><strong>Cornell</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=jhu.edu" alt=""><strong>Johns Hopkins</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=imperial.ac.uk" alt=""><strong>Imperial</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=lse.ac.uk" alt=""><strong>LSE</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=cmu.edu" alt=""><strong>Carnegie Mellon</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=nyu.edu" alt=""><strong>NYU</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=kcl.ac.uk" alt=""><strong>King's College</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=manchester.ac.uk" alt=""><strong>Manchester</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=warwick.ac.uk" alt=""><strong>Warwick</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=durham.ac.uk" alt=""><strong>Durham</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=tufts.edu" alt=""><strong>Tufts</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=northeastern.edu" alt=""><strong>Northeastern</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=utoronto.ca" alt=""><strong>Toronto</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=hec.edu" alt=""><strong>HEC Paris</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=essec.edu" alt=""><strong>ESSEC</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=unibocconi.it" alt=""><strong>Bocconi</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=ie.edu" alt=""><strong>IE Business</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=illinois.edu" alt=""><strong>UIUC</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=bu.edu" alt=""><strong>Boston University</strong></div>
-          <div class="university"><img src="https://www.google.com/s2/favicons?sz=64&domain=psu.edu" alt=""><strong>Penn State</strong></div>
+          <div class="university" style="--tile: #A51C30;"><img loading="lazy" src="uni-logos/harvard.png" alt="Harvard University"></div>
+          <div class="university" style="--tile: #00356B;"><img loading="lazy" src="uni-logos/yale.png" alt="Yale University"></div>
+          <div class="university" style="--tile: #8C1515;"><img loading="lazy" src="uni-logos/stanford.png" alt="Stanford University"></div>
+          <div class="university" style="--tile: #E77500;"><img loading="lazy" src="uni-logos/princeton.png" alt="Princeton University"></div>
+          <div class="university" style="--tile: #A31F34;"><img loading="lazy" src="uni-logos/mit.png" alt="Massachusetts Institute of Technology"></div>
+          <div class="university" style="--tile: #1D4F91;"><img loading="lazy" src="uni-logos/columbia.png" alt="Columbia University"></div>
+          <div class="university" style="--tile: #B31B1B;"><img loading="lazy" src="uni-logos/cornell.png" alt="Cornell University"></div>
+          <div class="university" style="--tile: #011F5B;"><img loading="lazy" src="uni-logos/penn.png" alt="University of Pennsylvania"></div>
+          <div class="university" style="--tile: #4E3629;"><img loading="lazy" src="uni-logos/brown.png" alt="Brown University"></div>
+          <div class="university" style="--tile: #002D72;"><img loading="lazy" src="uni-logos/johns-hopkins.png" alt="Johns Hopkins University"></div>
+          <div class="university" style="--tile: #002147;"><img loading="lazy" src="uni-logos/oxford.png" alt="University of Oxford"></div>
+          <div class="university" style="--tile: #D40032;"><img loading="lazy" src="uni-logos/lse.png" alt="London School of Economics"></div>
+          <div class="university" style="--tile: #57806E;"><img loading="lazy" src="uni-logos/cambridge.png" alt="University of Cambridge"></div>
+          <div class="university" style="--tile: #D6001C;"><img loading="lazy" src="uni-logos/king-s-college-london.png" alt="King&#39;s College London"></div>
+          <div class="university" style="--tile: #003E74;"><img loading="lazy" src="uni-logos/imperial.png" alt="Imperial College London"></div>
+          <div class="university" style="--tile: #C41230;"><img loading="lazy" src="uni-logos/carnegie-mellon.png" alt="Carnegie Mellon University"></div>
+          <div class="university" style="--tile: #57068C;"><img loading="lazy" src="uni-logos/nyu.png" alt="New York University"></div>
+          <div class="university" style="--tile: #D41B2C;"><img loading="lazy" src="uni-logos/northeastern.png" alt="Northeastern University"></div>
+          <div class="university" style="--tile: #3E8EDE;"><img loading="lazy" src="uni-logos/tufts.png" alt="Tufts University"></div>
+          <div class="university" style="--tile: #CC0000;"><img loading="lazy" src="uni-logos/boston-university.png" alt="Boston University"></div>
+          <div class="university" style="--tile: #5F259F;"><img loading="lazy" src="uni-logos/manchester.png" alt="The University of Manchester"></div>
+          <div class="university" style="--tile: #002A5C;"><img loading="lazy" src="uni-logos/toronto.png" alt="University of Toronto"></div>
+          <div class="university" style="--tile: #68246D;"><img loading="lazy" src="uni-logos/durham.png" alt="Durham University"></div>
+          <div class="university" style="--tile: #13294B;"><img loading="lazy" src="uni-logos/uiuc.png" alt="University of Illinois Urbana-Champaign"></div>
+          <div class="university" style="--tile: #3C1053;"><img loading="lazy" src="uni-logos/warwick.png" alt="The University of Warwick"></div>
+          <div class="university" style="--tile: #041E42;"><img loading="lazy" src="uni-logos/penn-state.png" alt="Penn State"></div>
+          <div class="university" style="--tile: #1A1A1A;"><img loading="lazy" src="uni-logos/essec.png" alt="ESSEC Business School"></div>
+          <div class="university" style="--tile: #002855;"><img loading="lazy" src="uni-logos/hec-paris.png" alt="HEC Paris"></div>
+          <div class="university" style="--tile: #0033A0;"><img loading="lazy" src="uni-logos/ie.png" alt="IE University"></div>
+          <div class="university" style="--tile: #1B365D;"><img loading="lazy" src="uni-logos/bocconi.png" alt="Bocconi University"></div>
         </div>
       </div>
     </section>
@@ -521,6 +784,7 @@
           <h3>Explore</h3>
           <ul>
             <li><a href="method.html">Method</a></li>
+            <li><a href="founder.html">Founder</a></li>
             <li><a href="results.html">Results</a></li>
             <li><a href="fit.html">Right Fit</a></li>
             <li><a href="team.html">Team</a></li>
