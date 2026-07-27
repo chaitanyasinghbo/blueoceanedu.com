@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="220" viewBox="0 0 720 220" role="img" aria-labelledby="title desc">
+  <title id="title">Blue Ocean Education, Delhi Modern identity</title>
+  <desc id="desc">An abstract Delhi observatory arch and sun beside a variable-width wordmark.</desc>
+  <defs><style>@font-face{font-family:'Anek Latin';src:url('../assets/fonts/AnekLatin-VF.ttf') format('truetype');font-weight:100 800;font-stretch:75% 125%}</style></defs>
+  <rect width="720" height="220" fill="#f3eddf"/>
+  <g transform="translate(37 32)">
+    <path d="M0 0H156V156H0Z" fill="#361746"/>
+    <path d="M39 131V82C39 47 58 25 78 25C98 25 117 47 117 82V131Z" fill="#f3eddf"/>
+    <circle cx="78" cy="62" r="17" fill="#f4b92f"/>
+    <path d="M20 133L136 24" stroke="#db586f" stroke-width="9"/>
+  </g>
+  <g fill="#361746" font-family="Anek Latin, Avenir Next Condensed, Arial Narrow, sans-serif">
+    <text x="226" y="93" font-size="56" font-weight="720" font-stretch="expanded" letter-spacing="-.5">BLUE OCEAN</text>
+    <text x="229" y="139" font-size="23" font-weight="520" font-stretch="condensed" letter-spacing="6.6">EDUCATION</text>
+  </g>
+</svg>

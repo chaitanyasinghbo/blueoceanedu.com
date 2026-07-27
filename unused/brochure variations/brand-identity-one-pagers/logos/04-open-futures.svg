@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="220" viewBox="0 0 720 220" role="img" aria-labelledby="title desc">
+  <title id="title">Blue Ocean Education, Open Futures identity</title>
+  <desc id="desc">Three expanding portals beside a confident lowercase wordmark.</desc>
+  <defs><style>@font-face{font-family:'Familjen Grotesk';src:url('../assets/fonts/FamiljenGrotesk-VF.ttf') format('truetype');font-weight:400 700}</style></defs>
+  <rect width="720" height="220" fill="#ffd948"/>
+  <g transform="translate(35 30)" fill="none" stroke="#3428ee">
+    <path d="M18 156V77C18 44 39 19 70 19C101 19 122 44 122 77V156" stroke-width="13"/>
+    <path d="M41 156V88C41 69 52 55 70 55C88 55 99 69 99 88V156" stroke-width="13"/>
+    <path d="M64 156V105H76V156" stroke="#ff685f" stroke-width="13"/>
+  </g>
+  <g fill="#1d1830" font-family="Familjen Grotesk, Avenir Next, Arial, sans-serif">
+    <text x="207" y="92" font-size="54" font-weight="700" letter-spacing="-2.4">blueocean</text>
+    <text x="210" y="139" font-size="23" font-weight="560" letter-spacing="5.2">EDUCATION</text>
+  </g>
+</svg>

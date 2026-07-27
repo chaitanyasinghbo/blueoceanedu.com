@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="220" viewBox="0 0 720 220" role="img" aria-labelledby="title desc">
+  <title id="title">Blue Ocean Education, Field Notes identity</title>
+  <desc id="desc">An editorial bracket and handwritten stroke beside a scholarly wordmark.</desc>
+  <defs><style>@font-face{font-family:'Literata';src:url('../assets/fonts/Literata-VF.ttf') format('truetype');font-weight:200 900}@font-face{font-family:'Anek Latin';src:url('../assets/fonts/AnekLatin-VF.ttf') format('truetype');font-weight:100 800;font-stretch:75% 125%}</style></defs>
+  <rect width="720" height="220" fill="#f4eddf"/>
+  <g transform="translate(44 33)" fill="none">
+    <path d="M42 8H13V146H42" stroke="#211b17" stroke-width="6"/>
+    <path d="M104 8H133V146H104" stroke="#211b17" stroke-width="6"/>
+    <path d="M49 112C67 99 87 93 108 94" stroke="#b93627" stroke-width="9" stroke-linecap="round"/>
+    <circle cx="74" cy="62" r="24" stroke="#315b8a" stroke-width="5"/>
+    <path d="M54 62H94" stroke="#315b8a" stroke-width="5"/>
+  </g>
+  <g fill="#211b17">
+    <text x="228" y="91" font-family="Literata, Iowan Old Style, Georgia, serif" font-size="47" font-weight="620" letter-spacing="-1.4">Blue Ocean</text>
+    <text x="231" y="137" font-family="Anek Latin, Avenir Next, Arial, sans-serif" font-size="22" font-weight="560" letter-spacing="5.2">EDUCATION</text>
+  </g>
+</svg>

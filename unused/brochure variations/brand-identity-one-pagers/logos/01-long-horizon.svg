@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="220" viewBox="0 0 720 220" role="img" aria-labelledby="title desc">
+  <title id="title">Blue Ocean Education, Long Horizon identity</title>
+  <desc id="desc">An abstract horizon and rising point beside the Blue Ocean Education wordmark.</desc>
+  <defs><style>@font-face{font-family:'Schibsted Grotesk';src:url('../assets/fonts/SchibstedGrotesk-VF.ttf') format('truetype');font-weight:400 900}</style></defs>
+  <rect width="720" height="220" fill="#e8edf6"/>
+  <g transform="translate(34 34)" fill="none">
+    <path d="M8 82H142" stroke="#0b1836" stroke-width="6"/>
+    <path d="M8 82C42 31 101 31 142 82" stroke="#2f58f0" stroke-width="8"/>
+    <path d="M8 82C42 126 102 126 142 82" stroke="#0b1836" stroke-width="8"/>
+    <path d="M74 8L84 82H64Z" fill="#c8ff45" stroke="none"/>
+    <circle cx="74" cy="82" r="5" fill="#ff704f" stroke="none"/>
+  </g>
+  <g fill="#0b1836" font-family="Schibsted Grotesk, Avenir Next, Arial, sans-serif">
+    <text x="218" y="96" font-size="48" font-weight="760" letter-spacing="-1.8">Blue Ocean</text>
+    <text x="220" y="140" font-size="22" font-weight="560" letter-spacing="5.8">EDUCATION</text>
+  </g>
+</svg>

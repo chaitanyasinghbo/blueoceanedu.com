@@ -1,0 +1,98 @@
+[
+ [
+  "harvard",
+  "Harvard University",
+  "Secondary School Program",
+  "#A51C30"
+ ],
+ [
+  "yale",
+  "Yale University",
+  "Young Global Scholars",
+  "#00356B"
+ ],
+ [
+  "stanford",
+  "Stanford University",
+  "Pre-Collegiate Studies",
+  "#8C1515"
+ ],
+ [
+  "mit",
+  "MIT",
+  "Beaver Works Summer Institute",
+  "#A31F34"
+ ],
+ [
+  "columbia",
+  "Columbia University",
+  "Pre-College Program",
+  "#1D4F91"
+ ],
+ [
+  "penn",
+  "University of Pennsylvania",
+  "Wharton Global Youth Program",
+  "#011F5B"
+ ],
+ [
+  "brown",
+  "Brown University",
+  "Pre-College Programs",
+  "#4E3629"
+ ],
+ [
+  "cornell",
+  "Cornell University",
+  "Precollege Studies",
+  "#B31B1B"
+ ],
+ [
+  "chicago",
+  "The University of Chicago",
+  "Summer Immersion",
+  "#800000"
+ ],
+ [
+  "jhu",
+  "Johns Hopkins University",
+  "Engineering Innovation",
+  "#002D72"
+ ],
+ [
+  "georgetown",
+  "Georgetown University",
+  "Summer Academies",
+  "#041E42"
+ ],
+ [
+  "notredame",
+  "University of Notre Dame",
+  "Summer Scholars",
+  "#0C2340"
+ ],
+ [
+  "concord-review",
+  "The Concord Review",
+  "History and the humanities, since 1987",
+  null
+ ],
+ [
+  "jei",
+  "Journal of Emerging Investigators",
+  "Peer-reviewed science",
+  null
+ ],
+ [
+  "ijhsr",
+  "International Journal of High School Research",
+  "STEM and social science",
+  null
+ ],
+ [
+  "jsr",
+  "Journal of Student Research",
+  "All disciplines, peer-reviewed",
+  null
+ ]
+]
