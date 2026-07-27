@@ -134,30 +134,6 @@ h1, h2, h3,
 .cta-grid h2,
 .fit-block h3,
 .team-header h2,
-/* The institution card is pulled out of the flat-Surface list above because
-   it needs an image layer as well as a colour.
-
-   Its three photographs are `loading="lazy"` while `institutionFade` starts
-   at page load, so on a slow connection a visitor reaches the card before any
-   frame has arrived and sees the bare ground cycle through nothing. Measured
-   at 400kbps: over ten seconds of empty card, which reads as a slideshow that
-   does not work rather than one that is still loading.
-
-   This is a 32px-wide frame of the first photograph, inlined at 532 bytes and
-   stretched by the browser, which is what makes it read as a blurred plate
-   rather than a thumbnail. Inline rather than a file, because a placeholder
-   that needs its own request is not a placeholder. Surface stays underneath as
-   the colour layer, so nothing about the card's palette changes.
-
-   main.css cannot carry this: this file is linked last and its flat
-   `background` would drop the image layer. See docs/site.md, "The rotating
-   institution card". */
-.institution-proof-card {
-  background:
-    url("data:image/webp;base64,UklGRgwCAABXRUJQVlA4IAACAACwCgCdASogADAAPrFEnUqnI6KhsBqoAOAWCWwAnTMONzfAfhL+KscYloDeT1+CufllaW5oRLvPFelsULhOiiszew5CXUv/3HbYdJ8qWn19GWcfWaeLPzO6TdjtkB3AAP74ZcFN4WrCeBL5z17LX3nhFba1EEnhjtHAsVZb0HwSzqv99QhbrYsUHn+jaoft46IHfZeqIkbMv/2DMO75GhInzj6emsj/9GT1lt/0M4VkLknz9nzR5Go7ZTQYQHgeIUYiDHl7zcOXjKw9KofPqxScDh6E/l/qTl6/5LoDlRDJ53Zopz3qWOi+B+nFO8HbBb/1cxMNZ3YpxvnCctqxNT5f/lmeXJ9HRtFyS6u+TGtpQi/LxkuF4oAsadTD7thh7hwG7PkS5uG4rGmOObKgBQAiymK0PHv0N0i066mq47h5RPzYiqkXXU/qmuc3heQw+TnW20TSIJxyis/m8qakd+2Hcw13sITDNXaSPxEXIywDPmUt+5JydyNe8n/KXk9WQSgvo7JAoDptsig3CvEyTtVTdH03NqALQEKJH2fCKd9XZoscAroLD4tYjvbCHqQld7Na2pwMd54SPS7S5J0zvGq6PJChL4KwZUKJTWewRILo5B1TmoVUYDRbWTSX6GvYL/NL8k21oL9Zax8KyOxrP6ne4bb1haX+ZCjtcUW3sVEAAA==") center 35% / cover no-repeat,
-    var(--surface);
-}
-
 .team-person-copy h3,
 .services-heading em,
 .services-heading strong,
@@ -517,4 +493,29 @@ h1, h2, h3,
 
 .theme-toggle {
   display: none !important;
+}
+
+
+/* The institution card is pulled out of the flat-Surface list above because
+   it needs an image layer as well as a colour.
+
+   Its three photographs are `loading="lazy"` while `institutionFade` starts
+   at page load, so on a slow connection a visitor reaches the card before any
+   frame has arrived and sees the bare ground cycle through nothing. Measured
+   at 400kbps: over ten seconds of empty card, which reads as a slideshow that
+   does not work rather than one that is still loading.
+
+   This is a 32px-wide frame of the first photograph, inlined at 532 bytes and
+   stretched by the browser, which is what makes it read as a blurred plate
+   rather than a thumbnail. Inline rather than a file, because a placeholder
+   that needs its own request is not a placeholder. Surface stays underneath as
+   the colour layer, so nothing about the card's palette changes.
+
+   main.css cannot carry this: this file is linked last and its flat
+   `background` would drop the image layer. See docs/site.md, "The rotating
+   institution card". */
+.institution-proof-card {
+  background:
+    url("data:image/webp;base64,UklGRgwCAABXRUJQVlA4IAACAACwCgCdASogADAAPrFEnUqnI6KhsBqoAOAWCWwAnTMONzfAfhL+KscYloDeT1+CufllaW5oRLvPFelsULhOiiszew5CXUv/3HbYdJ8qWn19GWcfWaeLPzO6TdjtkB3AAP74ZcFN4WrCeBL5z17LX3nhFba1EEnhjtHAsVZb0HwSzqv99QhbrYsUHn+jaoft46IHfZeqIkbMv/2DMO75GhInzj6emsj/9GT1lt/0M4VkLknz9nzR5Go7ZTQYQHgeIUYiDHl7zcOXjKw9KofPqxScDh6E/l/qTl6/5LoDlRDJ53Zopz3qWOi+B+nFO8HbBb/1cxMNZ3YpxvnCctqxNT5f/lmeXJ9HRtFyS6u+TGtpQi/LxkuF4oAsadTD7thh7hwG7PkS5uG4rGmOObKgBQAiymK0PHv0N0i066mq47h5RPzYiqkXXU/qmuc3heQw+TnW20TSIJxyis/m8qakd+2Hcw13sITDNXaSPxEXIywDPmUt+5JydyNe8n/KXk9WQSgvo7JAoDptsig3CvEyTtVTdH03NqALQEKJH2fCKd9XZoscAroLD4tYjvbCHqQld7Na2pwMd54SPS7S5J0zvGq6PJChL4KwZUKJTWewRILo5B1TmoVUYDRbWTSX6GvYL/NL8k21oL9Zax8KyOxrP6ne4bb1haX+ZCjtcUW3sVEAAA==") center 35% / cover no-repeat,
+    var(--surface);
 }

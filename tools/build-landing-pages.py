@@ -154,6 +154,36 @@ def read_partial(path):
     return parts
 
 
+def check_no_heading_backgrounds(where):
+    """Fail if a heading selector in ocean-ember.css declares a background.
+
+    Nothing on this site paints a background onto a heading, so a rule that
+    does is always an accident. The specific accident this catches: an inlined
+    `data:` placeholder meant for one card was spliced into the middle of the
+    type-scale selector list, right after `.team-header h2,`. That orphaned
+    `h1, h2, h3, .section-title, .numbers-proof-title, .cta-grid h2,
+    .fit-block h3, .team-header h2` onto the card's rule, so every heading on
+    every page rendered with a blurred photograph behind the words.
+
+    It is exactly the failure a brace check cannot see: the braces balanced,
+    the file parsed, and the damage was that a valid rule matched the wrong
+    selectors. Cheap to assert, so it is asserted.
+    """
+    css = (ROOT / "ocean-ember.css").read_text()
+    body = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    for m in re.finditer(r"([^{}]+)\{([^{}]*)\}", body):
+        selectors, decls = m.group(1), m.group(2)
+        if not re.search(r"(^|[\s;])background(-image)?\s*:", decls):
+            continue
+        for sel in selectors.split(","):
+            sel = " ".join(sel.split())
+            if re.search(r"(^|[\s>+~.])h[1-3]$|(^|[\s>+~])h[1-3]([\s>+~]|$)", sel) \
+               or re.search(r"\b(section-title|numbers-proof-title|page-head h1)\b", sel):
+                fail("%s: heading selector `%s` declares a background. A rule "
+                     "was almost certainly spliced into a selector list."
+                     % (where, sel))
+
+
 def check_css_balance(css, where):
     """Fail on an unbalanced brace instead of shipping a swallowed stylesheet.
 
@@ -260,6 +290,7 @@ def build_page(index_html, partial, cfg):
     # leaves the trust strip below it alone, which is how the press strip stays
     # in sync without being duplicated here.
     check_css_balance(partial["style"], "tools/landing-hero.html @style")
+    check_no_heading_backgrounds("ocean-ember.css")
 
     style_end = html.rfind("</style>")
     if style_end == -1:
