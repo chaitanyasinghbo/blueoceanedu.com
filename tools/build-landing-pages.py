@@ -127,7 +127,7 @@ ASSET_DIRS = ["alumni-logos", "press-logos", "uni-logos", "admits-blue",
 # **a change to ocean-ember.css needs a rebuild to reach lp/ and iblp/**, the
 # same rule main.css already lives by.
 ASSET_FILES = ["school-fees.js", "lead-events.js",
-               "hero-campus.webp", "hero-campus-1200.webp",
+               "hero-campus.webp", "hero-campus-1200.webp", "hero-campus-900.webp",
                "institution-harvard.webp", "institution-oxford.webp",
                "founder/sanjay.webp", "harvard-hall.webp",
                "ocean-ember.css"]

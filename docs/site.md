@@ -691,6 +691,14 @@ Also removed: 84 files under `lp/` and `iblp/` that were copies of those
 folders, left from before the two pages were generated. The builder no longer
 copies any of them.
 
+**`find-unused.py` reports `lp/fonts/`, `lp/brand/` and their `iblp/` twins as
+spare, and they are not.** The tool walks from the repo root, where
+`lp/index.html`'s `../ocean-ember.css` resolves to the root copy, so it never
+traverses into the landing folder's own `fonts/` or `brand/`. It has no way to
+model a directory that is *also* served as its own root, which is exactly what
+those copies exist for. See *Each landing folder is a Pages root*. Do not delete
+them on the strength of that report.
+
 The tool exits non-zero while any page references a file that is not there. It
 does now: `anushka_cambridge.png`, `bhakti.png`, `manya_brown.png` and
 `prateek_harvard.png` are the four success-story photographs, referenced from
@@ -906,6 +914,57 @@ to the image rather than to the plate, which drops the `<img>` out of the
 decorative cross-fade in a card about 360px tall, and pointing it at the 1920px
 file meant a phone downloaded both sizes: 1200 for the hero and 1920 for a card
 nobody looks at.
+
+### The rotating institution card
+
+`.institution-proof-card` cross-fades three photographs, Harvard, the MIT dome
+and the Radcliffe Camera, on `institutionFade 15s infinite` with the frames
+staggered 0s / 5s / 10s. Two things about it were wrong in a way that only
+showed on a slow connection, and both are fixed together.
+
+**The animation clock and the images were unsynchronised.** The frames are
+`loading="lazy"`, so they start downloading when the card nears the viewport.
+The animation starts when the stylesheet applies, which is page load. Those are
+different moments and nothing held them together, so a visitor who scrolled
+down after twenty seconds met a cycle already twenty seconds in, against images
+that had not arrived. Reproduced at 400kbps: the card was empty for more than
+ten seconds, and the one frame that did finish loading did so at the exact
+moment its own keyframe returned it to `opacity: 0`.
+
+The animation now waits for the section to be revealed:
+
+```css
+.js .institution-fader img          { animation-play-state: paused; }
+.js .reveal.visible .institution-fader img { animation-play-state: running; }
+```
+
+It starts from frame 1 when the card is actually on screen, which also hands
+the lazy fetches a head start, since frame 1 does not reach full opacity until
+about 2s in.
+
+**`.js` is not decoration.** It is added by the same inline script that owns the
+reveal observer, so if that script never runs the class never appears and the
+fader falls back to rotating from page load exactly as before. Without the gate,
+a card whose `.visible` never arrived would hold a paused animation at
+`opacity: 0` and show nothing at all, permanently, which is a worse failure than
+the one being fixed.
+
+**The card carries an inlined placeholder.** A 32px-wide frame of the first
+photograph, 532 bytes of base64, stretched by the browser so it reads as a
+blurred plate rather than a thumbnail. The card is therefore never empty: the
+sharp frames cross-fade on top of it as they arrive. It is inline because a
+placeholder that needs its own request is not a placeholder.
+
+**It lives in `ocean-ember.css`, not `main.css`, and that is load-bearing.**
+`.institution-proof-card` was in the flat `background: var(--surface)` group in
+the brand layer, which is linked last, so a `background` set in `main.css` loses
+the whole shorthand including the image layer. The card is pulled out of that
+group into its own rule that keeps Surface as the colour layer underneath.
+**Any card that needs an image layer has the same problem**: check whether the
+brand layer already flattens it before setting a background in `main.css`.
+
+The three frames were also resized for the box they actually occupy, which is
+384x444 at most. They were 486KB together and are 289KB now.
 
 ### Resource hints, and why they sit outside the sentinels
 

@@ -207,7 +207,7 @@
           <div class="institution-proof-card" aria-hidden="true">
             <div class="institution-fader" aria-hidden="true">
               <img src="institution-harvard.webp" alt="">
-              <img src="hero-campus-1200.webp" alt="">
+              <img src="hero-campus-900.webp" alt="">
               <img src="institution-oxford.webp" alt="">
             </div>
           </div>
@@ -884,6 +884,13 @@
       applyTheme(next);
       localStorage.setItem("boTheme", next);
     });
+
+    /* Tells main.css that the reveal observer below is live, so it can hold
+       the institution fader paused until the card is actually on screen. Set
+       here rather than in the <head> because this is the script that owns the
+       observer: if it never runs, the class is never added, and the fader
+       falls back to rotating from page load the way it always did. */
+    document.documentElement.classList.add("js");
 
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {

@@ -777,6 +777,7 @@
     .institution-proof-card {
       min-height: clamp(300px, 25vw, 360px);
       position: relative;
+
       background: var(--forest-strong);
     }
 
@@ -795,6 +796,37 @@
       filter: saturate(0.9) contrast(1.03);
       animation: institutionFade 15s infinite;
       will-change: opacity, transform;
+    }
+
+    /* The rotation waits for the card to be on screen.
+
+       The three frames are `loading="lazy"` and the animation clock starts
+       when this stylesheet applies, which is page load. Those are two
+       different moments and nothing was holding them together: on a slow
+       connection the images only begin downloading as the card nears the
+       viewport, by which point the 15s cycle is already tens of seconds in,
+       so a visitor scrolled down to a card whose frames have not arrived and
+       watched an empty panel cycle through pictures that were not there.
+       Reproduced at 400kbps: blank for more than ten seconds, and the one
+       frame that finished loading did so as its own keyframe took it back to
+       opacity 0.
+
+       Pausing until `.visible` starts the cycle from frame 1 at the moment
+       the section is revealed, which also hands the lazy fetches the head
+       start they were missing, since frame 1 does not reach full opacity
+       until about 2s in.
+
+       Gated on `.js` so the failure mode is the old behaviour rather than a
+       worse one. Without it a card whose `.visible` never arrives, because
+       the observer did not run, would hold a paused animation at opacity 0
+       and show nothing at all, for ever. `.js` is set by the same inline
+       script that owns the observer. */
+    .js .institution-fader img {
+      animation-play-state: paused;
+    }
+
+    .js .reveal.visible .institution-fader img {
+      animation-play-state: running;
     }
 
     .institution-fader img:nth-child(2) {
