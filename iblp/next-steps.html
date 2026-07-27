@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+  <!-- @analytics — GA4 and the Meta pixel, one block, same on every page.
+
+       The dataLayer event on line 8 is the only line that changes per page:
+       tools/build-landing-pages.py swaps SITE_PAGEVIEW for the landing
+       page's own event name. Keep the block byte-identical everywhere else
+       or that swap silently stops matching. -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2STB24PJGQ"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -27,14 +32,12 @@
   src="https://www.facebook.com/tr?id=754270597536586&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
+  <!-- /@analytics -->
   <meta charset="UTF-8">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Next Steps | IBDP Admissions | Blue Ocean Education</title>
-  <meta name="description" content="You're in. Here are the five most useful next steps while a Blue Ocean advisor reviews your profile.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <meta name="description" content="Your diagnostic call is booked. Here are the five most useful next steps while a Blue Ocean advisor reviews your profile.">
   <link rel="stylesheet" href="main.css">
   <style>
 
@@ -229,31 +232,6 @@
     .ns-newsletter-status.ok { color: var(--lime); }
     .ns-newsletter-status.error { color: oklch(80% 0.12 28); }
 
-    .ns-blog-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-    .ns-blog-link {
-      display: inline-flex;
-      align-items: center;
-      min-height: 46px;
-      padding: 0 16px;
-      border-radius: 999px;
-      font-size: 12.5px;
-      font-weight: 700;
-      background: color-mix(in oklch, var(--paper) 12%, transparent);
-      border: 1px solid color-mix(in oklch, var(--paper) 20%, transparent);
-      color: var(--paper);
-      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
-    }
-    .ns-blog-link:hover {
-      background: color-mix(in oklch, var(--paper) 18%, transparent);
-      border-color: var(--lime);
-      transform: translateY(-1px);
-    }
-
     .ns-foot-note {
       margin-top: 28px;
       color: var(--muted);
@@ -270,6 +248,7 @@
     }
 
   </style>
+  <link rel="stylesheet" href="../ocean-ember.css">
 </head>
 <body>
 
@@ -296,10 +275,10 @@
 
     <section class="section compact dark ns-header">
       <div class="wrap">
-        <p class="eyebrow light">Submission Received</p>
+        <p class="eyebrow light">Call Booked</p>
         <h1 class="section-title" id="nsTitle" style="font-size: clamp(2rem, 5vw, 3.25rem); max-width: 720px;">Your next steps with Blue Ocean.</h1>
-        <p class="section-copy" style="margin-top: 1.25rem; max-width: 620px;">We have your details. While our team reviews your profile, these five steps are the most useful place to start.</p>
-        <p class="ns-status-line" id="nsStatus">A Blue Ocean advisor will follow up within one business day.</p>
+        <p class="section-copy" style="margin-top: 1.25rem; max-width: 620px;">Your time is held and the details are with our team. While we review your profile, these three steps are the most useful place to start.</p>
+        <p class="ns-status-line" id="nsStatus">You will get a calendar invitation and a confirmation by email.</p>
       </div>
     </section>
 
@@ -310,7 +289,7 @@
             <p class="eyebrow">Next Actions</p>
             <h2 class="section-title" style="font-size: clamp(1.8rem, 3.4vw, 2.5rem);">Use the next few minutes well.</h2>
           </div>
-          <p class="section-copy">Start at the top and work down. Five resources, in the order most families find useful.</p>
+          <p class="section-copy">Start at the top and work down. Three resources, in the order most families find useful.</p>
         </div>
 
         <ol class="ns-step-list">
@@ -331,36 +310,8 @@
             </div>
           </li>
 
-          <li class="ns-step-card tone-2 reveal">
-            <div class="ns-step-number">02</div>
-            <div class="ns-step-main">
-              <span class="ns-step-kicker">Webinar</span>
-              <h3>Watch the Blue Ocean Admissions Playbook</h3>
-              <p>See how we approach profile positioning, school strategy, essays, and scholarship planning, in one session.</p>
-              <div class="ns-step-actions">
-                <a class="btn btn-lime" href="https://event.webinarjam.com/r0wx01/register/6mn5myb7?webinar_id=3" target="_blank" rel="noopener noreferrer">Watch the Webinar</a>
-              </div>
-            </div>
-          </li>
-
           <li class="ns-step-card tone-3 reveal">
-            <div class="ns-step-number">03</div>
-            <div class="ns-step-main">
-              <span class="ns-step-kicker">Reading</span>
-              <h3>Read the Article Closest to Your Question</h3>
-              <p>Pick the topic closest to where you are right now. Each one opens in a new tab.</p>
-              <div class="ns-blog-links">
-                <a class="ns-blog-link" href="https://blueocean.education/blog/us-universities-from-india" target="_blank" rel="noopener noreferrer">US Admissions</a>
-                <a class="ns-blog-link" href="https://blueocean.education/blog/uk-universities-from-india" target="_blank" rel="noopener noreferrer">UK Admissions</a>
-                <a class="ns-blog-link" href="https://blueocean.education/blog/scholarships-indian-students" target="_blank" rel="noopener noreferrer">Scholarships</a>
-                <a class="ns-blog-link" href="https://blueocean.education/blog/study-abroad-consultants" target="_blank" rel="noopener noreferrer">Consultants</a>
-                <a class="ns-blog-link" href="https://blueocean.education/blog/college-application-essentials" target="_blank" rel="noopener noreferrer">College Applications</a>
-              </div>
-            </div>
-          </li>
-
-          <li class="ns-step-card tone-4 reveal">
-            <div class="ns-step-number">04</div>
+            <div class="ns-step-number">02</div>
             <div class="ns-step-main">
               <span class="ns-step-kicker">Community</span>
               <h3>Join the Blue Ocean WhatsApp Group</h3>
@@ -372,7 +323,7 @@
           </li>
 
           <li class="ns-step-card tone-5 reveal">
-            <div class="ns-step-number">05</div>
+            <div class="ns-step-number">03</div>
             <div class="ns-step-main">
               <span class="ns-step-kicker">Instagram</span>
               <h3>Follow Blue Ocean on Instagram</h3>
@@ -414,6 +365,7 @@
           <h3>Explore</h3>
           <ul>
             <li><a href="https://blueoceanedu.com/method.html">Method</a></li>
+            <li><a href="https://blueoceanedu.com/founder.html">Founder</a></li>
             <li><a href="https://blueoceanedu.com/results.html">Results</a></li>
             <li><a href="https://blueoceanedu.com/fit.html">Right Fit</a></li>
             <li><a href="https://blueoceanedu.com/team.html">Team</a></li>
@@ -440,6 +392,7 @@
     </div>
   </footer>
 
+  <script src="lead-events.js"></script>
   <script>
     /* Theme */
     const themeToggle = document.getElementById('themeToggle');
@@ -471,6 +424,21 @@
     }
 
     const savedLead = getStoredLead();
+
+    /* ── The booking event ───────────────────────────
+       The lead was already counted on the page with the form, at submit. This
+       page is only reached from the button under the scheduler, so arriving
+       here means a slot was picked, and that is the second event.
+
+       BOEvents.booked carries both guards: no stored lead means no event, so
+       opening this URL directly counts nothing, and one event per lead means
+       a refresh or a second tab cannot count it twice. See lead-events.js. */
+    try {
+      BOEvents.booked(savedLead);
+    } catch (err) {
+      console.error('Booking event failed:', err);
+    }
+
     const nsTitle = document.getElementById('nsTitle');
     const nsStatus = document.getElementById('nsStatus');
     const newsletterForm = document.getElementById('newsletterForm');
@@ -481,7 +449,7 @@
 
     if (savedLead && savedLead.first_name) {
       nsTitle.textContent = savedLead.first_name + ', here are your next steps.';
-      nsStatus.textContent = 'A Blue Ocean advisor will follow up with ' + savedLead.first_name + ' within one business day.';
+      nsStatus.textContent = savedLead.first_name + ' will get a calendar invitation and a confirmation by email.';
       newsletterFirstName.value = savedLead.first_name;
     }
     if (savedLead && savedLead.email) {

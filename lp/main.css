@@ -252,20 +252,32 @@
         var(--forest-strong);
       background-size: 80px 80px;
       color: var(--paper);
-      min-height: calc(100vh - 74px);
       display: flex;
       flex-direction: column;
     }
 
+    /* Neither the section nor the row carries a viewport minimum any
+       more. `.hero` held `100vh - 74px` and `.hero-grid` held
+       `100vh - 250px` with `flex: 1 0 auto`, so on any screen where the
+       content came in under a full viewport the difference was handed
+       to the row and spent as slack: on a 900px display that was about
+       50px of empty ground between the alumni strip and the press
+       strip, and it grew with the screen. The frame is 4:5 at up to
+       520px wide, so the row is 612px plus padding on every screen,
+       which is a hair under a laptop viewport once the strip is added
+       and is a height the hero actually fills.
+
+       The padding is where the hero's breathing room lives now, top
+       and bottom, rather than in a gap the middle of the row opens up
+       by accident. It is deliberate space at the section's edges,
+       which is a different thing from slack. */
     .hero-grid {
       width: min(100%, var(--max));
-      flex: 1 0 auto;
       margin: 0 auto;
-      min-height: calc(100vh - 130px);
-      padding: 44px var(--pad) 36px;
+      padding: clamp(44px, 5vw, 72px) var(--pad) clamp(26px, 3vw, 40px);
       display: grid;
-      grid-template-columns: minmax(0, 0.98fr) minmax(420px, 0.78fr);
-      gap: 48px;
+      grid-template-columns: minmax(0, 1fr) minmax(400px, 0.72fr);
+      gap: 34px;
       align-items: center;
     }
 
@@ -283,21 +295,24 @@
       color: var(--lime);
     }
 
+    /* One measure for the whole column. The h1 ran to 720px, the lede
+       to 630px and the alumni strip to the full column, so three edges
+       stopped in three places down the left-hand side. They now share
+       620px and stack against one right edge. */
     .hero-copy {
       grid-column: 1;
       grid-row: 1;
       padding-bottom: 0;
-      max-width: 720px;
+      max-width: 620px;
       position: relative;
       z-index: 3;
     }
 
     .hero h1 {
       margin: 0;
-      max-width: 720px;
       font-size: 82px;
-      line-height: 0.92;
-      letter-spacing: 0;
+      line-height: 0.94;
+      letter-spacing: -0.015em;
       font-weight: 800;
     }
 
@@ -306,11 +321,10 @@
     }
 
     .hero-lede {
-      margin: 28px 0 0;
-      max-width: 630px;
+      margin: 18px 0 0;
       color: color-mix(in oklch, var(--paper) 72%, var(--forest));
-      font-size: 20px;
-      line-height: 1.45;
+      font-size: 18px;
+      line-height: 1.5;
     }
 
     .hero-actions {
@@ -320,107 +334,141 @@
       margin-top: 32px;
     }
 
+    /* ── The alumni strip ─────────────────────────────────────────
+       The press wall's rule at inline scale: one Core ground, every
+       mark knocked out in white, from alumni-logos/. It was a cream
+       pill carrying five marks in their own colours, which put two
+       crimson shields, a red wordmark and a blue crest inside a 34px
+       row directly above a second multi-coloured strip. */
+
     .hero-alumni {
-      margin: 42px 0 0;
-      padding: 14px 20px;
+      margin: 26px 0 0;
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 20px;
-      background: color-mix(in oklch, var(--paper) 92%, var(--lime-low));
+      flex-direction: column;
+      background: var(--forest);
       border: 1px solid var(--line-dark);
       border-radius: 10px;
+      overflow: hidden;
     }
 
+    /* Label above the marks rather than beside them, the same shape the
+       press wall below it takes. Set inline, the label ate a third of a
+       604px panel and left five marks about 70px each, at which width
+       the Kennedy School shield is 23px wide. */
     .hero-alumni-label {
-      flex: 0 0 auto;
-      white-space: nowrap;
-      color: var(--moss);
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 900;
-      letter-spacing: 0.13em;
+      letter-spacing: 0.12em;
       line-height: 1.25;
       text-transform: uppercase;
-      padding-right: 20px;
-      border-right: 1px solid var(--line-dark);
+      color: var(--moss);
+      padding: 10px 16px 9px;
+      border-bottom: 1px solid color-mix(in oklch, var(--forest) 86%, var(--paper));
     }
 
     .hero-logo-row {
-      flex: 1 1 0;
-      min-width: 0;
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      padding: 2px 12px;
     }
 
     .hero-logo-slot {
-      flex: 1 1 0;
       min-width: 0;
+      height: 48px;
       display: grid;
       place-items: center;
     }
 
+    /* --mark works here for the same reason it does on the press wall:
+       a fixed box fits the bitmap, not the mark. The Harvard wordmark
+       is 4:1 and the Kennedy School shield is taller than it is wide,
+       so at one box size the wordmark reads as a hairline beside a
+       shield twice its weight. Values are tuned from ink area and are
+       all at or below 1, so a mark never spills into its neighbour's
+       gap. It replaced .logo-wide and .logo-seal, two buckets doing
+       the same job in three steps. */
     .hero-logo-slot img {
-      max-width: 100%;
+      max-width: calc(88% * var(--mark, 1));
+      max-height: calc(28px * var(--mark, 1));
       width: auto;
-      height: 32px;
+      height: auto;
       object-fit: contain;
-    }
-
-    .hero-logo-slot.logo-wide img {
-      height: 30px;
-    }
-
-    .hero-logo-slot.logo-seal img {
-      height: 40px;
     }
 
     .hero-media {
       grid-column: 2;
       grid-row: 1;
-      align-self: stretch;
-      min-height: 620px;
+      align-self: center;
       position: relative;
       display: grid;
-      align-items: end;
       z-index: 1;
     }
 
+    /* ── The hero frame ───────────────────────────────────────────
+       One frame holds both pictures, and it is built as a frame rather
+       than a bleed: an outer moulding in Core, an even mat around all
+       four sides, then the picture plate inside it. The plate carries a
+       fixed 4:5, so the same object appears on a phone and on a desktop
+       instead of an absolutely positioned box stretching to whatever
+       height the grid row happens to be. The student cutout sits inside
+       the plate, so her waist crop lands on the plate's bottom edge,
+       which is where a cutout is meant to end. */
+
     .campus-frame {
-      position: absolute;
-      inset: 26px 0 96px 0;
-      border-radius: 8px;
-      overflow: hidden;
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      margin-inline: auto;
+      aspect-ratio: 4 / 5;
+      padding: 14px;
+      border-radius: 12px;
       border: 1px solid var(--line-dark);
-      box-shadow: 0 28px 80px var(--shadow);
       background: var(--forest);
+      box-shadow: 0 28px 80px var(--shadow);
     }
 
-    .campus-frame::after {
+    /* The mat's inner edge. A hairline set inside the moulding so the
+       frame reads as two members rather than one thick rule. */
+    .campus-frame::before {
       content: "";
       position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, color-mix(in oklch, var(--forest-strong) 2%, transparent), color-mix(in oklch, var(--forest-strong) 44%, transparent));
+      inset: 7px;
+      border-radius: 9px;
+      border: 1px solid color-mix(in oklch, var(--paper) 10%, transparent);
       pointer-events: none;
+      z-index: 3;
     }
 
-    .campus-frame img {
+    .campus-plate {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 6px;
+      background: var(--forest-strong);
+    }
+
+    /* The campus photo runs clean inside the plate. The hero's own
+       tinted wash of the same picture already sits behind the whole
+       section; a scrim and a desaturation pass here left the framed
+       copy reading as a dimmer version of the background rather than
+       the one place the photograph is shown at full strength. */
+    .campus-frame img:not(.student-figure) {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: saturate(0.86) contrast(0.98);
     }
 
     .student-figure {
       position: absolute;
-      right: -48px;
-      bottom: 74px;
-      width: min(112%, 630px);
-      max-height: none;
+      right: 0;
+      bottom: 0;
+      width: min(92%, 460px);
+      max-height: 92%;
       object-fit: contain;
       object-position: bottom right;
-      filter: drop-shadow(0 24px 46px oklch(8% 0.03 174 / 0.46));
+      filter: drop-shadow(0 18px 38px oklch(8% 0.03 174 / 0.5));
       z-index: 2;
     }
 
@@ -450,75 +498,173 @@
       color: color-mix(in oklch, var(--forest-strong) 84%, var(--paper));
     }
 
+    /* ── The press strip ──────────────────────────────────────────
+       Built to the same rule as .universities: one ground, one mark
+       colour, a fixed logo box so a 6:1 masthead and a 0.7:1 colophon
+       land at the same optical weight.
+
+       It scrolls, which an earlier ribbon of the outlets' own logos
+       also did before it was replaced by a static 4 x 2 wall. What
+       failed then was the marks, not the motion: eight brand colours
+       and eight cap heights in a 34px strip, no per-mark sizing, and
+       aria-hidden on the lot because the duplicates made it
+       unreadable. Keep the knockouts, keep --mark, keep alt on the
+       first set only, and the motion costs nothing.
+
+       The marks are pre-built white knockouts in press-logos/, not
+       source logos filtered in CSS. Three of the eight ship on an
+       opaque plate, and brightness(0) invert(1) turns a plate into a
+       white slab rather than a knockout. See the note in that folder. */
+
+    /* The band takes --max first and pads inside it, the same order
+       .hero-grid uses. Padding an unbounded band and capping the panel
+       within it made the panel a full --pad wider than the hero content
+       on each side, so the strip overhung the h1 above it by 56px. */
     .trust-band {
-      width: 100%;
-      padding: 0 var(--pad) clamp(28px, 4vw, 44px);
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      padding: 0 var(--pad) clamp(40px, 4.5vw, 64px);
     }
 
+    /* One row, not a wall. The panel used to be a 4 x 2 grid of 3.2:1
+       tiles standing about 210px tall to carry eight small marks, which
+       made the closing note of the hero its heaviest object. Label and
+       marks now sit side by side in a single 62px band: the label holds
+       a fixed left column, the marks run past it. */
     .trust-inner {
       width: min(100%, var(--max));
       margin: 0 auto;
-      padding: 14px 20px 16px;
       display: flex;
-      flex-direction: column;
-      gap: 12px;
-      background: color-mix(in oklch, var(--paper) 92%, var(--lime-low));
+      align-items: stretch;
+      background: var(--forest);
       border: 1px solid var(--line-dark);
       border-radius: 10px;
       overflow: hidden;
     }
 
+    .trust-head {
+      flex: 0 0 auto;
+      width: 236px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3px;
+      padding: 10px 16px;
+      border-right: 1px solid color-mix(in oklch, var(--forest) 86%, var(--paper));
+    }
+
     .trust-label {
-      color: var(--moss);
-      font-size: 11px;
+      margin: 0;
+      font-size: 10.5px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      white-space: nowrap;
+      color: var(--paper);
     }
 
-    .trust-items {
+    .trust-note {
+      margin: 0;
+      font-size: 11.5px;
+      line-height: 1.35;
+      color: color-mix(in oklch, var(--paper) 58%, var(--forest));
+    }
+
+    /* The marks scroll. Eight mastheads sitting still in a row is a logo
+       bar; eight moving past a fixed label is a wire feed, which is what
+       "in print, and on air" is claiming. The mask keeps a mark from
+       appearing and vanishing on a hard edge. */
+    .trust-wall {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 46px, #000 calc(100% - 46px), transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 46px, #000 calc(100% - 46px), transparent);
+    }
+
+    .trust-track {
       display: flex;
       align-items: center;
-      gap: 30px;
-      white-space: nowrap;
-      animation: drift 32s linear infinite;
+      width: max-content;
+      animation: trust-marquee 36s linear infinite;
     }
 
-    .trust-logo {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 34px;
-      flex-shrink: 0;
+    .trust-inner:hover .trust-track {
+      animation-play-state: paused;
     }
 
-    .trust-logo img {
-      max-width: 120px;
-      max-height: 26px;
+    /* The track carries the set twice and travels exactly half its own
+       width, so the second set arrives where the first started and the
+       loop has no seam. This holds at any tile count, as long as the
+       markup keeps duplicating the set exactly once. */
+    @keyframes trust-marquee {
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-50%, 0, 0); }
+    }
+
+    .trust-tile {
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      width: 134px;
+      height: 62px;
+    }
+
+    /* Height-bound, then corrected per mark. A contain fit sizes the
+       bitmap, not the mark: Forbes' bold serif and NDTV's slab fill
+       their box edge to edge, while the Penguin colophon is an outline
+       and the Times of India lockup stacks an ornament over a small
+       wordmark. At one box size the first two read twice the weight of
+       the last two. --mark is that correction, set per tile the same
+       way .university sets --tile. It is tuned from the ink area each
+       mark actually covers once fitted, not from its bounding box. */
+    .trust-tile img {
+      max-width: calc(76% * var(--mark, 1));
+      max-height: calc(23px * var(--mark, 1));
       width: auto;
       height: auto;
       object-fit: contain;
     }
 
-    .trust-logo.tall img {
-      max-height: 30px;
+    /* Motion off means the row stops, and the duplicate set is then
+       reachable by scroll rather than stranded off-panel. */
+    @media (prefers-reduced-motion: reduce) {
+      .trust-track {
+        animation: none;
+      }
+
+      .trust-wall {
+        overflow-x: auto;
+      }
     }
 
-    .trust-logo.wide img {
-      max-width: 148px;
-    }
+    /* The label stops holding a column once it costs the marks more
+       width than it takes: at 236px of a 400px panel there is no feed
+       left to run. */
+    @media (max-width: 720px) {
+      .trust-inner {
+        flex-direction: column;
+      }
 
-    .trust-logo::after {
-      content: "·";
-      margin-left: 30px;
-      color: color-mix(in oklch, var(--forest) 22%, transparent);
-      font-size: 16px;
-    }
+      .trust-head {
+        width: auto;
+        padding: 9px 15px 8px;
+        border-right: none;
+        border-bottom: 1px solid color-mix(in oklch, var(--forest) 86%, var(--paper));
+      }
 
-    @keyframes drift {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+      .trust-wall {
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 22px, #000 calc(100% - 22px), transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 22px, #000 calc(100% - 22px), transparent);
+      }
+
+      .trust-tile {
+        width: 112px;
+        height: 54px;
+      }
+
+      .trust-tile img {
+        max-height: calc(21px * var(--mark, 1));
+      }
     }
 
     .numbers-proof {
@@ -706,6 +852,20 @@
     .acceptance-chart {
       display: grid;
       gap: 11px;
+    }
+
+    /* Sourcing line under the admit chart. Text scale, not Display:
+       it sits well under the 20px Display floor. */
+    .acceptance-source {
+      margin: 20px 0 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.55;
+      max-width: 62ch;
     }
 
     .acceptance-row {
@@ -2183,6 +2343,128 @@
       gap: clamp(14px, 1.8vw, 20px);
     }
 
+    /* team.html carries the founder alone here, with all seven advisors
+       in .counsel-wall below, so the card goes full width and turns
+       horizontal: portrait left, copy right. index.html and start.html
+       keep the founder card and carry .counsel-wall as its own
+       section below it. */
+    .team-people-grid.is-solo {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* Founder-led is the whole positioning, so this card gets height.
+       Letting it collapse to content made a squat banner that read as
+       a byline rather than a section. */
+    .team-founder.is-wide {
+      min-height: clamp(330px, 32vw, 430px);
+      grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr);
+      align-items: stretch;
+    }
+
+    /* Matched to the counsel wall below it: a pre-normalised cutout on
+       a solid ground with the alma mater's mark top right. Core-deep
+       rather than the board's crimson, so the founder reads as Blue
+       Ocean and the board reads as Harvard, and because the source
+       photo carries a red NDTV microphone that fights the crimson.
+
+       It replaced a pale Support panel holding a 3.3MB SVG with a
+       painted blue backdrop baked in, which matched nothing else on
+       the page and cropped him through the chest. The cutout is built
+       by the same pipeline as `counsel-portraits/`. */
+    .team-founder.is-wide .team-photo {
+      min-height: 100%;
+      /* Core-lift, not Core-deep. The section ground is Core, so the
+         darker step vanished into it and the card lost its left edge.
+         A lighter slate reads as a panel and still carries a white
+         mark at 9:1. */
+      background: var(--forest-soft);
+    }
+
+    .team-founder.is-wide .team-photo img {
+      object-position: center bottom;
+    }
+
+    /* `.team-photo img` is (0,1,1), so a bare class would lose to it
+       and the mark would be stretched to fill the panel. */
+    .team-photo .team-photo-crest {
+      position: absolute;
+      inset: auto;
+      top: clamp(14px, 1.2vw, 20px);
+      right: clamp(14px, 1.2vw, 20px);
+      width: clamp(78px, 6.4vw, 104px);
+      height: clamp(30px, 2.7vw, 40px);
+      object-fit: contain;
+      object-position: right top;
+      z-index: 1;
+    }
+
+    /* The record, in the space the card used to leave empty. It
+       replaced five Google favicons at 38px, which at that size were
+       three indistinguishable crimson blobs, and which claimed two
+       affiliations that appear nowhere else on the site. */
+    .team-creds {
+      margin: clamp(18px, 1.8vw, 24px) 0 0;
+      padding: clamp(15px, 1.5vw, 20px) 0 0;
+      border-top: 1px solid color-mix(in oklch, var(--line) 55%, transparent);
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px clamp(18px, 2vw, 32px);
+    }
+
+    .team-creds li {
+      display: grid;
+      gap: 3px;
+    }
+
+    .team-creds b {
+      color: var(--forest-strong);
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    .team-creds span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    /* The bio is no longer the copy panel's last child. */
+    .team-founder .team-person-copy > p:last-of-type {
+      margin: 22px 0 0;
+      color: var(--ink-soft);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .team-founder.is-wide .team-person-copy {
+      align-content: center;
+      padding: clamp(24px, 2.6vw, 40px);
+    }
+
+    @media (max-width: 860px) {
+      .team-founder.is-wide {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      /* Stacked, the panel turns landscape and a 3:4 cutout cropped to
+         cover loses the head. Contained and floored to the panel, he
+         sits centred on the slate with ground either side. */
+      .team-founder.is-wide .team-photo {
+        min-height: 300px;
+      }
+
+      .team-founder.is-wide .team-photo img {
+        object-fit: contain;
+        object-position: center bottom;
+      }
+    }
+
     .team-support {
       min-height: 0;
       grid-template-columns: minmax(142px, 0.34fr) minmax(0, 1fr);
@@ -2269,7 +2551,7 @@
       width: 26px;
       height: 26px;
       border-radius: 5px;
-      background: #0a66c2;
+      background: var(--forest-strong);
       color: var(--paper);
       flex-shrink: 0;
       text-decoration: none;
@@ -2306,42 +2588,2093 @@
       object-fit: contain;
     }
 
+    /* Ported from the prospectus logo spread. Solid tiles in each
+       university's own colour, white knockout marks, no gutters, so
+       thirty admits read as one block of colour rather than thirty
+       cards. It replaced a bordered grid of Google favicons beside a
+       short name, which put a 16px icon upscaled to 52px next to a
+       real wordmark and made the wall look sourced rather than earned.
+
+       Every mark here is a wordmark or a crest-and-name lockup, so the
+       tile names itself and no caption is needed. The name still ships
+       as alt text. */
     .universities {
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
-      border-top: 1px solid var(--line);
-      border-left: 1px solid var(--line);
-      background: var(--paper);
+      border-radius: 10px;
+      overflow: hidden;
     }
 
+    /* Column counts that divide thirty exactly. Four across would
+       leave a two-tile orphan row, which on a gutterless mosaic reads
+       as a rendering fault rather than a layout. */
     .university {
-      min-height: 120px;
-      padding: 20px;
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      display: grid;
-      align-content: center;
-      gap: 10px;
+      position: relative;
+      aspect-ratio: 5 / 4;
+      background: var(--tile, var(--forest));
+      /* Sub-pixel column widths round the tile height down by a
+         fraction, which leaves hairline seams of page background
+         between rows. Bleeding each tile one pixel outward in its own
+         colour closes them, and the container clips the overhang. */
+      box-shadow: 0 0 0 1px var(--tile, var(--forest));
     }
 
+    /* A fixed box plus object-fit is what normalises optical size
+       across marks running from about 2:1 (Columbia's crest) to 8:1
+       (Cornell's wordmark). A wide mark is held by the width, a tall
+       one by the height, and both land at the same visual weight. */
     .university img {
-      width: 52px;
-      height: 52px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 82%;
+      height: 54%;
       object-fit: contain;
-      filter: saturate(0.84);
     }
 
-    .university strong {
-      font-size: 15px;
+    /* The whole ladder lives here rather than in the shared width
+       blocks, because only counts that divide thirty are usable and
+       the shared blocks step 6 / 4 / 2. */
+    @media (max-width: 1120px) {
+      .universities {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 780px) {
+      .universities {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .universities {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    /* ── Founder ──────────────────────────────────────────────────
+       The letter is the page. It sets one measure and holds it, so
+       the reader can settle into it. The photo strip and the
+       milestones are corroboration underneath. */
+
+    .letter {
+      max-width: 68ch;
+    }
+
+    /* The page opens on the letter, so the letter opens on a letterhead.
+       It carries the page's h1: the sender, the way a letter names its
+       sender, rather than a title a letter would not have. */
+    .letterhead {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 28px;
+      margin-bottom: clamp(30px, 3.4vw, 44px);
+      padding-bottom: clamp(18px, 2vw, 24px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .letterhead h1 {
+      margin: 0;
+      color: var(--forest-strong);
+      font-size: clamp(25px, 2.5vw, 32px);
+      font-weight: 800;
+      letter-spacing: 0;
+      line-height: 1.08;
+    }
+
+    .letterhead-role {
+      margin: 7px 0 0;
+      color: var(--moss);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .letterhead-place {
+      flex-shrink: 0;
+      margin: 0;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 13.5px;
+      line-height: 1.5;
+      text-align: right;
+    }
+
+    /* A greeting, not a section label. Set in Display and in sentence
+       case: the tracked caps this replaced read as an eyebrow, which put
+       a section heading where a letter says hello. */
+    .letter .letter-salutation {
+      margin: 0 0 22px;
+      color: var(--forest-strong);
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.1vw, 27px);
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1.2;
+      text-transform: none;
+    }
+
+    @media (max-width: 620px) {
+      .letterhead {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      .letterhead-place {
+        text-align: left;
+      }
+    }
+
+    /* Eleven paragraphs is a long read, so the letter is set to a
+       measure rather than to its column. --letter-measure lands about
+       66 characters a line at the top of the size clamp, which is the
+       brand's ceiling. Filling the column ran past 85, and a line that
+       long loses the reader on the carriage return.
+
+       The measure is stated in px, not ch. Neue Haas Text's zero is
+       wide, so its ch is about 0.57em while running lowercase averages
+       0.44em, and a ch-based measure overshoots by a fifth. Body copy
+       is Ink on Surface, not the softer Ink used for captions. */
+    .letter p {
+      margin: 0 0 22px;
+      max-width: var(--letter-measure);
+      color: var(--ink);
+      font-size: clamp(16.5px, 1.32vw, 19px);
+      line-height: 1.72;
+    }
+
+    .letter em {
+      font-style: italic;
+    }
+
+    /* Links inside the letter and the milestones. A letter should not
+       read as a page of blue words, so the link keeps the body colour
+       and is drawn by a Support underline. Colour arrives on hover. */
+    .letter a,
+    .milestones a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-decoration-color: color-mix(in oklch, var(--moss) 55%, transparent);
+      text-underline-offset: 3px;
+      transition: color 140ms, text-decoration-color 140ms;
+    }
+
+    .letter a:hover,
+    .milestones a:hover {
+      color: var(--moss);
+      text-decoration-color: var(--moss);
+    }
+
+    .letter-signature {
+      margin-top: clamp(26px, 3vw, 38px);
+      padding-top: clamp(20px, 2.2vw, 28px);
+      border-top: 1px solid var(--line);
+    }
+
+    .letter-signature strong {
+      display: block;
+      font-size: clamp(20px, 1.5vw, 23px);
       line-height: 1.15;
     }
 
-    .university span {
+    /* The letterhead rule and the signature rule close the same measure
+       the paragraphs are set to, so the letter reads as one sheet
+       rather than as text floating inside a wider column. One property
+       on the spread sets all three. */
+    .letter-spread .letterhead,
+    .letter-signature {
+      max-width: var(--letter-measure);
+    }
+
+    .letter-signature span {
+      display: block;
+      margin-top: 4px;
       color: var(--muted);
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* The letter spread, ported from prospectus page 3. The letter keeps
+       its measure and a rail runs beside it carrying the evidence: the
+       portrait, then the two Harvard documents the letter's middle
+       paragraphs stand on. */
+    /* Letterhead across the top of the letter column, the rail beside
+       both. Placement is explicit rather than source order, because the
+       source runs letterhead, rail, letter so that one column on a phone
+       opens on the letterhead and reaches the portrait before the first
+       of eleven paragraphs. */
+    .letter-spread {
+      --letter-measure: min(100%, 566px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) clamp(276px, 28vw, 392px);
+      grid-template-rows: auto minmax(0, 1fr);
+      column-gap: clamp(40px, 5vw, 72px);
+      align-items: start;
+    }
+
+    .letter-spread .letterhead {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .letter-spread .letter {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .letter-spread .founder-rail {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+
+    .founder-portrait {
+      position: relative;
+      margin: 0;
+      aspect-ratio: 2 / 3;
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--paper-deep);
+    }
+
+    .founder-portrait img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 16%;
+    }
+
+    /* Same scrim as the counsel wall. Portraits are captioned on the
+       photograph; snapshots and documents are captioned on the mat. */
+    .founder-portrait figcaption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 56px 16px 14px;
+      background: linear-gradient(
+        transparent,
+        oklch(14% 0.02 218 / 0.55) 42%,
+        oklch(12% 0.02 218 / 0.95)
+      );
+      color: oklch(92% 0.012 218);
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    /* A matted print. The prospectus sets photographs and documents on a
+       cream mat, tilted a degree or two, with a hard shadow beneath. It
+       is the one place the site shows a physical object rather than a
+       picture, and it is scoped to the founder page. */
+    .print-mat {
+      margin: 0;
+      padding: 9px 9px 11px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      box-shadow: 0 2px 0 var(--shadow), 0 16px 30px -14px var(--shadow);
+    }
+
+    .print-mat img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .print-mat figcaption {
+      margin-top: 9px;
+      color: var(--muted);
+      font-family: var(--sans);
       font-size: 11px;
-      font-weight: 800;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1.45;
+      text-align: center;
       text-transform: uppercase;
+    }
+
+    /* The two documents fall below the portrait, right then left, so the
+       rail reads as one composition rather than a stack. They do not
+       overlap: in the prospectus they lay on the dark lower half of a
+       full-page portrait, and here there is no such empty band, so an
+       overlap would cover a caption instead of empty ground. */
+    .founder-docs {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 22px;
+    }
+
+    .founder-docs .print-mat:first-child {
+      width: 82%;
+      margin-left: auto;
+      transform: rotate(1.5deg);
+    }
+
+    .founder-docs .print-mat:last-child {
+      width: 74%;
+      margin-right: auto;
+      transform: rotate(-1.4deg);
+    }
+
+    @media (max-width: 1080px) {
+      .letter-spread {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: none;
+      }
+
+      .letter-spread .letterhead,
+      .letter-spread .letter,
+      .letter-spread .founder-rail {
+        grid-column: 1;
+        grid-row: auto;
+      }
+
+      /* The documents turn to a pair beside the portrait rather than a
+         column under it, or the rail alone would run most of a screen
+         before the salutation. */
+      .founder-rail {
+        display: grid;
+        grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+        gap: clamp(20px, 3.5vw, 32px);
+        align-items: start;
+        max-width: 600px;
+        margin-bottom: clamp(34px, 5vw, 52px);
+      }
+
+      .founder-docs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 0;
+      }
+
+      .founder-docs .print-mat:first-child,
+      .founder-docs .print-mat:last-child {
+        width: 100%;
+        margin: 0;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .founder-rail {
+        grid-template-columns: minmax(0, 1fr);
+        max-width: 340px;
+      }
+    }
+
+    /* The photo strip, from the prospectus page 4 mosaic: a scattered
+       row of prints rather than a grid of cropped tiles. Aspect ratio is
+       set per photograph, so a book cover is not cropped to a landscape
+       frame to keep a row even. */
+    .founder-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: clamp(14px, 1.7vw, 26px);
+      align-items: start;
+    }
+
+    .founder-shot img {
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+
+    .founder-shot.is-portrait img {
+      aspect-ratio: 3 / 4;
+    }
+
+    .founder-shot:nth-child(1) .print-mat { transform: rotate(-1.3deg) translateY(7px); }
+    .founder-shot:nth-child(2) .print-mat { transform: rotate(1deg); }
+    .founder-shot:nth-child(3) .print-mat { transform: rotate(-0.8deg) translateY(11px); }
+    .founder-shot:nth-child(4) .print-mat { transform: rotate(1.3deg) translateY(3px); }
+    .founder-shot:nth-child(5) .print-mat { transform: rotate(-1deg) translateY(9px); }
+
+    @media (max-width: 900px) {
+      .founder-strip {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(16px, 3vw, 26px);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .founder-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    /* The photographs and the timeline are one section: the same thirty
+       years, shown twice. The gap has to clear the mats, which are
+       staggered down by as much as 11px and hang lower on the portrait
+       tile. */
+    .founder-timeline {
+      margin-top: clamp(44px, 5vw, 68px);
+    }
+
+    .founder-timeline .method-kicker {
+      margin-bottom: 20px;
+    }
+
+    .milestones {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .milestones li {
+      display: grid;
+      grid-template-columns: 88px minmax(0, 1fr);
+      gap: clamp(16px, 2vw, 30px);
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+      align-items: baseline;
+    }
+
+    .milestones li:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .milestones b {
+      color: var(--moss);
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .milestones span {
+      color: var(--ink-soft);
+      font-size: clamp(15px, 1.08vw, 17px);
+      line-height: 1.5;
+    }
+
+    /* ── In print ─────────────────────────────────────────────────
+       The clippings index under the letter. Three lists of four, set
+       as one bordered table on Core rather than as loose stacks on
+       Surface: written by him, written about him, and on camera. The
+       ground is the same one the landing-page press wall gives every
+       masthead, and it is what holds twelve third-party links together
+       as a single object instead of twelve floating rows.
+
+       The mastheads are type, not marks. press-logos/ holds eight
+       knockouts and this section names twelve outlets, so a logo wall
+       would have four gaps in it. */
+    .press-shelf .section-head {
+      margin-bottom: clamp(34px, 3.4vw, 46px);
+    }
+
+    /* One pixel of Core-rule showing through the grid gap draws the
+       column dividers, the same way .join-steps draws its cells. */
+    .clipping-cols {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line-dark);
+      border: 1px solid var(--line-dark);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .clipping-col {
+      background: var(--forest);
+      padding: clamp(22px, 2.2vw, 30px) clamp(18px, 1.8vw, 26px) clamp(14px, 1.6vw, 20px);
+    }
+
+    .clipping-col .method-kicker {
+      margin-bottom: 6px;
+    }
+
+    .clipping-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .clipping-list li {
+      border-top: 1px solid var(--line-dark);
+    }
+
+    /* Two rows in one column, the chevron spanning both beside them.
+       The label and the headline are siblings rather than a wrapped
+       pair, so the row needs explicit placement or the headline lands
+       in the 8px chevron track. */
+    .clipping {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 8px;
+      column-gap: 16px;
+      align-items: center;
+      padding: 15px 0;
+    }
+
+    .clipping-pub {
+      grid-column: 1;
+      display: block;
+      color: var(--moss);
+      font-family: var(--sans);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .clipping-title {
+      grid-column: 1;
+      display: block;
+      margin-top: 7px;
+      color: var(--paper);
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.42;
+      transition: color 140ms;
+    }
+
+    /* The same chevron the mobile panel draws. Every row on this shelf
+       leads somewhere, and one shape says so across all of them. */
+    .clipping::after,
+    .book-link::after {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-top: 1.5px solid currentColor;
+      border-right: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      opacity: 0.5;
+      transition: opacity 140ms, transform 140ms;
+      flex-shrink: 0;
+    }
+
+    .clipping::after {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      align-self: center;
+      color: var(--moss);
+    }
+
+    .clipping:hover .clipping-title {
+      color: var(--lime-low);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .clipping:hover::after,
+    .book-link:hover::after {
+      opacity: 1;
+      transform: translate(3px, 0) rotate(45deg);
+    }
+
+    /* The book is the one object in this section rather than a link to
+       one, so it takes Core-lift and runs the full width under the
+       index, copy left and the two ways to reach it right. It does not
+       repeat founder/book.jpg: the cover is already a matted print in
+       the record below, and the same photograph twice on one page
+       reads as an oversight. */
+    .book-strip {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: clamp(24px, 3vw, 56px);
+      align-items: center;
+      margin-top: clamp(26px, 2.8vw, 40px);
+      padding: clamp(26px, 2.8vw, 38px) clamp(22px, 2.4vw, 34px);
+      background: var(--forest-soft);
+      border-radius: 8px;
+    }
+
+    .book-strip h3 {
+      margin: 12px 0 0;
+      color: var(--paper);
+      font-size: clamp(23px, 2vw, 29px);
+      font-weight: 700;
+      line-height: 1.14;
+      letter-spacing: 0;
+    }
+
+    .book-strip p {
+      margin: 12px 0 0;
+      max-width: 62ch;
+      color: color-mix(in oklch, var(--paper) 76%, var(--forest));
+      font-size: 15.5px;
+      line-height: 1.6;
+    }
+
+    .book-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .book-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--paper);
+      font-family: var(--sans);
+      font-size: 14.5px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    /* Three into two leaves an empty cell, and an empty cell in a
+       bordered table reads as a rendering fault. The third list takes
+       the full row instead. */
+    @media (max-width: 1080px) {
+      .clipping-cols {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .clipping-col:last-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .book-strip {
+        grid-template-columns: minmax(0, 1fr);
+        align-items: start;
+        gap: 22px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .clipping-cols {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .book-link {
+        white-space: normal;
+      }
+    }
+
+    /* ── How to join ──────────────────────────────────────────────
+       Three numbered steps, then two plain-spoken panels. The fee is
+       not published: docs/product.md holds the figures and they are
+       shared on the strategy call. */
+
+    .join-steps {
+      display: grid;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .join-step {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: clamp(16px, 2vw, 30px);
+      padding: clamp(22px, 2.4vw, 34px);
+      background: var(--paper);
+    }
+
+    .join-num {
+      color: var(--moss);
+      font-family: var(--sans);
+      font-size: clamp(28px, 2.2vw, 38px);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .join-step h3 {
+      margin: 0 0 10px;
+      font-size: clamp(21px, 1.6vw, 25px);
+      line-height: 1.15;
+    }
+
+    .join-step p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: clamp(15px, 1.08vw, 17px);
+      line-height: 1.6;
+      max-width: 74ch;
+    }
+
+    .join-pair {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(20px, 2.6vw, 38px);
+      margin-top: clamp(28px, 3.2vw, 44px);
+    }
+
+    .join-panel h3 {
+      margin: 0 0 10px;
+      font-size: clamp(20px, 1.5vw, 23px);
+      line-height: 1.15;
+    }
+
+    .join-panel p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: clamp(15px, 1.08vw, 17px);
+      line-height: 1.6;
+    }
+
+    .join-fee {
+      margin-top: clamp(26px, 3vw, 40px);
+      padding: clamp(20px, 2.2vw, 30px);
+      border-radius: 8px;
+      background: var(--lime-low);
+    }
+
+    .join-fee p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: clamp(15px, 1.08vw, 17px);
+      line-height: 1.6;
+      max-width: 80ch;
+    }
+
+    @media (max-width: 860px) {
+      .join-pair {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .join-step {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+      }
+    }
+
+    /* ── Why start early / the whole student / the year ───────────
+
+       The year grid is five streams by twelve months with three
+       diagnosis points. It scrolls sideways in its own container
+       below 900px rather than forcing the page to scroll. */
+
+    .early-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: clamp(26px, 3.6vw, 56px);
+      align-items: center;
+    }
+
+    .early-layout svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    /* Chart key as HTML rather than SVG text, so it flows under the
+       plot instead of colliding with the lines. */
+    .chart-key {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 22px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .chart-key li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink-soft);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .chart-key li::before {
+      content: "";
+      width: 16px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--sc, var(--moss));
+    }
+
+    .early-copy p {
+      margin: 0 0 16px;
+      color: var(--ink-soft);
+      font-size: clamp(16px, 1.12vw, 18px);
+      line-height: 1.62;
+    }
+
+    .early-copy p:last-child {
+      margin-bottom: 0;
+    }
+
+    .breadth-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(16px, 1.9vw, 26px);
+      margin-top: clamp(26px, 3vw, 40px);
+    }
+
+    .breadth-item h3 {
+      margin: 0 0 8px;
+      color: var(--paper);
+      font-size: clamp(20px, 1.4vw, 23px);
+      line-height: 1.15;
+    }
+
+    .breadth-item p {
+      margin: 0;
+      color: oklch(82% 0.014 218);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .breadth-feeds {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: clamp(24px, 2.8vw, 36px);
+      background: var(--line-dark);
+      border: 1px solid var(--line-dark);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .breadth-feeds span {
+      padding: 16px 18px;
+      background: var(--forest-soft);
+      color: oklch(86% 0.014 218);
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .year-scroll {
+      overflow-x: auto;
+      margin-top: clamp(22px, 2.6vw, 34px);
+    }
+
+    .year-grid {
+      min-width: 760px;
+      display: grid;
+      grid-template-columns: 210px repeat(12, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .year-grid > * {
+      background: var(--paper);
+      padding: 9px 10px;
+    }
+
+    .year-head {
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
       letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .year-head.is-diagnose {
+      background: var(--forest);
+      color: var(--paper);
+    }
+
+    .year-stream {
+      display: grid;
+      gap: 3px;
+    }
+
+    .year-stream strong {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .year-stream span {
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .year-cell {
+      background: var(--paper);
+    }
+
+    .year-cell.is-on {
+      background: var(--sc, var(--moss));
+    }
+
+    .year-legend {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .early-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .breadth-grid,
+      .breadth-feeds {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .breadth-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* ── What families are up against ─────────────────────────────
+       Three data bands, each ending in its implication. Series
+       colours are Core, Support and Highlight. Signal never carries
+       a data series, per docs/brand.md. */
+
+    .problem-band {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+      gap: clamp(24px, 3.4vw, 56px);
+      padding: clamp(30px, 3.6vw, 50px) 0;
+      border-top: 1px solid var(--line);
+      align-items: center;
+    }
+
+    .problem-band h3 {
+      margin: 0 0 18px;
+      font-size: clamp(21px, 1.7vw, 26px);
+      line-height: 1.2;
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+    }
+
+    .problem-num {
+      color: var(--moss);
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      flex-shrink: 0;
+    }
+
+    .problem-figure svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    /* SVG text does not inherit the label scale. Both sit well under
+       the 20px Display floor, so both are Text. */
+    .pc-ax {
+      fill: var(--muted);
+      font-family: var(--sans);
+      font-size: 11px;
+    }
+
+    .pc-key {
+      font-family: var(--sans);
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+
+    .problem-src {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    /* --muted is an on-Surface value. On Core it lands dark on dark,
+       the same trap the eyebrow list in ocean-ember.css answers. */
+    .section.dark .problem-src {
+      color: oklch(72% 0.018 218);
+    }
+
+    .problem-implication {
+      padding: clamp(18px, 1.9vw, 26px);
+      border-radius: 8px;
+      background: var(--lime-low);
+    }
+
+    .problem-tag {
+      margin: 0 0 8px;
+      color: var(--moss);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .problem-implication p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: clamp(15px, 1.08vw, 17px);
+      line-height: 1.55;
+    }
+
+    /* Counted-in-court bars. Widths are to scale against the
+       applicant total, which is the whole point of the graphic. */
+    .scale-row {
+      display: grid;
+      gap: 12px;
+    }
+
+    .scale-bar {
+      display: grid;
+      gap: 6px;
+    }
+
+    .scale-bar span {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+
+    .scale-bar i {
+      display: block;
+      height: 22px;
+      border-radius: 2px;
+      background: var(--sc, var(--forest));
+      width: var(--w);
+    }
+
+    .guidance-pair {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(14px, 1.8vw, 24px);
+    }
+
+    .guidance-panel {
+      padding: clamp(16px, 1.7vw, 22px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .guidance-panel > p:first-child {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .guidance-scatter,
+    .guidance-path {
+      margin: 0 0 12px;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .guidance-scatter li {
+      padding: 4px 9px;
+      border: 1px dashed var(--line);
+      border-radius: 20px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 12px;
+    }
+
+    .guidance-path {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .guidance-path li {
+      position: relative;
+      padding: 0 0 12px 20px;
+      color: var(--ink-soft);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .guidance-path li::before {
+      content: "";
+      position: absolute;
+      left: 3px;
+      top: 5px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--moss);
+    }
+
+    .guidance-path li:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 14px;
+      bottom: 1px;
+      width: 1px;
+      background: var(--line);
+    }
+
+    .guidance-panel > p:last-child {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .problem-notes {
+      margin: clamp(24px, 2.8vw, 36px) 0 0;
+      padding-top: clamp(18px, 2vw, 26px);
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 900px) {
+      .problem-band {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .guidance-pair {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* ── Scroll-linked pyramid (services sticky column) ───────────
+
+       Lives on the dark services ground, so it cannot reuse the
+       Spike legend's fills: Core on Core would vanish. Instead every
+       band sits dim and the active one lifts to Support, with the
+       apex lifting to Highlight because it is the point everyone
+       sees. One colour at a time, so the eye reads position rather
+       than four competing hues.
+
+       The active layer comes from data-active on the wrapper, set by
+       the sticky-services script. Layer 4 is Management: no band
+       lights, the dashed line does. */
+
+    .pyramid {
+      margin-bottom: clamp(18px, 2.4vw, 30px);
+    }
+
+    .pyramid svg {
+      display: block;
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+    }
+
+    .pyr-band {
+      fill: var(--forest-soft);
+      stroke: var(--line-dark);
+      stroke-width: 1;
+      opacity: 0.5;
+      transition: fill 320ms ease, opacity 320ms ease;
+    }
+
+    .pyr-line {
+      fill: none;
+      stroke: var(--line-dark);
+      stroke-width: 1.5;
+      stroke-dasharray: 6 5;
+      opacity: 0.55;
+      transition: stroke 320ms ease, opacity 320ms ease;
+    }
+
+    .pyr-num {
+      fill: var(--paper);
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      opacity: 0.45;
+      transition: opacity 320ms ease, fill 320ms ease;
+    }
+
+    .pyr-num.is-apex {
+      font-size: 11px;
+    }
+
+    /* Active band. Support for the three lower layers, Highlight for
+       the apex. Highlight is a fill colour, never text, so the apex
+       number flips to Ink on top of it. */
+    .pyramid[data-active="0"] .pyr-band[data-layer="0"],
+    .pyramid[data-active="1"] .pyr-band[data-layer="1"],
+    .pyramid[data-active="2"] .pyr-band[data-layer="2"] {
+      fill: var(--moss);
+      opacity: 1;
+    }
+
+    .pyramid[data-active="3"] .pyr-band[data-layer="3"] {
+      fill: var(--clay);
+      opacity: 1;
+    }
+
+    .pyramid[data-active="0"] .pyr-num[data-layer="0"],
+    .pyramid[data-active="1"] .pyr-num[data-layer="1"],
+    .pyramid[data-active="2"] .pyr-num[data-layer="2"] {
+      opacity: 1;
+    }
+
+    .pyramid[data-active="3"] .pyr-num[data-layer="3"] {
+      fill: var(--ink);
+      opacity: 1;
+    }
+
+    .pyramid[data-active="4"] .pyr-line {
+      stroke: var(--moss);
+      opacity: 1;
+    }
+
+    /* Caption swaps with the active layer. Only one span is ever
+       shown, so the block does not reflow as the label changes. */
+    .pyramid-caption {
+      display: grid;
+      margin: 14px 0 0;
+      min-height: 1.4em;
+    }
+
+    .pyramid-caption span {
+      grid-area: 1 / 1;
+      color: var(--label-on-core, oklch(72% 0.05 218));
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 260ms ease;
+    }
+
+    .pyramid[data-active="0"] .pyramid-caption span[data-layer="0"],
+    .pyramid[data-active="1"] .pyramid-caption span[data-layer="1"],
+    .pyramid[data-active="2"] .pyramid-caption span[data-layer="2"],
+    .pyramid[data-active="3"] .pyramid-caption span[data-layer="3"],
+    .pyramid[data-active="4"] .pyramid-caption span[data-layer="4"] {
+      opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pyr-band,
+      .pyr-line,
+      .pyr-num,
+      .pyramid-caption span {
+        transition: none;
+      }
+    }
+
+    /* The sticky column is hidden below 981px, where each row carries
+       its own copy and visual, so the pyramid goes with it. */
+    @media (max-width: 980px) {
+      .pyramid {
+        display: none;
+      }
+    }
+
+    /* ── The Spike ────────────────────────────────────────────────
+       The pyramid diagram plus the build-order argument. Band fills
+       use Highlight and Support, never Signal: a diagram is a chart,
+       and docs/brand.md reserves Signal for the button, one headline
+       word, and one key number. */
+
+    .spike-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: clamp(28px, 4vw, 64px);
+      align-items: center;
+    }
+
+    .spike-figure svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* SVG text does not inherit the label scale, so it is set here.
+       The band numbers sit on Core, Support and Highlight fills, so
+       the one on Highlight flips to Ink to keep contrast. */
+    .spike-svg-num {
+      fill: var(--paper);
+      font-family: var(--sans);
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .spike-svg-num.is-dark {
+      fill: var(--ink);
+      font-size: 16px;
+    }
+
+    .spike-svg-line {
+      fill: var(--muted);
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+    }
+
+    .spike-legend {
+      display: grid;
+      gap: clamp(14px, 1.6vw, 20px);
+    }
+
+    .spike-item {
+      display: grid;
+      grid-template-columns: 12px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .spike-swatch {
+      width: 12px;
+      height: 12px;
+      margin-top: 6px;
+      border-radius: 2px;
+      background: var(--sw, var(--moss));
+    }
+
+    .spike-item h3 {
+      margin: 0 0 4px;
+      font-size: clamp(20px, 1.5vw, 23px);
+      line-height: 1.15;
+    }
+
+    .spike-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .spike-item.is-line .spike-swatch {
+      background: none;
+      border: 1px dashed var(--muted);
+      border-radius: 0;
+    }
+
+    .spike-argument {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(22px, 3vw, 48px);
+      margin-top: clamp(36px, 4.4vw, 62px);
+      padding-top: clamp(28px, 3.2vw, 44px);
+      border-top: 1px solid var(--line);
+    }
+
+    .spike-argument p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: clamp(16px, 1.12vw, 18px);
+      line-height: 1.62;
+    }
+
+    @media (max-width: 900px) {
+      .spike-layout,
+      .spike-argument {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .spike-figure {
+        max-width: 460px;
+      }
+    }
+
+    /* ── In print, and on air ─────────────────────────────────────
+       Mastheads are set as type, not logos, so the wall needs no
+       image assets and every outlet reads at the same weight. The
+       existing logo strip in the index hero covers the visual case. */
+
+    .clip-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .clip {
+      padding: clamp(20px, 1.9vw, 28px);
+      background: var(--paper);
+      display: grid;
+      align-content: start;
+      gap: 10px;
+    }
+
+    /* Masthead and date. Text Bold tracked caps, well under the
+       20px Display floor. */
+    .clip-mast {
+      margin: 0;
+      color: var(--moss);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .clip h3 {
+      margin: 0;
+      font-size: clamp(19px, 1.35vw, 22px);
+      line-height: 1.28;
+      font-weight: 700;
+    }
+
+    .clip-by {
+      margin: 0;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .clip-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(14px, 1.6vw, 22px);
+      margin-top: clamp(20px, 2.2vw, 30px);
+    }
+
+    .clip-strip .clip {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: none;
+      gap: 7px;
+    }
+
+    .clip-strip .clip h3 {
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    .clip-source {
+      margin: clamp(18px, 2vw, 26px) 0 0;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 12px;
+    }
+
+    @media (max-width: 1024px) {
+      .clip-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 700px) {
+      .clip-grid,
+      .clip-strip {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* ── Four people on every file ────────────────────────────────
+       Not a feature grid. Each block is a person with a cadence, so
+       the cadence is what leads and the blocks are told apart by when
+       they act, not by an icon. */
+
+    .bench-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(20px, 2.4vw, 34px);
+    }
+
+    .bench-block {
+      padding: clamp(22px, 2.2vw, 32px);
+      border: 1px solid var(--line-dark);
+      border-radius: 8px;
+      background: var(--forest-soft);
+    }
+
+    /* Cadence label. Text Bold, tracked caps, Support tint on Core. */
+    .bench-cadence {
+      margin: 0 0 10px;
+      color: var(--label-on-core, oklch(72% 0.05 218));
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .bench-block h3 {
+      margin: 0 0 12px;
+      color: var(--paper);
+      font-size: clamp(23px, 1.8vw, 28px);
+      line-height: 1.12;
+    }
+
+    .bench-block > p {
+      margin: 0 0 20px;
+      color: oklch(84% 0.014 218);
+      font-size: clamp(15px, 1.05vw, 17px);
+      line-height: 1.58;
+    }
+
+    .bench-sub {
+      margin: 0 0 10px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line-dark);
+      color: oklch(72% 0.02 218);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .bench-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 9px;
+    }
+
+    .bench-list li {
+      position: relative;
+      padding-left: 18px;
+      color: oklch(80% 0.014 218);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .bench-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+      width: 7px;
+      height: 1px;
+      background: var(--moss);
+    }
+
+    .bench-note {
+      margin: clamp(24px, 2.6vw, 36px) 0 0;
+      color: oklch(74% 0.018 218);
+      font-size: clamp(15px, 1.05vw, 17px);
+      line-height: 1.6;
+      max-width: 74ch;
+    }
+
+    .bench-note strong {
+      color: var(--paper);
+      font-weight: 700;
+    }
+
+    @media (max-width: 860px) {
+      .bench-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* ── The counsel wall ─────────────────────────────────────────
+       Ported from the prospectus advisor spread: a cutout portrait on
+       a solid Harvard ground, the alma mater's mark above the name,
+       and a gradient scrim at the foot carrying both.
+
+       The crimson is a third-party colour used the same way the
+       admits wall uses each university's own, and it is what makes
+       "all Harvard alumni" land before a word is read. Replaces a
+       pale Support ground the cutouts floated on, two of which
+       carried a painted blue backdrop the other five did not.
+
+       Two layouts share the tile. The default is the wrapped grid, as
+       on the team page, where the board is the point of the section
+       and every face should be visible without interaction. Wrap the
+       wall in `.counsel-carousel` to get the rail instead, which is
+       what the home page uses so seven portraits stay on one line.
+       Rail mechanics match the outcome rail above (native scroll,
+       x-mandatory snap, chevrons that step one card), so both read
+       as the same component. */
+
+    .counsel-wall {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(10px, 1.1vw, 16px);
+      /* Harvard crimson. Per tile if an advisor's mark ever needs its
+         own ground; every current tile shares this one. */
+      --counsel-ground: #A51C30;
+    }
+
+    /* Harvard itself as the ground of the section: Harvard Hall, under
+       a near-neutral scrim. The board is all Harvard alumni, and the
+       campus says that ahead of the copy in a way a wordmark cannot.
+       The per-advisor marks on the tiles are left alone, and stay the
+       only place each advisor's own institution is shown.
+
+       `harvard-hall.webp` is built from a 5472x3648 CC0 original by
+       Daderot on Wikimedia Commons. Provenance, the build recipe, and
+       why the treatment is baked into the file rather than applied in
+       CSS are all in `docs/site.md`. Do not re-crop or re-encode it
+       from the version in this repo; go back to the Commons original.
+
+       The section runs `dark` because of it. A photograph strong
+       enough to be recognised cannot be pushed far enough back to sit
+       under Ink type, so the type goes to Paper and the scrim does the
+       work instead of the opacity.
+
+       Readability is measured, not eyeballed. Against the Display
+       title the worst pixel behind the type runs 13.5:1, and against
+       the muted section copy 6.4:1. The first pass on this section sat
+       at 8.4:1 and 5.5:1, which cleared AA and still read as busy,
+       because a contrast ratio does not see texture. Local variance
+       behind the title is what actually had to come down, and it is
+       now 0.0033 against 0.0095 then.
+
+       - the photo layer carries no `filter`. Saturation is baked into
+         the asset at 0.88, which both keeps the brick warm against
+         the crimson tiles and compresses far better than leaving the
+         full-chroma original to the encoder.
+       - the scrim opens at 0.94 over the head, eases to 0.86 through
+         the middle where the cupola does its work, and closes at 0.95
+         under the wall. Its hue is near-neutral rather than Core: a
+         teal scrim over red brick turns the building olive, and the
+         warmth is most of what makes it read as a campus at all. */
+    .counsel-section {
+      position: relative;
+    }
+
+    .counsel-section > .wrap {
+      position: relative;
+      z-index: 1;
+    }
+
+    .counsel-section::before,
+    .counsel-section::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .counsel-section::before {
+      background: url("harvard-hall.webp") center 42% / cover no-repeat;
+    }
+
+    .counsel-section::after {
+      background: linear-gradient(
+        oklch(13% 0.018 200 / 0.94) 0%,
+        oklch(13% 0.018 200 / 0.86) 50%,
+        oklch(13% 0.018 200 / 0.95) 100%
+      );
+    }
+
+    /* The credit line under the wall on `team.html`. Muted is an Ink
+       grey and disappears on the photo. */
+    .counsel-section .clip-source {
+      color: color-mix(in oklch, var(--paper) 58%, var(--forest));
+    }
+
+    .counsel-carousel {
+      position: relative;
+      --counsel-gap: clamp(10px, 1.1vw, 16px);
+      /* Cards per view. Overridden at the breakpoints below. */
+      --counsel-per-view: 4;
+    }
+
+    .counsel-carousel .counsel-wall {
+      display: flex;
+      gap: var(--counsel-gap);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+
+    .counsel-carousel .counsel-wall::-webkit-scrollbar {
+      display: none;
+    }
+
+    .counsel-carousel .counsel-wall > * {
+      flex: 0 0 calc(
+        (100% - (var(--counsel-per-view) - 1) * var(--counsel-gap))
+        / var(--counsel-per-view)
+      );
+      scroll-snap-align: start;
+    }
+
+    .counsel-tile {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--counsel-ground);
+    }
+
+    /* The cutouts are pre-normalised in `counsel-portraits/`: every
+       face is scaled to the same width and every subject anchored to
+       the foot of a 3:4 frame. Doing it in CSS is not possible, since
+       the sources run from a 500x400 head-and-shoulders crop to a
+       1200x1650 full torso, and any single object-fit rule leaves
+       half the board either floating or cropped through the chin. */
+    .counsel-portrait {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center bottom;
+      display: block;
+    }
+
+    /* The mark sits top right, on clean ground. On the prospectus'
+       landscape cells it sat beside the name; in a 3:4 tile the
+       portrait is anchored to the foot, which leaves the top third
+       empty, and that is where the mark belongs. It fills dead space
+       and never lands on a face.
+
+       Same fixed-box trick as the admits wall. The Harvard lockup is
+       about 4:1 and the LSE plate is square, so capping one axis
+       alone would leave the square mark a third of the lockup's
+       presence. */
+    .counsel-crest {
+      position: absolute;
+      top: clamp(12px, 1.1vw, 16px);
+      right: clamp(12px, 1.1vw, 16px);
+      width: clamp(78px, 6.4vw, 100px);
+      height: clamp(30px, 2.7vw, 38px);
+      object-fit: contain;
+      object-position: right top;
+      z-index: 1;
+    }
+
+    /* The scrim is what makes a name legible over any portrait. It
+       runs from transparent to near-Ink so the type never sits on the
+       face, only on the darkened foot of the frame. */
+    .counsel-band {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 48px 16px 14px;
+      background: linear-gradient(
+        transparent,
+        oklch(11% 0.02 218 / 0.34) 38%,
+        oklch(9% 0.02 218 / 0.86) 74%,
+        oklch(8% 0.02 218 / 0.96)
+      );
+    }
+
+    .counsel-band strong {
+      display: block;
+      color: var(--paper);
+      font-family: var(--serif);
+      font-size: clamp(17px, 1.25vw, 20px);
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .counsel-band span {
+      display: block;
+      margin-top: 5px;
+      color: oklch(84% 0.03 218);
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.45;
+    }
+
+    /* The claim tile. Same footprint as a portrait so the wall stays
+       a clean grid, Core so it reads as the label for the rest. */
+    .counsel-intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: clamp(18px, 1.8vw, 26px);
+      background: var(--forest);
+      aspect-ratio: 3 / 4;
+      border-radius: 8px;
+    }
+
+    .counsel-intro h3 {
+      margin: 0;
+      color: var(--paper);
+      font-size: clamp(21px, 1.7vw, 27px);
+      line-height: 1.1;
+    }
+
+    .counsel-intro p {
+      margin: 12px 0 0;
+      color: oklch(84% 0.02 218);
+      font-family: var(--sans);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* Chevrons, matched to the outcome rail. Hidden where the rail is
+       touch-scrolled and the partial next card is the affordance. */
+    .counsel-nav {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 22px;
+    }
+
+    /* The outcome rail's chevrons are a Paper disc that fills to Core
+       on hover, which is right on Paper and inverts to invisible on
+       the photo. Ghosted here, filling to Paper instead. */
+    .counsel-nav .outcome-btn {
+      border-color: color-mix(in oklch, var(--paper) 34%, transparent);
+      background: color-mix(in oklch, var(--paper) 12%, transparent);
+      color: var(--paper);
+    }
+
+    .counsel-nav .outcome-btn:hover:not(:disabled) {
+      background: var(--paper);
+      border-color: var(--paper);
+      color: var(--forest-strong);
+    }
+
+    .counsel-nav .outcome-btn:disabled {
+      opacity: 0.34;
+    }
+
+    @media (max-width: 1080px) {
+      .counsel-carousel {
+        --counsel-per-view: 3;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .counsel-wall {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .counsel-carousel {
+        --counsel-per-view: 2;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .counsel-carousel {
+        /* A fraction, so the next card peeks and the rail reads as
+           scrollable without a visible bar. */
+        --counsel-per-view: 1.3;
+      }
+
+      .counsel-nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .counsel-band {
+        padding: 36px 12px 11px;
+      }
+    }
+
+    /* ── Voices ───────────────────────────────────────────────────
+       One row component for both student and parent testimony. Rows
+       alternate the photo side. The quote leads; the photo is the
+       corroboration, so it is the smaller half. */
+
+    .voices {
+      display: grid;
+      gap: clamp(28px, 3.4vw, 52px);
+    }
+
+    .voice-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(210px, 0.42fr);
+      gap: clamp(24px, 3vw, 48px);
+      align-items: center;
+    }
+
+    .voice-row.alt {
+      grid-template-columns: minmax(210px, 0.42fr) minmax(0, 1fr);
+    }
+
+    .voice-row.alt .voice-copy {
+      order: 2;
+    }
+
+    .voice-row.alt .voice-photo {
+      order: 1;
+    }
+
+    .voice-photo {
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--lime-low);
+    }
+
+    /* Head-and-shoulders portraits crop from the top. Wider candid
+       shots set --focus per photo so the subject stays in frame. */
+    .voice-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: var(--focus, center top);
+      display: block;
+    }
+
+    .voice-name {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px 14px;
+      margin-bottom: 14px;
+    }
+
+    .voice-name h3 {
+      margin: 0;
+      font-size: clamp(23px, 1.9vw, 29px);
+      line-height: 1.1;
+    }
+
+    /* Admit line and relationship line. Both sit under the 20px
+       Display floor, so they are Text labels. */
+    .voice-meta {
+      color: var(--moss);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .voice-copy blockquote {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: clamp(16px, 1.16vw, 18px);
+      line-height: 1.62;
+      max-width: 68ch;
+    }
+
+    .section.dark .voice-copy blockquote {
+      color: oklch(86% 0.012 218);
+    }
+
+    .section.dark .voice-photo {
+      background: var(--forest-soft);
+    }
+
+    @media (max-width: 860px) {
+      .voice-row,
+      .voice-row.alt {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+      }
+
+      .voice-row.alt .voice-copy,
+      .voice-row.alt .voice-photo {
+        order: initial;
+      }
+
+      .voice-photo {
+        max-width: 220px;
+        aspect-ratio: 1 / 1;
+      }
+    }
+
+    /* ── Distinction, proven ──────────────────────────────────────
+       Two logo walls on a light section. Both sets of marks are white
+       wordmarks, so each tile carries its own dark ground: the summer
+       programs take the university's own colour, the journals take
+       Core. No near-neutral colour-mix here, the grounds are flat. */
+
+    .proof-wall-label {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .proof-wall-label + .proof-wall-label,
+    .program-wall + .proof-wall-label {
+      margin-top: clamp(44px, 5vw, 68px);
+    }
+
+    .program-wall,
+    .journal-wall {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(12px, 1.3vw, 18px);
+    }
+
+    .program-tile,
+    .journal-tile {
+      min-height: 138px;
+      padding: 22px 20px 18px;
+      border-radius: 8px;
+      background: var(--tile, var(--forest));
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 14px;
+      text-align: center;
+    }
+
+    /* Aspect ratios run from about 2:1 (Columbia's crest) to 8:1
+       (Cornell's wordmark). Height is what a wide mark is limited by
+       and width is what a tall one is limited by, so both caps are
+       generous enough that each mark lands at a similar optical size. */
+    .program-tile img,
+    .journal-tile img {
+      max-width: 76%;
+      max-height: 54px;
+      object-fit: contain;
+    }
+
+    .journal-tile img {
+      max-width: 84%;
+      max-height: 42px;
+    }
+
+    /* Programme name under the mark. Well under the 20px Display floor,
+       so this is the label scale in Text, not a small heading. */
+    .program-tile span,
+    .journal-tile span {
+      color: oklch(97% 0.01 84 / 0.88);
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 1024px) {
+      .program-wall,
+      .journal-wall {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .program-wall,
+      .journal-wall {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .program-tile,
+      .journal-tile {
+        min-height: 116px;
+        padding: 18px 14px 14px;
+      }
     }
 
     .quote-band {
@@ -2557,10 +4890,6 @@
       .student-story-card:nth-child(even) {
         margin-top: 0;
       }
-
-      .universities {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
     }
 
     @media (max-width: 920px) {
@@ -2622,13 +4951,8 @@
         display: inline-flex;
       }
 
-      .hero {
-        min-height: auto;
-      }
-
       .hero-grid {
         grid-template-columns: 1fr;
-        padding-top: 26px;
       }
 
       .hero-copy {
@@ -2640,17 +4964,10 @@
       .hero-media {
         grid-column: 1;
         grid-row: 1;
-        min-height: 520px;
-      }
-
-      .campus-frame {
-        inset: 20px 0 84px 0;
       }
 
       .student-figure {
-        right: -20px;
-        bottom: 62px;
-        width: min(68%, 430px);
+        width: min(86%, 400px);
       }
 
       .hero-caption {
@@ -2807,54 +5124,41 @@
         font-size: 17px;
       }
 
-      .hero-alumni {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-        padding: 14px 16px 16px;
-      }
-
       .hero-alumni-label {
-        padding-right: 0;
-        border-right: none;
-        padding-bottom: 10px;
-        border-bottom: 1px solid var(--line-dark);
-        width: 100%;
+        padding: 11px 16px 10px;
       }
 
       .hero-logo-row {
-        width: 100%;
-        gap: 10px;
+        padding: 2px 10px;
+      }
+
+      .hero-logo-slot {
+        height: 50px;
       }
 
       .hero-logo-slot img {
-        height: 28px;
+        max-height: calc(28px * var(--mark, 1));
       }
 
-      .hero-logo-slot.logo-wide img {
-        height: 26px;
+      /* The frame keeps its shape on a phone. Only the mat thins, so a
+         335px plate does not lose an eighth of its width to moulding. */
+      .campus-frame {
+        max-width: 420px;
+        padding: 10px;
+        border-radius: 10px;
       }
 
-      .hero-logo-slot.logo-seal img {
-        height: 34px;
-      }
-
-      .hero-media {
-        min-height: 430px;
+      .campus-frame::before {
+        inset: 5px;
+        border-radius: 7px;
       }
 
       .student-figure {
-        right: -28px;
-        bottom: 62px;
-        width: min(86%, 390px);
+        width: min(90%, 340px);
       }
 
       .hero-caption {
         bottom: 24px;
-      }
-
-      .trust-items {
-        animation-duration: 24s;
       }
 
       .section {
@@ -3099,10 +5403,6 @@
       .student-story-grid,
       .footer-grid {
         grid-template-columns: 1fr;
-      }
-
-      .universities {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .team-support {

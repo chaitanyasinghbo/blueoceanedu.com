@@ -1,206 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- @analytics — GA4 and the Meta pixel, one block, same on every page.
+<!-- Landing-page hero. The one part of lp/ and iblp/ that is not index.html.
 
-       The dataLayer event on line 8 is the only line that changes per page:
-       tools/build-landing-pages.py swaps SITE_PAGEVIEW for the landing
-       page's own event name. Keep the block byte-identical everywhere else
-       or that swap silently stops matching. -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2STB24PJGQ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-2STB24PJGQ');
-    dataLayer.push({ "event": "SITE_PAGEVIEW" });
-  </script>
-  <!-- Meta Pixel Code -->
-  <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '754270597536586');
-  fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=754270597536586&ev=PageView&noscript=1"
-  /></noscript>
-  <!-- End Meta Pixel Code -->
-  <!-- /@analytics -->
-  <meta charset="UTF-8">
-  <link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Work 1-1 | Blue Ocean Education</title>
-  <meta name="description" content="Request a private consultation with Dr. Sanjay Kumar. A 45-minute academic review to assess your child's profile and the path to the world's most selective universities.">
-  <link rel="stylesheet" href="main.css">
-  <style>
+     Everything else on those pages is generated from index.html by
+     tools/build-landing-pages.py. Edit this file to change the landing
+     hero; edit index.html to change anything below it; then re-run the
+     builder. Do not hand-edit lp/*.html or iblp/*.html.
 
-    /* ── Theme toggle ───────────────────────────────── */
-    .theme-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      height: 30px;
-      padding: 0 10px;
-      border-radius: 20px;
-      border: 1px solid color-mix(in oklch, var(--paper) 15%, transparent);
-      background: transparent;
-      cursor: pointer;
-      transition: border-color 160ms;
-      flex-shrink: 0;
-    }
-    .theme-toggle:hover { border-color: color-mix(in oklch, var(--paper) 32%, transparent); }
-    .td { width: 9px; height: 9px; border-radius: 50%; transition: transform 180ms, box-shadow 180ms; }
-    .td-green { background: oklch(85% 0.12 116); }
-    .td-blue  { background: oklch(66% 0.092 226); }
-    html:not([data-theme="blue"]) .td-green { transform: scale(1.3); box-shadow: 0 0 0 2.5px oklch(85% 0.12 116 / 0.28); }
-    html[data-theme="blue"] .td-blue       { transform: scale(1.3); box-shadow: 0 0 0 2.5px oklch(66% 0.092 226 / 0.28); }
-    html[data-theme="blue"] {
-      --forest-strong: oklch(26% 0.055 242);
-      --forest:        oklch(33% 0.068 240);
-      --forest-soft:   oklch(41% 0.065 238);
-      --moss:          oklch(48% 0.100 226);
-      --lime:          oklch(72% 0.115 222);
-      --lime-low:      oklch(93% 0.038 222);
-      --line-dark:     oklch(44% 0.038 240);
-      --shadow:        oklch(14% 0.020 250 / 0.24);
-      --paper:         oklch(97% 0.020 228);
-      --paper-low:     oklch(93.5% 0.026 228);
-      --paper-deep:    oklch(89% 0.030 226);
-      --line:          oklch(84% 0.018 228);
-    --ink:           oklch(15% 0.018 240);
-    --ink-soft:      oklch(34% 0.016 240);
-    --muted:         oklch(46% 0.014 240);
-    --clay:          oklch(60% 0.10 216);
+     The three sections below are read by the builder: @style is appended
+     to index.html's inline style so it wins on anything both set, @markup
+     replaces the hero-grid and leaves the press strip under it alone, and
+     @script goes in before </body> after school-fees.js.
+
+     {{H1}} and {{FORM_SOURCE}} are filled in per page. -->
+
+<!-- @style -->
+    /* ── Nav: logo only ─────────────────────────────── */
+    /* Hidden rather than stripped from the markup, so the header keeps one
+       shape across all four pages and a change to index.html's nav cannot
+       break the build. */
+    .menu-toggle { display: none !important; }
+    .nav-links   { display: none !important; }
+    .nav-actions { display: none !important; }
+    .mobile-panel { display: none !important; }
+
+    /* ── Hero MIT wash ──────────────────────────────── */
+    /* The same two layers index.html carries, at the same values: the wash
+       is the section's ground, the flat tint is what the type sits on. See
+       docs/site.md, "The hero wash and its scrim". A landing hero has no
+       framed picture, so here the wash is the only place the campus
+       appears, which is the one reason to keep it. */
+    .hero { position: relative; }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('back copy.png') center 35% / cover no-repeat;
+      opacity: 0.46;
+      mix-blend-mode: luminosity;
+      z-index: 0;
+      pointer-events: none;
     }
 
-    html[data-theme="blue"] :focus-visible {
-      outline-color: oklch(46% 0.090 226);
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: color-mix(in oklch, var(--forest-strong) 82%, transparent);
+      z-index: 0;
+      pointer-events: none;
     }
 
-    /* ── Mobile panel ───────────────────────────────── */
-    .mobile-panel { display: none; }
-    @media (max-width: 920px) {
-      body.menu-open .nav-links { display: none !important; }
-      .mobile-panel {
-        position: fixed; top: 68px; left: 12px; right: 12px; z-index: 200;
-        border-radius: 14px; border: 1px solid var(--line-dark);
-        background: var(--forest-strong); box-shadow: 0 24px 64px var(--shadow); overflow: hidden;
-      }
-      body.menu-open .mobile-panel { display: block; animation: panel-in 200ms ease; }
-      @keyframes panel-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-      .mobile-panel-links { list-style: none; padding: 6px 0 0; margin: 0; }
-      .mobile-panel-links a {
-        display: flex; align-items: center; justify-content: space-between;
-        padding: 0 22px; min-height: 54px; font-size: 15px; font-weight: 600;
-        color: color-mix(in oklch, var(--paper) 82%, var(--forest));
-        border-bottom: 1px solid color-mix(in oklch, var(--paper) 7%, transparent);
-        transition: background 120ms, color 120ms; text-decoration: none;
-      }
-      .mobile-panel-links li:last-child a { border-bottom: none; }
-      .mobile-panel-links a::after {
-        content: ''; display: block; width: 6px; height: 6px;
-        border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor;
-        transform: rotate(45deg); opacity: 0.35; flex-shrink: 0;
-      }
-      .mobile-panel-footer {
-        padding: 14px 16px 18px; margin-top: 4px;
-        display: flex; flex-direction: column; gap: 10px;
-        border-top: 1px solid color-mix(in oklch, var(--paper) 7%, transparent);
-      }
-      .mobile-panel-footer .btn { min-height: 50px; font-size: 15px; width: 100%; justify-content: center; border-radius: 10px; }
-      .mobile-panel-phone {
-        display: block; text-align: center; font-size: 13px; font-weight: 600;
-        color: color-mix(in oklch, var(--paper) 40%, var(--forest)); transition: color 130ms;
-      }
+    .hero-grid,
+    .trust-band {
+      position: relative;
+      z-index: 1;
     }
 
-    /* ── Page-specific: hero layout ─────────────────── */
-    /* The form is the whole page, so the hero owns the viewport. */
-    .consul-hero {
-      min-height: calc(100svh - 74px);
-      justify-content: center;
+
+    /* ── Hero form column ───────────────────────────── */
+    .hero-form-col {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: center;
     }
 
-    .consul-hero-grid {
-      width: min(100%, var(--max));
-      flex: 1 0 auto;
-      margin: 0 auto;
-      padding: clamp(52px, 7vw, 88px) var(--pad) clamp(56px, 7vw, 96px);
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(440px, 0.72fr);
-      gap: clamp(40px, 6vw, 80px);
-      align-items: center;
-    }
+    /* desktop: show alumni inside hero-copy, hide mobile-only copy */
+    .lp-alumni-mb { display: none; }
 
-    .consul-hero-copy h1 {
-      margin: 18px 0 0;
-      font-size: clamp(54px, 6.8vw, 96px);
-      line-height: 0.91;
-      font-weight: 900;
-      letter-spacing: -0.01em;
-      color: var(--paper);
-    }
-
-    .consul-hero-byline {
-      margin: 20px 0 0;
-      max-width: 540px;
-      color: color-mix(in oklch, var(--paper) 66%, var(--forest));
-      font-size: clamp(15px, 1.15vw, 17px);
-      line-height: 1.5;
-    }
-
-    /* The three steps of the join process, on the dark hero ground.
-       The same three steps fit.html carries as .join-steps, cut to one
-       line each: this sits beside the form, so it names the process and
-       stops. fit.html holds the full-length version. Sized up on desktop,
-       where the column has room; the 860px block below holds the compact
-       phone scale, because there the list sits above the form and every
-       pixel it takes pushes the first field further down. */
-    .consul-steps {
-      margin: 30px 0 0;
-      padding: 0;
-      list-style: none;
-      max-width: 580px;
-      border-top: 1px solid color-mix(in oklch, var(--paper) 13%, transparent);
-    }
-
-    .consul-steps li {
-      display: grid;
-      grid-template-columns: 42px minmax(0, 1fr);
-      gap: 3px 14px;
-      padding: 16px 0;
-      border-bottom: 1px solid color-mix(in oklch, var(--paper) 13%, transparent);
-    }
-
-    .consul-step-num {
-      grid-row: span 2;
-      padding-top: 2px;
-      font-size: 15px;
-      font-weight: 900;
-      letter-spacing: 0.04em;
-      line-height: 1.35;
-      color: color-mix(in oklch, var(--moss) 58%, var(--paper));
-    }
-
-    .consul-step-name {
-      font-size: 18px;
-      font-weight: 900;
-      line-height: 1.25;
-      color: var(--paper);
-    }
-
-    .consul-step-body {
-      font-size: 15.5px;
-      line-height: 1.5;
-      color: color-mix(in oklch, var(--paper) 56%, var(--forest));
-    }
 
 
     /* ── Form card ───────────────────────────────────── */
@@ -356,7 +222,9 @@
     }
 
     /* `.field-label` is the same treatment for a group that has no single
-       control to point a <label for> at, such as the ranking grid. */
+       control to point a <label for> at, such as the ranking grid. Without
+       it in this list the Country Preference label was the one label on the
+       form set as 16px body copy. */
     .field label,
     .field .field-label {
       font-size: 10.5px;
@@ -366,6 +234,9 @@
       color: var(--moss);
     }
 
+    /* Scoped to `.field`, not to `label`, or the note inside the ranking
+       grid's `.field-label` span keeps the caps and tracking of the label
+       it sits in. */
     .field .label-note {
       font-weight: 500;
       text-transform: none;
@@ -373,6 +244,18 @@
       font-size: 10px;
       color: var(--muted);
     }
+
+    /* Conditional fields. `.field` is display:grid, which beats the UA rule
+       for [hidden], so the attribute needs saying again here.
+
+       Missing, this is not a styling slip but a broken form: the three
+       fallback fields behind Other city, Other school and Other board all
+       carry `hidden` and all three rendered anyway, so step 2 opened with
+       `Which city`, `Which school` and `Which board` sitting empty under the
+       questions that are meant to reveal them, 246px of fields nobody was
+       asked to fill. It shipped on lp/ and iblp/ and not on start.html,
+       which is exactly the drift this partial exists to prevent. */
+    .field[hidden] { display: none; }
 
     .field input,
     .field select,
@@ -580,9 +463,35 @@
       text-underline-offset: 2px;
     }
 
-    /* Conditional fields. `.field` is display:grid, which beats the UA rule
-       for [hidden], so the attribute needs saying again here. */
-    .field[hidden] { display: none; }
+    /* Success */
+    /* The header is sticky, so scrolling the card to the top of the viewport
+       puts its heading underneath it: the family's first sight of the booking
+       step was the sentence under a `Pick your time` they could not see. */
+    #formCard { scroll-margin-top: 90px; }
+
+    .form-success {
+      padding: 34px 32px 34px;
+      text-align: center;
+      display: none;
+    }
+
+    .form-success.visible { display: block; }
+
+    .form-success h3 {
+      margin: 0 0 10px;
+      font-size: 23px;
+      font-weight: 900;
+      color: var(--forest-strong);
+    }
+
+    .form-success p {
+      margin: 0;
+      font-size: 15px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      max-width: 320px;
+      margin-inline: auto;
+    }
 
     /* Destination ranking.
 
@@ -666,33 +575,26 @@
 
     .rank-grid.field-error + .rank-hint { color: oklch(52% 0.15 28); }
 
-    /* Success */
-    /* The header is sticky, so scrolling the card to the top of the viewport
-       puts its heading underneath it: the family's first sight of the booking
-       step was the sentence under a `Pick your time` they could not see. */
-    #formCard { scroll-margin-top: 90px; }
-
-    .form-success {
-      padding: 34px 32px 34px;
-      text-align: center;
-      display: none;
-    }
-
-    .form-success.visible { display: block; }
-
     /* Booking.
 
        On submit the hero drops to one column and the card takes the full
        measure, because a Google scheduling grid inside a 440px form column
-       renders a week as a column of hairlines. The pitch on the left has done
-       its job by this point, so it goes. */
-    .consul-hero-grid.is-booking {
+       renders a week as a column of hairlines. The pitch beside it has done
+       its job by this point, so it goes, and so does the alumni strip
+       that repeats under the form on a phone. */
+    .hero-grid.is-booking {
       grid-template-columns: minmax(0, 1fr);
       max-width: 900px;
       align-items: start;
     }
 
-    .consul-hero-grid.is-booking .consul-hero-copy { display: none; }
+    .hero-grid.is-booking .hero-copy,
+    .hero-grid.is-booking .lp-alumni-mb { display: none; }
+
+    .hero-grid.is-booking .hero-form-col {
+      grid-column: 1;
+      grid-row: 1;
+    }
 
     .form-success .booking-head p {
       max-width: 430px;
@@ -752,46 +654,39 @@
       }
     }
 
-    .form-success h3 {
-      margin: 0 0 10px;
-      font-size: 23px;
-      font-weight: 900;
-      color: var(--forest-strong);
-    }
-
-    .form-success p {
-      margin: 0;
-      font-size: 15px;
-      color: var(--ink-soft);
-      line-height: 1.6;
-      max-width: 320px;
-      margin-inline: auto;
-    }
-
 
     /* ── Responsive ──────────────────────────────────── */
-    @media (max-width: 860px) {
-      .consul-hero-grid {
-        grid-template-columns: 1fr;
-        padding-top: clamp(38px, 7vw, 60px);
-        padding-bottom: clamp(48px, 7vw, 72px);
+    /* main.css stacks the hero at 920px and puts .hero-copy on row 2, under
+       the media column. A landing hero has no media column, so the copy goes
+       back to row 1 and the form follows it down.
+
+       This block was written for 860px while main.css moved its stack point
+       to 920px, which left a 60px band where the copy was on row 2 and the
+       form was still sitting in column 2 of a one-column grid. Both numbers
+       have to move together. */
+    @media (max-width: 920px) {
+      .hero-copy {
+        grid-row: 1 !important;
+        padding-bottom: 0;
       }
 
-      .consul-hero-copy h1 { font-size: clamp(46px, 10vw, 72px); }
-
-      .consul-hero-byline { margin-top: 16px; max-width: none; }
-
-      .consul-steps { margin-top: 22px; max-width: none; }
-
-      .consul-steps li {
-        grid-template-columns: 30px minmax(0, 1fr);
-        gap: 2px 12px;
-        padding: 11px 0;
+      .hero-form-col {
+        grid-column: 1;
+        grid-row: 2;
+        align-self: auto;
       }
 
-      .consul-step-num  { font-size: 12px; padding-top: 1px; line-height: 1.4; }
-      .consul-step-name { font-size: 14.5px; }
-      .consul-step-body { font-size: 13.5px; line-height: 1.45; }
+      /* The alumni strip swaps copies: the one inside .hero-copy goes, and
+         the one after the form appears, so the marks stay below the form
+         rather than pushing it a screen down. */
+      .lp-alumni-dt { display: none; }
+
+      .lp-alumni-mb {
+        display: flex;
+        grid-column: 1;
+        grid-row: 3;
+        padding-bottom: 8px;
+      }
 
       .field-row { grid-template-columns: 1fr; }
 
@@ -799,10 +694,7 @@
       .form-step { padding-left: 22px; padding-right: 22px; }
 
       .form-divider { margin: 0 -22px; }
-
-      .rank-grid { grid-template-columns: 1fr; }
     }
-
 
     /* The booking hand-off. */
     .btn-booked {
@@ -832,95 +724,25 @@
       color: var(--muted);
     }
 
-  </style>
-  <link rel="stylesheet" href="ocean-ember.css">
-</head>
-<body>
-
-  <header class="site-header">
-    <nav class="nav" aria-label="Main navigation">
-      <a class="brand" href="index.html" aria-label="Blue Ocean Education home">
-        <span class="brand-mark" aria-hidden="true">
-          <svg width="42" height="42" viewBox="0 0 32 32" fill="none">
-            <circle cx="16" cy="16" r="13.5" stroke="currentColor" stroke-width="1" stroke-opacity="0.45"/>
-            <path d="M16 5 L18 16 L14 16 Z" fill="var(--moss)"/>
-            <path d="M16 27 L18 16 L14 16 Z" fill="var(--paper)"/>
-            <circle cx="16" cy="16" r="1.5" fill="currentColor" fill-opacity="0.35"/>
-          </svg>
-        </span>
-        <span class="brand-word">
-          <strong>Blue Ocean</strong>
-          <span>Education</span>
-        </span>
-      </a>
-
-      <ul class="nav-links" id="navLinks">
-        <li><a href="method.html">Method</a></li>
-        <li><a href="founder.html">Founder</a></li>
-        <li><a href="results.html">Results</a></li>
-        <li><a href="fit.html">Right Fit</a></li>
-        <li><a href="team.html">Team</a></li>
-      </ul>
-
-      <div class="nav-actions">
-        <a class="phone-link" href="tel:+919821118128">+91 98211 18128</a>
-        <a class="btn btn-lime" href="start.html">Get Started</a>
-        <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
-    </nav>
-  </header>
-
-  <div class="mobile-panel" id="mobilePanel">
-    <ul class="mobile-panel-links">
-      <li><a href="method.html">Method</a></li>
-      <li><a href="founder.html">Founder</a></li>
-      <li><a href="results.html">Results</a></li>
-      <li><a href="fit.html">Right Fit</a></li>
-      <li><a href="team.html">Team</a></li>
-    </ul>
-    <div class="mobile-panel-footer">
-      <a class="btn btn-lime" href="start.html">Get Started</a>
-      <a class="mobile-panel-phone" href="tel:+919821118128">+91 98211 18128</a>
-    </div>
-  </div>
-
-  <main>
-
-    <!-- ── Hero + Form ─────────────────────────────── -->
-    <section class="hero consul-hero" aria-labelledby="consul-title">
-      <div class="consul-hero-grid">
-
-        <!-- Left: pitch -->
-        <div class="consul-hero-copy">
-          <p class="eyebrow light">Private Consultation</p>
-          <h1 id="consul-title">Work 1-1 with<br>our team.</h1>
-          <p class="consul-hero-byline">We take a limited number of students each year, so every plan is built around one student. Selection takes three steps.</p>
-
-          <ol class="consul-steps">
-            <li>
-              <span class="consul-step-num" aria-hidden="true">01</span>
-              <span class="consul-step-name">Diagnostic call</span>
-              <span class="consul-step-body">We learn the student in depth, and decide if we are the right team.</span>
-            </li>
-            <li>
-              <span class="consul-step-num" aria-hidden="true">02</span>
-              <span class="consul-step-name">Student essay</span>
-              <span class="consul-step-body">A short essay shows us how the student thinks.</span>
-            </li>
-            <li>
-              <span class="consul-step-num" aria-hidden="true">03</span>
-              <span class="consul-step-name">Strategy call</span>
-              <span class="consul-step-body">If selected, we walk you through the plan. If not, we say so plainly.</span>
-            </li>
-          </ol>
+<!-- @markup -->
+      <div class="hero-grid">
+        <div class="hero-copy reveal">
+          <h1 id="hero-title">{{H1}}</h1>
+          <p class="hero-lede">Blue Ocean helps build the student before the application. We help Indian parents with helping their child develop the depth, originality, and discipline required to compete for the world's most selective universities.</p>
+          <div class="hero-alumni lp-alumni-dt" aria-label="Built by alumni from">
+            <div class="hero-alumni-label">Built by alumni from:</div>
+            <div class="hero-logo-row">
+              <div class="hero-logo-slot" style="--mark: 0.70"><img src="alumni-logos/hbs.png" alt="Harvard Business School"></div>
+              <div class="hero-logo-slot" style="--mark: 0.93"><img src="alumni-logos/hks.png" alt="Harvard Kennedy School"></div>
+              <div class="hero-logo-slot" style="--mark: 0.73"><img src="alumni-logos/harvard.png" alt="Harvard University"></div>
+              <div class="hero-logo-slot" style="--mark: 0.65"><img src="alumni-logos/mit.png" alt="Massachusetts Institute of Technology"></div>
+              <div class="hero-logo-slot" style="--mark: 1"><img src="alumni-logos/iit-kharagpur.png" alt="IIT Kharagpur"></div>
+            </div>
+          </div>
         </div>
 
-        <!-- Right: 2-step form -->
-        <div class="consul-form-card" id="formCard">
+        <div class="hero-form-col" id="formCard">
+          <div class="consul-form-card">
 
           <div class="form-card-head">
             <div class="form-step-track" aria-hidden="true">
@@ -1148,13 +970,7 @@
                    Calendly here, with the family's name and address already
                    in it, so nothing is fetched from Calendly for a visitor
                    who never fills the form. The URL lives on the element so
-                   the fallback below can reach it without the helper.
-
-                   `hide_gdpr_banner=1` keeps Calendly's own cookie banner off
-                   the calendar. In a phone-width frame it lands on top of the
-                   dates and swallows every tap, and it is fixed to the bottom
-                   of an iframe taller than the phone, so it is not even
-                   visible to dismiss. See lead-events.js. -->
+                   the fallback below can reach it without the helper. -->
               <div class="booking-frame" id="bookingFrame"
                 data-calendly-url="https://calendly.com/operations-blueoceanedu/meet-with-blue-ocean-education?background_color=e5ded3&amp;text_color=13171b&amp;primary_color=e0600e&amp;hide_gdpr_banner=1">
                 <p class="booking-loading">Loading available times…</p>
@@ -1172,110 +988,22 @@
               <p class="booked-note">If nothing here suits you, we will call to arrange another time.</p>
             </div>
           </div>
+          </div><!-- /consul-form-card -->
+        </div><!-- /hero-form-col -->
 
-        </div><!-- /consul-form-card -->
-
-      </div><!-- /consul-hero-grid -->
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-grid">
-        <div>
-          <a class="brand footer-brand" href="index.html" aria-label="Blue Ocean Education home">
-            <span class="brand-mark" aria-hidden="true">
-              <svg width="40" height="40" viewBox="0 0 32 32" fill="none">
-                <circle cx="16" cy="16" r="13.5" stroke="currentColor" stroke-width="1" stroke-opacity="0.45"/>
-                <path d="M16 5 L18 16 L14 16 Z" fill="var(--moss)"/>
-                <path d="M16 27 L18 16 L14 16 Z" fill="var(--paper)"/>
-                <circle cx="16" cy="16" r="1.5" fill="currentColor" fill-opacity="0.35"/>
-              </svg>
-            </span>
-            <span class="brand-word">
-              <strong>Blue Ocean</strong>
-              <span>Education</span>
-            </span>
-          </a>
-          <p>A founder-led advisory helping hardworking Indian students build the profiles required for Harvard, Yale, Oxford, Cambridge, and the world's most selective universities.</p>
-        </div>
-        <div>
-          <h3>Explore</h3>
-          <ul>
-            <li><a href="method.html">Method</a></li>
-            <li><a href="founder.html">Founder</a></li>
-            <li><a href="results.html">Results</a></li>
-            <li><a href="fit.html">Right Fit</a></li>
-            <li><a href="team.html">Team</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Contact</h3>
-          <ul>
-            <li><a href="tel:+919821118128">+91 98211 18128</a></li>
-            <li><a href="mailto:admissions@blueoceanedu.com">admissions@blueoceanedu.com</a></li>
-            <li>6, School Lane, Connaught Place</li>
-            <li>New Delhi, 110001</li>
-          </ul>
+        <div class="hero-alumni lp-alumni-mb" aria-label="Built by alumni from" aria-hidden="true">
+          <div class="hero-alumni-label">Built by alumni from:</div>
+          <div class="hero-logo-row">
+            <div class="hero-logo-slot" style="--mark: 0.70"><img src="alumni-logos/hbs.png" alt="Harvard Business School"></div>
+            <div class="hero-logo-slot" style="--mark: 0.93"><img src="alumni-logos/hks.png" alt="Harvard Kennedy School"></div>
+            <div class="hero-logo-slot" style="--mark: 0.73"><img src="alumni-logos/harvard.png" alt="Harvard University"></div>
+            <div class="hero-logo-slot" style="--mark: 0.65"><img src="alumni-logos/mit.png" alt="Massachusetts Institute of Technology"></div>
+            <div class="hero-logo-slot" style="--mark: 1"><img src="alumni-logos/iit-kharagpur.png" alt="IIT Kharagpur"></div>
+          </div>
         </div>
       </div>
-      <div class="footer-bottom">
-        <span>© 2026 Blue Ocean Education Consulting. All rights reserved.</span>
-        <span>Private Admissions Advisory</span>
-        <button class="theme-toggle" id="themeToggle" aria-label="Switch colour theme" title="Switch colour theme">
-          <span class="td td-green"></span>
-          <span class="td td-blue"></span>
-        </button>
-      </div>
-    </div>
-  </footer>
 
-  <script src="school-fees.js"></script>
-  <script src="lead-events.js"></script>
-  <script>
-    const body = document.body;
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
-
-    menuToggle.addEventListener('click', () => {
-      const isOpen = body.classList.toggle('menu-open');
-      menuToggle.setAttribute('aria-expanded', String(isOpen));
-      menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-    });
-
-    navLinks.addEventListener('click', event => {
-      if (event.target.closest('a')) {
-        body.classList.remove('menu-open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-        menuToggle.setAttribute('aria-label', 'Open menu');
-      }
-    });
-
-    document.getElementById('mobilePanel').addEventListener('click', e => {
-      if (e.target.closest('a[href]')) {
-        body.classList.remove('menu-open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-        menuToggle.setAttribute('aria-label', 'Open menu');
-      }
-    });
-
-    /* Theme */
-    const themeToggle = document.getElementById('themeToggle');
-    function applyTheme(theme) {
-      document.documentElement.dataset.theme = theme;
-      document.querySelectorAll('[data-blue]').forEach(img => {
-        if (!img.dataset.green) img.dataset.green = img.getAttribute('src');
-        img.src = theme === 'blue' ? img.dataset.blue : img.dataset.green;
-      });
-    }
-    applyTheme(localStorage.getItem('boTheme') || 'blue');
-    themeToggle.addEventListener('click', () => {
-      const next = document.documentElement.dataset.theme === 'blue' ? 'green' : 'blue';
-      applyTheme(next);
-      localStorage.setItem('boTheme', next);
-    });
-
+<!-- @script -->
     /* Role toggle */
     document.querySelectorAll('.role-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1302,7 +1030,7 @@
     const counter    = document.getElementById('stepCounter');
     const success    = document.getElementById('formSuccess');
     const formCard   = document.getElementById('formCard');
-    const heroGrid   = document.querySelector('.consul-hero-grid');
+    const heroGrid   = document.querySelector('.hero-grid');
     const firstFocus = ['firstName', 'phone', 'pincode'];
     let currentStep  = 1;
 
@@ -1574,7 +1302,7 @@
 
       const payload = {
         timestamp:    new Date().toISOString(),
-        form_source:  'consultation_start_page',
+        form_source:  '{{FORM_SOURCE}}',
         user_type:    activeRole ? activeRole.dataset.role : 'guardian',
         first_name:   document.getElementById('firstName').value.trim(),
         last_name:    document.getElementById('lastName').value.trim(),
@@ -1683,18 +1411,6 @@
     document.getElementById('backBtn2').addEventListener('click', () => goToStep(2));
     document.getElementById('submitBtn').addEventListener('click', submitForm);
 
-    /* ── The booking hand-off ─────────────────────────
-       Calendly announces the booking itself, so this is the fallback rather
-       than the mechanism: the family says so when the message did not reach
-       us. Either way the booking event fires from next-steps.html on
-       arrival, so both paths are counted once and identically. */
-    const bookedBtn = document.getElementById('bookedBtn');
-    if (bookedBtn) {
-      bookedBtn.addEventListener('click', () => {
-        window.location.href = 'next-steps.html';
-      });
-    }
-
     document.querySelectorAll('.field input, .field select').forEach(el => {
       const clear = () => el.classList.remove('field-error');
       el.addEventListener('input', clear);
@@ -1711,7 +1427,15 @@
         if (el.value !== cleaned) { el.value = cleaned; el.setSelectionRange(pos - 1, pos - 1); }
       });
     });
-  </script>
 
-</body>
-</html>
+    /* ── The booking hand-off ─────────────────────────
+       Calendly announces the booking itself, so this is the fallback rather
+       than the mechanism: the family says so when the message did not reach
+       us. Either way the booking event fires from next-steps.html on
+       arrival, so both paths are counted once and identically. */
+    const bookedBtn = document.getElementById('bookedBtn');
+    if (bookedBtn) {
+      bookedBtn.addEventListener('click', () => {
+        window.location.href = 'next-steps.html';
+      });
+    }
