@@ -1,2 +1,6 @@
 # Local wrangler cache: machine-specific, and this repo is public.
 .wrangler/
+
+# 250MB of brochure PDFs. Every one is a render of an HTML file that is
+# in the repo; the renders are kept locally only.
+*.pdf

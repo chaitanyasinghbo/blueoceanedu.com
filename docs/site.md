@@ -561,7 +561,7 @@ On submit the scheduler opens inside the form card and the hero drops to one col
 
 **The Lead fires in place, and that is deliberate.** There is no new URL at submit, and there should not be: a family that fills the form and never picks a slot is still a lead, so waiting for a distinct URL to count it would silently drop every one of those. A standard event fired from JS is what Meta expects here; a URL-based custom conversion is not the only way to define one.
 
-**Calendly announces the booking.** It posts `calendly.event_scheduled` to the page the instant a slot is taken and the family moves on by itself. The `I have booked my slot` button under it is now the fallback rather than the mechanism, for the booking whose message never arrives. Both paths open `next-steps.html`, so both are counted once and identically. A time-on-page or focus heuristic would count people who never booked.
+**Calendly announces the booking.** It posts `calendly.event_scheduled` to the page the instant a slot is taken and the family moves on by itself. That message is the only route to `next-steps.html`, so the booking is counted exactly once. A time-on-page or focus heuristic would count people who never booked.
 
 Both events live in `lead-events.js`, loaded by `start.html`, both landing heroes and all three copies of `next-steps.html`, and copied into `lp/` and `iblp/` by the builder. One file rather than three inline copies, because three hand-maintained copies of a conversion is three chances for one to stop firing quietly.
 
@@ -608,7 +608,9 @@ Calendly posts a message to the page the instant a slot is taken:
 
 **There is a path for `widget.js` not arriving.** After six seconds `mountCalendly` builds the iframe itself, with `embed_domain` and `embed_type=Inline` on the URL — those two parameters are what make Calendly post its messages to the parent window, so the booking is still detected on that path. Prefill goes in the query string there, since there is no widget to hand it to.
 
-**The button under the scheduler stays.** It costs one line and it covers the booking whose message never reaches us: a blocked third-party frame, an extension, a change at Calendly's end. It opens the same page and fires the same event.
+**Nothing sits under the scheduler.** The card ends at the frame: the `I have booked my slot` button, the `If nothing here suits you` line, and the `.btn-booked` and `.booked-note` rules behind them are gone from `start.html` and from `tools/landing-hero.html`, and the click handler with them.
+
+It was there as a fallback, and removing it removes the case it covered. If `calendly.event_scheduled` does not reach the page — a locked-down browser, an extension, a change at Calendly's end — the family books a real slot and the card does not move. The slot is in the calendar and the team still sees it; what is lost is the confirmation screen and the count, since `Schedule` and `BOOKING_COMPLETED` both fire on arrival at `next-steps.html` and nobody arrives. That is the trade, made deliberately. **Do not restore the button without asking**, and if bookings in Calendly start running ahead of `BOOKING_COMPLETED` in GA4, this is the first thing to look at.
 
 ### Analytics must never be able to stop a booking
 
