@@ -1,6 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Resource hints.
+
+       These sit OUTSIDE the @analytics sentinels deliberately. The block
+       between the sentinels has to stay byte-identical on every page or the
+       builder's one-line pageview swap stops matching, and these lines are
+       rewritten per folder depth by tools/build-landing-pages.py.
+
+       charset and viewport lead the document because a <meta charset> found
+       after ~1KB of script makes the parser restart. The analytics block is
+       1.4KB, so both used to sit outside that window.
+
+       The three preloaded faces are the ones the first screen sets: Display
+       Bold for every heading, Text Roman for body, Text Medium for the nav
+       and the labels. The other six load from ocean-ember.css as needed.
+       ocean-ember.css is the LAST stylesheet in the head, so without these
+       the fonts are not discovered until it parses. -->
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://connect.facebook.net">
+  <link rel="preload" href="fonts/NHGDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/NHGText-Roman.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/NHGText-Medium.woff2" as="font" type="font/woff2" crossorigin>
+
   <!-- @analytics — GA4 and the Meta pixel, one block, same on every page.
 
        The dataLayer event on line 8 is the only line that changes per page:
@@ -33,9 +58,7 @@
   /></noscript>
   <!-- End Meta Pixel Code -->
   <!-- /@analytics -->
-  <meta charset="UTF-8">
   <link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home | Blue Ocean Education</title>
   <meta name="description" content="A founder-led advisory for ambitious Indian students building distinctive profiles for Harvard, Yale, Oxford, Cambridge, and the world's most selective universities.">
   <link rel="stylesheet" href="main.css">
@@ -198,11 +221,22 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: url('back copy.png') center 35% / cover no-repeat;
+      background: url('hero-campus.webp') center 35% / cover no-repeat;
       opacity: 0.46;
       mix-blend-mode: luminosity;
       z-index: 0;
       pointer-events: none;
+    }
+
+    /* A phone gets the 1200px copy of the same photograph, 200KB against
+       538KB. It is the identical crop at the identical opacity, and the
+       breakpoint matches the <source media> on the framed picture, so both
+       uses of the photograph resolve to one file per viewport and the
+       second one is served from cache. */
+    @media (max-width: 900px) {
+      .hero::before {
+        background-image: url('hero-campus-1200.webp');
+      }
     }
 
     /* The wash carries the campus at 0.46 rather than the 0.13 it
@@ -321,8 +355,25 @@
         <div class="hero-media reveal">
           <div class="campus-frame">
             <div class="campus-plate">
-              <img src="back copy.png" alt="MIT campus building in winter light">
-              <img class="student-figure" src="Untitled design.png" alt="Blue Ocean student wearing a Yale sweatshirt">
+              <!-- The framed picture is the hero's largest paint, so it is
+                   eager, high priority, and never lazy. The plate crops a
+                   16:9 photograph into a 4:5 frame, so the source is scaled
+                   to about 2.2x the plate's width before it is cropped: a
+                   492px plate consumes ~1100px of source. That is why the
+                   1200px file is the mobile source rather than something
+                   nearer the 400px box it appears to sit in.
+
+                   <picture> rather than srcset/sizes because a `sizes` value
+                   has to describe the layout box, and this box is 2.2x
+                   smaller than the pixels the crop actually spends. The
+                   media switch says which file each viewport gets instead of
+                   inferring it. .campus-plate picture in main.css restores
+                   the block sizing the wrapper would otherwise swallow. -->
+              <picture>
+                <source media="(max-width: 900px)" srcset="hero-campus-1200.webp" type="image/webp">
+                <img src="hero-campus.webp" width="1920" height="1080" fetchpriority="high" decoding="async" alt="MIT campus building in winter light">
+              </picture>
+              <img class="student-figure" src="hero-student.webp" width="1000" height="1000" fetchpriority="high" decoding="async" alt="Blue Ocean student wearing a Yale sweatshirt">
             </div>
           </div>
         </div>
@@ -375,9 +426,9 @@
         <div class="numbers-proof-grid">
           <div class="institution-proof-card" aria-hidden="true">
             <div class="institution-fader" aria-hidden="true">
-              <img loading="lazy" src="institution-harvard.jpg" alt="">
-              <img loading="lazy" src="back copy.png" alt="">
-              <img loading="lazy" src="institution-oxford.jpg" alt="">
+              <img loading="lazy" src="institution-harvard.webp" alt="">
+              <img loading="lazy" src="hero-campus-1200.webp" alt="">
+              <img loading="lazy" src="institution-oxford.webp" alt="">
             </div>
           </div>
 
@@ -757,7 +808,7 @@
               <p>We help students develop serious academic projects — work that reflects genuine curiosity, depth, and initiative. Not a school assignment. Not a resume filler. Something original that stands as primary evidence of who they are intellectually.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="blue-profile-arch/1.svg" alt="Academic Project Development">
+              <img loading="lazy" src="blue-profile-arch/1.webp" alt="Academic Project Development">
             </div>
           </div>
 
@@ -768,7 +819,7 @@
               <p>We identify competitions, fellowships, and prizes in your child's domain where results move admissions committees. Then we build a preparation strategy so the outcome becomes a meaningful part of the application story.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="blue-profile-arch/2.svg" alt="Competition Strategy">
+              <img loading="lazy" src="blue-profile-arch/2.webp" alt="Competition Strategy">
             </div>
           </div>
 
@@ -779,7 +830,7 @@
               <p>Generic volunteering does not move selective admissions committees. We help students design genuine community initiatives that are meaningful, sustainable, and capable of growing beyond their time in school. Work that reflects character, not just participation.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="blue-profile-arch/3.svg" alt="Community Impact">
+              <img loading="lazy" src="blue-profile-arch/3.webp" alt="Community Impact">
             </div>
           </div>
 
@@ -790,7 +841,7 @@
               <p>Every student has a natural strength that most programs never develop properly. We identify what makes each student genuinely different — in performance, domain expertise, original thinking, or craft — and help them reach a level that is hard to ignore.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="blue-profile-arch/4.svg" alt="Unique Skill Development">
+              <img loading="lazy" src="blue-profile-arch/4.webp" alt="Unique Skill Development">
             </div>
           </div>
 
@@ -801,7 +852,7 @@
               <p>The clearest signal of intellectual maturity is how someone reasons through a problem and defends a position. We train students to think, speak, and write with clarity — strengthening their essays, interviews, and academic work from the ground up.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="blue-profile-arch/5.svg" alt="Language and Argumentation">
+              <img loading="lazy" src="blue-profile-arch/5.webp" alt="Language and Argumentation">
             </div>
           </div>
 
@@ -812,7 +863,7 @@
               <p>Blue Ocean students do not apply and hope. We build a targeted university list, a clearly argued positioning, and an application architecture that connects every part of the student's profile to a coherent story across the US, UK, Singapore, and beyond.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="blue-profile-arch/6.svg" alt="Admissions Strategy">
+              <img loading="lazy" src="blue-profile-arch/6.webp" alt="Admissions Strategy">
             </div>
           </div>
 
@@ -823,7 +874,7 @@
               <p>Every student works directly with Dr. Sanjay Kumar and a team of mentors from Harvard, MIT, and the world's top universities. Weekly sessions drive progress. Monthly strategy meetings with Dr. Sanjay keep the full profile architecture sharp.</p>
             </div>
             <div class="service-card service-card-svg">
-              <img loading="lazy" src="blue-profile-arch/7.svg" alt="Ongoing Mentorship">
+              <img loading="lazy" src="blue-profile-arch/7.webp" alt="Ongoing Mentorship">
             </div>
           </div>
         </div><!-- /services-cards-col -->
@@ -846,7 +897,7 @@
           <div class="outcome-track" id="outcomeTrack">
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-blue/arunima.svg" alt="Arunima, admitted to Harvard University">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/arunima.webp" alt="Arunima, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Arunima</strong>
@@ -859,7 +910,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-blue/prateek.svg" alt="Prateek, admitted to Harvard University">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/prateek.webp" alt="Prateek, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Prateek</strong>
@@ -872,7 +923,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-blue/adya.svg" alt="Adya, admitted to Harvard University">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/adya.webp" alt="Adya, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Adya</strong>
@@ -885,7 +936,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-blue/tathagata.svg" alt="Tathagata, admitted to Cornell and Johns Hopkins">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/tathagata.webp" alt="Tathagata, admitted to Cornell and Johns Hopkins">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Tathagata</strong>
@@ -899,7 +950,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-blue/seema.svg" alt="Seema, admitted to Harvard University">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/seema.webp" alt="Seema, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Seema</strong>
@@ -912,7 +963,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-blue/palakshi.svg" alt="Palakshi, admitted to Harvard University">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/palakshi.webp" alt="Palakshi, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Palakshi</strong>
@@ -925,7 +976,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-blue/shreejeet.svg" alt="Shreejeet, admitted to Northeastern, University of Toronto, and Boston University">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/shreejeet.webp" alt="Shreejeet, admitted to Northeastern, University of Toronto, and Boston University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Shreejeet</strong>
@@ -940,7 +991,7 @@
             </article>
 
             <article class="outcome-card">
-              <img loading="lazy" class="outcome-photo" src="admits-blue/manya.svg" alt="Manya, admitted to Brown University and Carnegie Mellon">
+              <img loading="lazy" class="outcome-photo" src="admits-blue/manya.webp" alt="Manya, admitted to Brown University and Carnegie Mellon">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Manya</strong>

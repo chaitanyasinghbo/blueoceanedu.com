@@ -34,11 +34,21 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: url('back copy.png') center 35% / cover no-repeat;
+      background: url('hero-campus.webp') center 35% / cover no-repeat;
       opacity: 0.46;
       mix-blend-mode: luminosity;
       z-index: 0;
       pointer-events: none;
+    }
+
+    /* A phone gets the 1200px copy, 200KB against 538KB, same crop and same
+       opacity. On a landing page the wash is the only place the photograph
+       appears and the form is what the first screen is for, so this is the
+       one image standing between a visitor and the first field. */
+    @media (max-width: 900px) {
+      .hero::before {
+        background-image: url('hero-campus-1200.webp');
+      }
     }
 
     .hero::after {
@@ -696,6 +706,43 @@
       .form-divider { margin: 0 -22px; }
     }
 
+
+
+    /* ── The phone must not zoom while the form is being filled ──────
+       iOS Safari zooms the whole viewport whenever a text input, select
+       or textarea is focused with a computed font-size below 16px, and
+       it does not zoom back out on blur. These controls ran at 14.5px,
+       and the phone prefix at 13.5px, so the first tap on First Name
+       jumped the page in and left it there for the rest of the form:
+       every later field sat outside the viewport and had to be panned
+       to, and the Calendly frame that opens on submit inherited the
+       same zoomed viewport.
+
+       The fix is the font size, not the viewport. `maximum-scale=1` and
+       `user-scalable=no` stop the zoom too, by taking pinch-zoom away
+       from every visitor for the whole page. That is an accessibility
+       failure, Lighthouse scores it as one, and it is not needed: 16px
+       is the threshold, the controls already stand 46px tall, and on a
+       phone the larger text is easier to fill in anyway.
+
+       Scoped to `pointer: coarse`, not to a width. An iPad in landscape
+       is 1024px wide and zooms exactly the same way, while a 900px
+       desktop window does not zoom at all and keeps 14.5px. */
+    @media (pointer: coarse) {
+      .field input,
+      .field select,
+      .field textarea,
+      .phone-row .phone-prefix-select {
+        font-size: 16px;
+      }
+
+      /* 13px is well under the threshold, but a <button> is not a field
+         and never triggers focus zoom. It moves up for the thumb, not
+         for the zoom. */
+      .rank-chip {
+        font-size: 14px;
+      }
+    }
 
 <!-- @markup -->
       <div class="hero-grid">

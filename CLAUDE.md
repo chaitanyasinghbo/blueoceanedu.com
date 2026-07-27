@@ -128,6 +128,37 @@ Do not build:
 
 Implementation note: use `scroll-story.js` for this behavior. Wire the row selector and CSS custom property prefix into `BlueOceanScrollStory.initVerticalScrollStory(...)`.
 
+## Asset weight and the phone
+
+Nothing compresses assets on the way out. **Every file is served exactly as it
+sits in the repo**, so the encoding of each one is a decision. The homepage was
+9.0MB with a 41.8s mobile LCP; it is 1.76MB now, and the four things that did it
+come straight back the moment someone drops in a new asset.
+
+Full reasoning, measurements and settings are in `docs/site.md` under
+*Performance and asset weight*. The rules that matter before you add anything:
+
+- **No new PNG or JPEG for a photograph.** WebP, and measure the PSNR rather
+  than looking at it. Keep the master in `unused/` at its original path and
+  rebuild from that, never from the served copy.
+- **A `.svg` over ~100KB is probably not a vector.** Every file in
+  `blue-profile-arch/` was a base64 PNG in an SVG wrapper; one was 14.5MB for a
+  card 600px wide. Check for `data:image` before trusting the extension.
+- **`fonts/` is WOFF2.** Three faces are preloaded in every `<head>`, outside
+  the `@analytics` sentinels because the block between them must stay
+  byte-identical and these paths get rewritten per folder depth.
+- **The hero photograph ships at two sizes**, switched by a `<picture>` `media`
+  query at 900px, not by `sizes`. The frame crops 16:9 into 4:5, so the source
+  costs about 2.2x the layout box and a `sizes` value would understate it.
+
+**The viewport tag must never gain `maximum-scale` or `user-scalable`.** iOS
+focus-zoom is fixed where it is caused: form controls go to 16px under
+`@media (pointer: coarse)`, in **both** `start.html` and `tools/landing-hero.html`.
+Suppressing pinch-zoom for every visitor to fix a font size is an accessibility
+failure and Lighthouse scores it as one. `html, body` carry `overflow-x: clip`,
+never `hidden`, because `hidden` makes a scroll container and unsticks every
+`position: sticky` element on the site.
+
 ## `unused/` is the archive, not a source
 
 Nothing in `unused/` is reachable from a page the site serves. It keeps its

@@ -1,6 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Resource hints.
+
+       These sit OUTSIDE the @analytics sentinels deliberately. The block
+       between the sentinels has to stay byte-identical on every page or the
+       builder's one-line pageview swap stops matching, and these lines are
+       rewritten per folder depth by tools/build-landing-pages.py.
+
+       charset and viewport lead the document because a <meta charset> found
+       after ~1KB of script makes the parser restart. The analytics block is
+       1.4KB, so both used to sit outside that window.
+
+       The three preloaded faces are the ones the first screen sets: Display
+       Bold for every heading, Text Roman for body, Text Medium for the nav
+       and the labels. The other six load from ocean-ember.css as needed.
+       ocean-ember.css is the LAST stylesheet in the head, so without these
+       the fonts are not discovered until it parses. -->
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://connect.facebook.net">
+  <link rel="preload" href="../fonts/NHGDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/NHGText-Roman.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/NHGText-Medium.woff2" as="font" type="font/woff2" crossorigin>
+
   <!-- @analytics — GA4 and the Meta pixel, one block, same on every page.
 
        The dataLayer event on line 8 is the only line that changes per page:
@@ -33,9 +58,7 @@
   /></noscript>
   <!-- End Meta Pixel Code -->
   <!-- /@analytics -->
-  <meta charset="UTF-8">
   <link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Next Steps | Admissions | Blue Ocean Education</title>
   <meta name="description" content="Your diagnostic call is booked. Here are the five most useful next steps while a Blue Ocean advisor reviews your profile.">
   <link rel="stylesheet" href="main.css">
@@ -106,7 +129,7 @@
       overflow: hidden;
       background:
         linear-gradient(125deg, color-mix(in oklch, var(--forest-strong) 95%, transparent) 0%, color-mix(in oklch, var(--forest) 84%, transparent) 55%, color-mix(in oklch, var(--forest-soft) 70%, transparent) 100%),
-        url('institution-harvard.jpg') center 32% / cover no-repeat;
+        url('institution-harvard.webp') center 32% / cover no-repeat;
     }
     .ns-header .wrap { position: relative; z-index: 1; }
     .ns-status-line {

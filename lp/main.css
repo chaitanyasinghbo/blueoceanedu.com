@@ -29,6 +29,44 @@
 
     html {
       scroll-behavior: smooth;
+
+      /* iOS inflates the text of any block it decides is too narrow to
+         read, which it does on rotation and on some section grids, and
+         the inflation is per-block: two columns of the same copy come
+         back at two sizes. 100% keeps the sizes the stylesheet set.
+         It is not user-scalable: pinch-zoom is untouched. */
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    /* Nothing on the site is wider than the screen. The pages used to
+       overflow horizontally below about 420px, which on a phone reads as
+       the page having been zoomed in and refusing to come back: the
+       viewport pans sideways, the sticky header slides off, and a form
+       field can sit half off the right edge while it is being typed in.
+       `clip`, never `hidden`. `overflow-x: hidden` makes the element a
+       scroll container, and a `position: sticky` child stops sticking to
+       the viewport once it has one: the sticky header, the sticky services
+       column and method.html's pyramid would all come unstuck. `clip`
+       cuts the overflow without creating that container. */
+    html,
+    body {
+      overflow-x: clip;
+      max-width: 100%;
+    }
+
+    /* Removes the ~300ms the browser holds a tap in case a second one is
+       coming to double-tap-zoom. It applies to things that are already
+       single-tap targets, so nothing loses a gesture it was using. */
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    label,
+    summary,
+    [role="button"] {
+      touch-action: manipulation;
     }
 
     body {
@@ -454,6 +492,16 @@
        section; a scrim and a desaturation pass here left the framed
        copy reading as a dimmer version of the background rather than
        the one place the photograph is shown at full strength. */
+    /* The campus photograph is wrapped in <picture> so the viewport, not a
+       `sizes` guess, decides which file loads. A <picture> is inline by
+       default and would size to the image rather than to the plate, which
+       drops the img out of the 100%/100% box below it. */
+    .campus-plate picture {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
     .campus-frame img:not(.student-figure) {
       width: 100%;
       height: 100%;

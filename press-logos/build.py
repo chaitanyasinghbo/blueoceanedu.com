@@ -85,10 +85,20 @@ for src, dst, fn in JOBS:
     # out at the edges, and a raw getbbox() pads the mark inside its tile.
     mark = mark.crop(a.point(lambda v: 255 if v > 12 else 0).getbbox())
     w, h = mark.size
-    s = 600.0 / max(w, h)
+    # 320px on the long side, not 600. The tile these land in is 134x62 on the
+    # press strip and 88% x 28px on the alumni strip, and `object-fit: contain`
+    # means the source resolution changes nothing about the layout. 320 is over
+    # 3x the longest box dimension, which covers a 3x phone and stops there.
+    s = 320.0 / max(w, h)
     if s < 1:
         mark = mark.resize((max(1, int(w * s)), max(1, int(h * s))), Image.LANCZOS)
-    mark.save(os.path.join(OUT, dst))
+    # Every mark is a knockout: white where there is ink, transparent where
+    # there is not, and the one that keeps a dark detail (Penguin's bird) is
+    # still grey rather than coloured. Measured across all twelve, max chroma
+    # is 0, so LA carries them exactly and drops two of the four channels.
+    # Both strips sit in the hero, so this is critical-path weight.
+    mark = mark.convert("LA")
+    mark.save(os.path.join(OUT, dst), optimize=True)
     print(dst, mark.size)
 
 # The Indian Express ships as vector; recolour the fills rather than raster it.

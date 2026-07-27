@@ -95,8 +95,16 @@ ASSET_DIRS = ["alumni-logos", "press-logos", "uni-logos", "admits-blue",
 
 # Single files, same reason. `founder/sanjay.webp` is the only file used out of
 # a 944KB folder, so it is named rather than copied wholesale.
-ASSET_FILES = ["school-fees.js", "lead-events.js", "back copy.png", "institution-harvard.jpg",
-               "institution-oxford.jpg", "founder/sanjay.webp", "harvard-hall.webp"]
+#
+# Both sizes of the hero photograph ship. The landing hero has no framed
+# picture, but it carries the same wash, and the wash swaps to the 1200px copy
+# under 900px. `hero-student.webp` is deliberately absent: the cutout lives in
+# index.html's framed hero, which is the one part of the page these folders
+# replace.
+ASSET_FILES = ["school-fees.js", "lead-events.js",
+               "hero-campus.webp", "hero-campus-1200.webp",
+               "institution-harvard.webp", "institution-oxford.webp",
+               "founder/sanjay.webp", "harvard-hall.webp"]
 
 
 def fail(msg):
@@ -162,6 +170,13 @@ def localise(html):
     """
     html = html.replace('href="brand/favicon.svg"', 'href="../brand/favicon.svg"')
     html = html.replace('href="ocean-ember.css"', 'href="../ocean-ember.css"')
+    # The font preloads climb for the same reason ocean-ember.css does. `fonts/`
+    # is not in ASSET_DIRS: url() inside ocean-ember.css resolves against the
+    # stylesheet, which is at the root, so both folders already share one copy
+    # of the faces. A preload left relative would fetch /lp/fonts/ and 404,
+    # which costs the preload silently rather than loudly, since the real load
+    # still comes from the stylesheet.
+    html = html.replace('href="fonts/', 'href="../fonts/')
     html = html.replace('href="start.html"', 'href="#formCard"')
     for page in SITE_PAGES:
         html = html.replace('href="%s"' % page, 'href="%s%s"' % (SITE_ORIGIN, page))

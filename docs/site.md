@@ -624,9 +624,18 @@ Every `BOEvents` call is wrapped in a `try`. This is not defensive habit, it is 
 
 ## What the site does not use
 
-`unused/` holds 293 files that no page reaches, at their original paths. 573MB
+`unused/` holds 322 files that no page reaches, at their original paths. 622MB
 of the repo, most of it the brochure project and its Neue Haas Grotesk trials.
 `unused/README.md` lists what is in it and why.
+
+The most recent additions are the **masters the served assets were built from**,
+archived when the site moved to WebP and WOFF2: `back copy.png`,
+`Untitled design.png`, the two `institution-*.jpg`, the fifteen
+`blue-profile-arch/` and `admits-blue/` SVGs, and the nine `fonts/NHG*.otf`.
+Those are not dead weight, they are the only lossless copies left, and
+*Performance and asset weight* says to rebuild from them rather than from the
+served file. `exec-team/` and `hero-logos/`, which the two logo `build.py`
+scripts read, were already here.
 
 The list came from `tools/find-unused.py`, which walks outward from the 18 pages
 the site actually serves and follows every `src`, `href` and `url()` until
@@ -758,6 +767,262 @@ Both are the trap `ocean-ember.css` already documents, hit for real:
 
 - `.trust-inner` and `.hero-alumni` were in the list of panels set to `background: var(--surface)`. Both are Core grounds now, so they had to come out of that list or each renders as a Surface slab with white marks on it, which is to say blank.
 - `.trust-label` and `.hero-alumni-label` were grouped at `color: var(--core)`, which is Core on Core. Both are now reversed, and both move up to Text Bold, because a Medium cut at 11px recedes on Core whatever its contrast ratio measures. `.trust-note` takes `--label-on-core`.
+
+---
+
+## Performance and asset weight
+
+The site is a static multi-page build with no bundler, so nothing compresses an
+asset on the way out. **Every file in the repo is served exactly as it sits**,
+which makes the encoding of each one a decision rather than a build setting.
+
+The homepage once shipped **9.0MB** and measured a **41.8s LCP** on
+PageSpeed's mobile profile. It ships 1.76MB now. Almost all of that was four
+mistakes, and all four are the kind that reappear the moment someone drops a
+new asset in:
+
+| | Was | Now |
+|---|---|---|
+| `back copy.png`, the hero photograph | 4.2MB PNG | `hero-campus.webp` 525KB, `hero-campus-1200.webp` 195KB |
+| `Untitled design.png`, the student cutout | 1.3MB PNG | `hero-student.webp` 101KB |
+| `blue-profile-arch/*.svg`, the seven pillar cards | 36MB | 972KB WebP |
+| `admits-blue/*.svg`, the outcome photographs | 6.1MB | 864KB WebP |
+| `fonts/NHG*.otf`, nine faces | 647KB | 175KB WOFF2 |
+| `press-logos/` + `alumni-logos/` | 332KB | 160KB |
+
+Everything superseded is in `unused/` at its original path, because each one is
+the master the served file was built from. **Rebuild from the master, never
+from the served copy**, which is already lossy. That is the same rule
+`harvard-hall.webp` has always carried.
+
+### A .svg is not necessarily a vector
+
+`blue-profile-arch/6.svg` was 14.5MB. It was a `750 × 750` wrapper around a
+`3876 × 2579` base64 PNG, and so were the other fourteen files in those two
+folders: a photograph, a luminance mask of the same photograph, and a
+`feColorMatrix` and clip path assembling them into a wave-shaped cutout. The
+extension said vector and the payload was a raster at four times the size it is
+ever displayed at.
+
+They are re-rendered rather than unpacked, because the mask and the clip path
+are what produce the shape and reproducing that by hand is how you ship a
+subtly different picture. Headless Chrome renders the SVG at `1200 × 1200` on a
+transparent ground, and `cwebp -q 84 -alpha_q 100` encodes it:
+
+```
+<img> at 1200x1200 in a page with a transparent body
+  -> --screenshot --default-background-color=00000000
+  -> cwebp -q 84 -m 6 -alpha_q 100 -sharp_yuv
+```
+
+**Check any new `.svg` over about 100KB for a `data:image` before trusting the
+extension**, and check what the browser actually paints it at. `.service-card-svg
+img` is `object-fit: cover` on a card no wider than about 600px, so 1200 is
+already a 2x source.
+
+### Quality is measured, not eyeballed
+
+Every encode above was checked before it shipped, and the numbers are the
+reason these settings and not lower ones:
+
+| | PSNR | Note |
+|---|---|---|
+| `hero-campus.webp` q82 | 34.4 dB | q78 was 456KB at 33.3 dB, not worth the 70KB |
+| `hero-student.webp` q86 | 38.4 dB over the opaque region | alpha is bit-exact, `-alpha_q 100` |
+| WOFF2 faces | lossless | glyph count and cmap identical to the OTF, all nine |
+| `press-logos/`, `alumni-logos/` | lossless | all twelve measured at max chroma 0, so `LA` is exact |
+
+PSNR on a cutout has to be masked to `alpha > 0`. Measured over the whole
+frame, `hero-student.webp` reads 27 dB, because RGB under a fully transparent
+pixel is undefined and the encoder is free to put anything there. That number
+means nothing and it is not a quality problem.
+
+### The photograph ships at two sizes and the viewport picks
+
+The campus photograph is used twice on `index.html`: full-bleed as the hero
+wash (`.hero::before`), and inside the 4:5 frame. Both resolve to one file per
+viewport, so the second use is a cache hit:
+
+- **Above 900px**, `hero-campus.webp` at 1920px
+- **900px and below**, `hero-campus-1200.webp` at 1200px, 195KB against 525KB
+
+It is a `<picture>` with a `<source media>` rather than `srcset` and `sizes`,
+and that is deliberate. A `sizes` value describes the **layout box**, and this
+box lies about what the image costs: the plate is 492px wide and crops a 16:9
+photograph into a 4:5 frame, so the source is scaled to about **2.2x the box**
+before anything is cropped away. `sizes="492px"` would pick a file less than
+half the resolution the crop actually spends. The media switch states which
+file each viewport gets instead of inferring it from a number that does not
+describe the situation.
+
+`.campus-plate picture { display: block; width: 100%; height: 100% }` in
+`main.css` is load-bearing. A `<picture>` is inline by default and would size
+to the image rather than to the plate, which drops the `<img>` out of the
+`100% / 100%` box under it.
+
+**The institution fader takes the 1200px copy, on every viewport.** It is a
+decorative cross-fade in a card about 360px tall, and pointing it at the 1920px
+file meant a phone downloaded both sizes: 1200 for the hero and 1920 for a card
+nobody looks at.
+
+### Resource hints, and why they sit outside the sentinels
+
+Every page opens the same way, **before** the `<!-- @analytics -->` block:
+
+```html
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://connect.facebook.net">
+  <link rel="preload" href="fonts/NHGDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/NHGText-Roman.woff2"  as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/NHGText-Medium.woff2" as="font" type="font/woff2" crossorigin>
+```
+
+Three things about that block are not preference:
+
+- **It is outside the sentinels.** The block between `<!-- @analytics -->` and
+  `<!-- /@analytics -->` has to stay byte-identical on every page or the
+  builder's one-line pageview swap stops matching. These lines also differ per
+  folder depth, which is the other reason they cannot live inside it.
+- **`charset` and `viewport` lead the document.** They used to sit *after* the
+  analytics block, which is 1.4KB of script, so `<meta charset>` was found
+  outside the first 1KB and the parser had grounds to restart.
+- **Three faces, not nine.** Display Bold sets every heading, Text Roman the
+  body, Text Medium the nav and the labels. The other six load from
+  `ocean-ember.css` when something needs them. That file is the **last**
+  stylesheet in the head, so without these the first-screen faces are not
+  discovered until it parses.
+
+`localise()` in the builder rewrites `href="fonts/` to `href="../fonts/`, the
+same climb `ocean-ember.css` makes. `fonts/` is deliberately **not** in
+`ASSET_DIRS`: `url()` inside `ocean-ember.css` resolves against the stylesheet,
+which is at the root, so both landing folders already share one copy of the
+faces. A preload left relative would fetch `/lp/fonts/` and 404, and it would
+fail *quietly*, because the real load still comes from the stylesheet.
+
+`start.html` additionally preconnects to `assets.calendly.com` and
+`calendly.com`. The scheduler is still mounted on submit and nothing is fetched
+from Calendly before then; warming the connection just takes about 300ms off
+the mount at the one moment a family is waiting on it.
+
+### The phone must not zoom, pan, or reflow
+
+Three separate iOS behaviours, three separate answers, none of them the
+viewport tag.
+
+**Focus zoom.** iOS Safari zooms the whole viewport whenever a text input,
+select, or textarea is focused with a computed `font-size` under 16px, and it
+does not zoom back out on blur. The form ran at 14.5px, and the phone prefix at
+13.5px, so the first tap on First Name zoomed the page in and left it there for
+the rest of the form: every later field sat outside the viewport and had to be
+panned to, and the Calendly frame that opens on submit inherited the same
+zoomed viewport. Both copies of the form CSS now carry:
+
+```css
+@media (pointer: coarse) {
+  .field input, .field select, .field textarea,
+  .phone-row .phone-prefix-select { font-size: 16px; }
+  .rank-chip { font-size: 14px; }
+}
+```
+
+**The fix is the font size, not the viewport.** `maximum-scale=1` and
+`user-scalable=no` stop the zoom too, by taking pinch-zoom away from every
+visitor for the whole page. That is an accessibility failure, Lighthouse scores
+it as one, and it is not needed here. The viewport tag stays
+`width=device-width, initial-scale=1.0` on every page and **must not gain
+`maximum-scale` or `user-scalable`.**
+
+Scoped to `pointer: coarse`, not to a width: an iPad in landscape is 1024px
+wide and zooms exactly the same way, while a 900px desktop window does not zoom
+at all and keeps the 14.5px the design was drawn at. `.rank-chip` is a
+`<button>` and never triggers focus zoom; it moves to 14px for the thumb.
+
+**Sideways pan.** `html, body { overflow-x: clip; max-width: 100% }` in
+`main.css`. **`clip`, never `hidden`** — `overflow-x: hidden` makes the element
+a scroll container, and a `position: sticky` child stops sticking to the
+viewport once it has one, which would unstick the site header, the sticky
+services column, and `method.html`'s pyramid all at once.
+
+Note that `clip` also makes `scrollWidth` report the padding box, so
+**`document.documentElement.scrollWidth` can no longer detect overflow on this
+site.** To check, lift the clip first:
+
+```js
+document.head.insertAdjacentHTML('beforeend',
+  '<style>html,body{overflow-x:visible!important;max-width:none!important}</style>');
+document.documentElement.scrollWidth        // now the true extent
+```
+
+The designed horizontal rails (`.trust-track`, the outcome rail, the counsel
+carousel) are wider than the viewport on purpose and are not overflow. Any
+audit has to skip elements inside an ancestor whose `overflow-x` is `auto`,
+`scroll`, `hidden`, or `clip`.
+
+**Text inflation.** `-webkit-text-size-adjust: 100%` on `html`. iOS enlarges
+the text of any block it decides is too narrow, per block, so two columns of
+the same copy come back at two sizes. This is not `user-scalable`; pinch-zoom
+is untouched.
+
+**Tap delay.** `touch-action: manipulation` on `a, button, input, select,
+textarea, label, summary, [role="button"]`, which drops the ~300ms the browser
+holds a tap in case a second one arrives to double-tap-zoom.
+
+### The knockout marks are `LA`, not `RGBA`
+
+`press-logos/build.py` and `alumni-logos/build.py` cap the long side at
+**320px** and save `mark.convert("LA")` with `optimize=True`. Both strips sit
+in the hero, so this is critical-path weight, and both were paying for it
+twice: 600px sources for a `134 × 62` tile, in four channels for a mark that
+has one. Every visible pixel is white where there is ink and transparent where
+there is not, and the one mark that keeps a dark detail, Penguin's bird, is
+grey rather than coloured. Measured across all twelve, **max chroma is 0**, so
+`LA` carries them exactly.
+
+`object-fit: contain` in a fixed box means source resolution changes nothing
+about layout, so `--mark` and every tuned value carry over untouched. 320px is
+over 3x the longest box dimension, which covers a 3x phone and stops there.
+
+**Both scripts read from `unused/`**, where `exec-team/` and `hero-logos/` were
+archived. They take their paths relative to the working directory, so run them
+from a directory where `exec-team`, `hero-logos`, `press-logos` and
+`alumni-logos` all resolve, rather than editing the paths to reach into the
+archive.
+
+### What is left, and what it would cost
+
+Both remaining items are deliberate, not oversights:
+
+- **~440KB of third-party JavaScript** (`gtag/js` 186KB, `fbevents.js` 103KB,
+  the pixel's config 150KB). Both tags are already `async` so neither blocks
+  render, but they are most of the main-thread work before first paint. Cutting
+  it means changing when the pixel initialises, and *Analytics and the
+  conversion* is emphatic that the lead must never be what gives way. **Do not
+  defer these without deciding what happens to the `Lead` event first.**
+- **`main.css` is 149KB raw, 30KB gzipped**, and render-blocking along with
+  `ocean-ember.css`. Minifying saves about 16KB *after* compression, and the
+  file is a documented source whose comments carry most of the reasoning in
+  this document. The honest fix is critical CSS, which is a real refactor.
+
+### Measuring it
+
+`pagespeed.web.dev`'s public API is quota-limited and will refuse anonymous
+runs. Lighthouse is the same engine:
+
+```
+npx lighthouse@12 https://blueoceanedu.com/ --only-categories=performance \
+  --form-factor=mobile --screenEmulation.mobile --throttling-method=simulate
+```
+
+**Serve the site with gzip when comparing locally, or the numbers are fiction.**
+`python3 -m http.server` sends nothing compressed, which puts 149KB of `main.css`
+on the wire instead of 30KB and invents an "Enable text compression" opportunity
+worth 1.2s that does not exist in production. Local runs also understate image
+cost badly, because there is no real network between the two processes: the
+homepage measured 41.8s LCP live and 5.8s from `localhost` on the *same* 9MB
+build. **Page weight is the honest local number; take LCP from a real run.**
 
 ---
 
@@ -1033,7 +1298,7 @@ Every mark rule in the mock is written as `.brand-mark .brand-lockup` or `.brand
 | `brand/logo-bo.svg` | The BO mark alone |
 | `brand/logo-b.svg` | The B alone |
 | `brand/favicon.svg` | The B in Surface on a Core rounded square |
-| `fonts/NHG*.otf` | Neue Haas Grotesk, trial licence |
+| `fonts/NHG*.woff2` | Neue Haas Grotesk, trial licence. The `.otf` masters are in `unused/fonts/` |
 
 Source of truth is `Blue Ocean new assets/`. The repo copies exist so the page can reference short paths.
 
@@ -1055,7 +1320,7 @@ The Google Fonts `<link>` and its preconnects were removed from every page. `mai
 
 Neither of these was introduced by the rebrand.
 
-- Pages overflow horizontally below about 420px. This predates the rebrand and lives in `main.css`, so fixing it affects every page.
+- ~~Pages overflow horizontally below about 420px.~~ Answered in `main.css` by the `overflow-x: clip` rule on `html, body`. Measured at 390px, 360px and 320px on `index.html`, `start.html` and `lp/` with the clip lifted, and the true `scrollWidth` equals the viewport at every one. See *Performance and asset weight* → *The phone must not zoom, pan, or reflow*.
 - `manya_brown.png`, `prateek_harvard.png`, `anushka_cambridge.png`, and `bhakti.png` are referenced by the hidden `#stories` section in `index.html` and by the case studies, but have never existed in the repo.
 
 Fixed in passing: the case studies linked `../mock.html`, a filename that no longer exists, from both the brand and the "Back to student stories" link. Both now point at `../index.html`.

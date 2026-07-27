@@ -21,47 +21,47 @@
 
 @font-face {
   font-family: "NHG Display";
-  src: url("fonts/NHGDisplay-Light.otf") format("opentype");
+  src: url("fonts/NHGDisplay-Light.woff2") format("woff2");
   font-weight: 300; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: "NHG Display";
-  src: url("fonts/NHGDisplay-Roman.otf") format("opentype");
+  src: url("fonts/NHGDisplay-Roman.woff2") format("woff2");
   font-weight: 400; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: "NHG Display";
-  src: url("fonts/NHGDisplay-Medium.otf") format("opentype");
+  src: url("fonts/NHGDisplay-Medium.woff2") format("woff2");
   font-weight: 500; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: "NHG Display";
-  src: url("fonts/NHGDisplay-Bold.otf") format("opentype");
+  src: url("fonts/NHGDisplay-Bold.woff2") format("woff2");
   font-weight: 600 700; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: "NHG Display";
-  src: url("fonts/NHGDisplay-Black.otf") format("opentype");
+  src: url("fonts/NHGDisplay-Black.woff2") format("woff2");
   font-weight: 800 900; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: "NHG Text";
-  src: url("fonts/NHGText-Roman.otf") format("opentype");
+  src: url("fonts/NHGText-Roman.woff2") format("woff2");
   font-weight: 400; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: "NHG Text";
-  src: url("fonts/NHGText-Medium.otf") format("opentype");
+  src: url("fonts/NHGText-Medium.woff2") format("woff2");
   font-weight: 500 600; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: "NHG Text";
-  src: url("fonts/NHGText-Bold.otf") format("opentype");
+  src: url("fonts/NHGText-Bold.woff2") format("woff2");
   font-weight: 700 900; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: "NHG Text";
-  src: url("fonts/NHGText-Italic.otf") format("opentype");
+  src: url("fonts/NHGText-Italic.woff2") format("woff2");
   font-weight: 400; font-style: italic; font-display: swap;
 }
 

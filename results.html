@@ -1,6 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Resource hints.
+
+       These sit OUTSIDE the @analytics sentinels deliberately. The block
+       between the sentinels has to stay byte-identical on every page or the
+       builder's one-line pageview swap stops matching, and these lines are
+       rewritten per folder depth by tools/build-landing-pages.py.
+
+       charset and viewport lead the document because a <meta charset> found
+       after ~1KB of script makes the parser restart. The analytics block is
+       1.4KB, so both used to sit outside that window.
+
+       The three preloaded faces are the ones the first screen sets: Display
+       Bold for every heading, Text Roman for body, Text Medium for the nav
+       and the labels. The other six load from ocean-ember.css as needed.
+       ocean-ember.css is the LAST stylesheet in the head, so without these
+       the fonts are not discovered until it parses. -->
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://connect.facebook.net">
+  <link rel="preload" href="fonts/NHGDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/NHGText-Roman.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/NHGText-Medium.woff2" as="font" type="font/woff2" crossorigin>
+
   <!-- @analytics — GA4 and the Meta pixel, one block, same on every page.
 
        The dataLayer event on line 8 is the only line that changes per page:
@@ -33,9 +58,7 @@
   /></noscript>
   <!-- End Meta Pixel Code -->
   <!-- /@analytics -->
-  <meta charset="UTF-8">
   <link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Results | Blue Ocean Education</title>
   <meta name="description" content="Blue Ocean students are admitted at 6x the general applicant rate at Ivy League and top-15 universities. 100+ acceptances at Harvard, Yale, Oxford, Cambridge, and beyond.">
   <link rel="stylesheet" href="main.css">
@@ -183,9 +206,9 @@
         <div class="numbers-proof-grid">
           <div class="institution-proof-card" aria-hidden="true">
             <div class="institution-fader" aria-hidden="true">
-              <img src="institution-harvard.jpg" alt="">
-              <img src="back copy.png" alt="">
-              <img src="institution-oxford.jpg" alt="">
+              <img src="institution-harvard.webp" alt="">
+              <img src="hero-campus-1200.webp" alt="">
+              <img src="institution-oxford.webp" alt="">
             </div>
           </div>
 
@@ -379,7 +402,7 @@
           <div class="outcome-track" id="outcomeTrack">
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-blue/arunima.svg" alt="Arunima, admitted to Harvard University">
+              <img class="outcome-photo" src="admits-blue/arunima.webp" alt="Arunima, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Arunima</strong>
@@ -392,7 +415,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-blue/prateek.svg" alt="Prateek, admitted to Harvard University">
+              <img class="outcome-photo" src="admits-blue/prateek.webp" alt="Prateek, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Prateek</strong>
@@ -405,7 +428,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-blue/adya.svg" alt="Adya, admitted to Harvard University">
+              <img class="outcome-photo" src="admits-blue/adya.webp" alt="Adya, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Adya</strong>
@@ -418,7 +441,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-blue/tathagata.svg" alt="Tathagata, admitted to Cornell and Johns Hopkins">
+              <img class="outcome-photo" src="admits-blue/tathagata.webp" alt="Tathagata, admitted to Cornell and Johns Hopkins">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Tathagata</strong>
@@ -432,7 +455,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-blue/seema.svg" alt="Seema, admitted to Harvard University">
+              <img class="outcome-photo" src="admits-blue/seema.webp" alt="Seema, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Seema</strong>
@@ -445,7 +468,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-blue/palakshi.svg" alt="Palakshi, admitted to Harvard University">
+              <img class="outcome-photo" src="admits-blue/palakshi.webp" alt="Palakshi, admitted to Harvard University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Palakshi</strong>
@@ -458,7 +481,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-blue/shreejeet.svg" alt="Shreejeet, admitted to Northeastern, University of Toronto, and Boston University">
+              <img class="outcome-photo" src="admits-blue/shreejeet.webp" alt="Shreejeet, admitted to Northeastern, University of Toronto, and Boston University">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Shreejeet</strong>
@@ -473,7 +496,7 @@
             </article>
 
             <article class="outcome-card">
-              <img class="outcome-photo" src="admits-blue/manya.svg" alt="Manya, admitted to Brown University and Carnegie Mellon">
+              <img class="outcome-photo" src="admits-blue/manya.webp" alt="Manya, admitted to Brown University and Carnegie Mellon">
               <div class="outcome-body">
                 <div class="outcome-name">
                   <strong>Manya</strong>
@@ -520,7 +543,7 @@
               <blockquote>I was honestly very nervous about the whole process. Dr. Sanjay and the team were with me at every step, pushing me when I slacked and taking my calls at odd hours before deadlines. My essays went through more drafts than I can count, and every single one came back better. Thank you Team Blue Ocean for believing in me more than I believed in myself.</blockquote>
             </div>
             <div class="voice-photo">
-              <img loading="lazy" src="admits-blue/arunima.svg" alt="Arunima">
+              <img loading="lazy" src="admits-blue/arunima.webp" alt="Arunima">
             </div>
           </div>
 
@@ -546,7 +569,7 @@
               <blockquote>I came in grade 10 with decent grades and no real direction. The team helped me find human-centric design and set up research and internships around it, and suddenly everything I did connected. Every essay draft came back within a day or two, with detailed feedback. I got Brown and Carnegie Mellon with a scholarship, and my parents still bring it up at every family function.</blockquote>
             </div>
             <div class="voice-photo">
-              <img loading="lazy" src="admits-blue/manya.svg" alt="Manya">
+              <img loading="lazy" src="admits-blue/manya.webp" alt="Manya">
             </div>
           </div>
 
@@ -559,7 +582,7 @@
               <blockquote>Honestly, I walked in with just a list of rankings. The team kept asking what I actually enjoyed until we found fintech, and after that everything in my profile pointed one way. The counselors took my panic calls even at 2 am before the Cornell deadline. Forever grateful to Dr. Sanjay and the whole team.</blockquote>
             </div>
             <div class="voice-photo">
-              <img loading="lazy" src="admits-blue/tathagata.svg" alt="Tathagata">
+              <img loading="lazy" src="admits-blue/tathagata.webp" alt="Tathagata">
             </div>
           </div>
         </div>
