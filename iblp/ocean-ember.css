@@ -1,0 +1,497 @@
+/* ══════════════════════════════════════════════════════════════════
+   OCEAN EMBER
+   Blue Ocean Education Consulting · Brand Guidelines v1.0, July 2026
+
+   The brand layer for the whole site. Link it LAST in <head>, after
+   main.css and after any page's inline <style>, because the pages
+   carry an older html[data-theme="blue"] palette block inline and
+   this file has to win on both specificity and source order.
+
+   Root pages:      <link rel="stylesheet" href="ocean-ember.css">
+   lp/ iblp/ etc:   <link rel="stylesheet" href="../ocean-ember.css">
+
+   url() below resolves against this file, not the page, so the same
+   one file works at any folder depth.
+
+   Structure and copy are untouched. Only palette, type, and mark.
+   ══════════════════════════════════════════════════════════════════ */
+
+
+/* ── Type · Neue Haas Grotesk (trial licence) ──────────────────── */
+
+@font-face {
+  font-family: "NHG Display";
+  src: url("fonts/NHGDisplay-Light.woff2") format("woff2");
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "NHG Display";
+  src: url("fonts/NHGDisplay-Roman.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "NHG Display";
+  src: url("fonts/NHGDisplay-Medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "NHG Display";
+  src: url("fonts/NHGDisplay-Bold.woff2") format("woff2");
+  font-weight: 600 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "NHG Display";
+  src: url("fonts/NHGDisplay-Black.woff2") format("woff2");
+  font-weight: 800 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "NHG Text";
+  src: url("fonts/NHGText-Roman.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "NHG Text";
+  src: url("fonts/NHGText-Medium.woff2") format("woff2");
+  font-weight: 500 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "NHG Text";
+  src: url("fonts/NHGText-Bold.woff2") format("woff2");
+  font-weight: 700 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "NHG Text";
+  src: url("fonts/NHGText-Italic.woff2") format("woff2");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+
+
+/* ── Colour · the six Ocean Ember values ───────────────────────── */
+/* The data-theme selectors are not decoration. Pages set
+   data-theme="blue" on <html> and redefine the palette inline, at
+   (0,1,1). Matching that here is what keeps the old green and blue
+   themes from coming back. */
+
+:root,
+html[data-theme="blue"],
+html[data-theme="green"] {
+  --core:      #243747;  /* anchor: mark, headings, dark grounds */
+  --support:   #5089B5;  /* second voice: charts, links, panels */
+  --signal:    #E0600E;  /* accent: the action, the key number */
+  --surface:   #E5DED3;  /* the paper */
+  --ink-core:  #13171B;  /* body copy */
+  --highlight: #F49904;  /* chart fills, never text */
+
+  /* Derived roles. Steps down from Surface stay on Surface's own
+     warm hue, so no light section drifts grey or mauve. */
+  --surface-lift:  #DDD5C8;
+  --surface-deep:  #D3C9B9;
+  --surface-rule:  #CDC3B3;
+  --core-deep:     color-mix(in oklch, var(--core) 74%, var(--ink-core));
+  --core-lift:     color-mix(in oklch, var(--core) 80%, var(--support));
+  --support-light: color-mix(in oklch, var(--support) 56%, var(--surface));
+  --support-pale:  #DCE3E9;
+  --label-on-core: color-mix(in oklch, var(--support) 46%, var(--surface));
+
+  /* main.css and case-study.css token names, remapped */
+  --ink:           var(--ink-core);
+  --ink-soft:      color-mix(in oklch, var(--ink-core) 78%, var(--surface));
+  --muted:         color-mix(in oklch, var(--ink-core) 60%, var(--surface));
+  --paper:         var(--surface);
+  --paper-low:     var(--surface-lift);
+  --paper-deep:    var(--surface-deep);
+  --forest:        var(--core);
+  --forest-strong: var(--core-deep);
+  --forest-soft:   var(--core-lift);
+  --moss:          var(--support);
+  --lime:          var(--signal);
+  --lime-low:      var(--support-pale);
+  --clay:          var(--highlight);
+  --blue:          var(--support);
+  --line:          var(--surface-rule);
+  --line-dark:     color-mix(in oklch, var(--core) 78%, var(--surface));
+  --shadow:        color-mix(in oklch, var(--ink-core) 24%, transparent);
+
+  --serif: "NHG Display", Arial, "Helvetica Neue", sans-serif;
+  --sans:  "NHG Text", Arial, "Helvetica Neue", sans-serif;
+}
+
+:focus-visible {
+  outline-color: var(--signal);
+}
+
+
+/* ── Type · applying the scale ─────────────────────────────────── */
+/* Display carries 20px and up, Text below. Neue Haas has no italic
+   display cut, so every italic serif moment becomes Display, upright.
+   Every heading rule in main.css is 23px or larger except .footer h3
+   at 13px, which is handed back to Text below. Display at 13px beside
+   Text at 14px reads as two unrelated typefaces. */
+
+h1, h2, h3,
+.section-title,
+.numbers-proof-title,
+.cta-grid h2,
+.fit-block h3,
+.team-header h2,
+.team-person-copy h3,
+.services-heading em,
+.services-heading strong,
+.service-text-block h3,
+.service-row-text h3,
+.acceptance-card h2,
+.method-hero h2 span,
+.method-hero h2 strong,
+.method-feature h3,
+.stories-title span,
+.stories-title em,
+.stage-copy h3,
+.belief-model-head h2,
+.belief-step h3,
+.quote-text,
+.intro-panel blockquote,
+.page-head h1 {
+  font-family: var(--serif);
+  font-style: normal;
+  letter-spacing: -0.018em;
+}
+
+.team-person-copy h3 {
+  letter-spacing: -0.01em;
+}
+
+/* Labels. The brand eyebrow is a tracked cap line, not a display
+   italic. A label set thin at wide tracking recedes no matter what
+   its contrast ratio measures, so weight carries these, not colour. */
+.eyebrow,
+.numbers-proof-kicker,
+.footer h3 {
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--core);
+  margin: 0 0 20px;
+}
+
+/* An eyebrow takes Core on Surface and a Support tint on Core.
+   main.css colours the team, services and CTA eyebrows with --lime,
+   which now resolves to Signal, and Signal is not a label colour.
+   Several other dark sections carry a plain .eyebrow with no .light
+   modifier, which would land Core on Core and disappear. Both cases
+   are answered here: equal specificity, later in the cascade. */
+.eyebrow.light,
+.hero .eyebrow,
+.section.dark .eyebrow,
+.team-section .eyebrow,
+.services-section .eyebrow,
+.services-header .eyebrow,
+.cta-section .eyebrow,
+.stories-showcase .eyebrow,
+.method-hero .eyebrow,
+.intro-panel .eyebrow,
+.case-hero .eyebrow,
+.case-cta .eyebrow {
+  color: var(--label-on-core);
+}
+
+.footer h3 {
+  font-size: 14px;
+  letter-spacing: 0.14em;
+}
+
+.method-kicker,
+.trust-label,
+.hero-alumni-label,
+.team-role,
+.stage-kicker,
+.acceptance-legend {
+  font-family: var(--sans);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.method-kicker,
+.team-role,
+.stage-kicker {
+  font-size: 14px;
+}
+
+
+/* ── Colour · where each one earns its place ───────────────────── */
+/* Signal marks the action and the number that matters. It never
+   carries body copy. Ink on Signal is 4.9:1; Core on Signal is 3.4:1
+   and would fail, which is why the button text is Ink. */
+
+.btn-lime,
+.btn-sticky {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--ink-core);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.btn-lime:hover,
+.btn-sticky:hover {
+  background: color-mix(in oklch, var(--signal) 82%, var(--highlight));
+  border-color: color-mix(in oklch, var(--signal) 82%, var(--highlight));
+}
+
+.hero h1 span,
+.services-section .services-heading em,
+.proof-stat-card strong,
+.method-hero h2 span {
+  color: var(--signal);
+}
+
+/* Support and its tints carry every other accent, including labels
+   on Core and the marks that qualify a list. */
+.services-section .method-kicker,
+.services-cards-col .method-kicker,
+.press-shelf .method-kicker,
+.clipping-pub,
+.stage-kicker,
+.intro-panel cite,
+.method-admit-card span,
+.belief-step.is-active .belief-model-number {
+  color: var(--support-light);
+}
+
+.fit-list svg {
+  color: var(--support-light);
+}
+
+/* Charts take Support and Highlight, with Ink labels. */
+.acceptance-legend span:last-child,
+.acceptance-value {
+  color: var(--ink-soft);
+}
+
+.acceptance-legend span::before,
+.acceptance-mini-bar .proof-bar-fill {
+  background: color-mix(in srgb, var(--core) 42%, var(--surface));
+}
+
+
+/* ── Neutral panels, stated not mixed ──────────────────────────── */
+/* color-mix(in oklch, ...) between two low-chroma colours drifts hue
+   and renders visibly pink. Surface plus Ink produced mauve section
+   backgrounds and pink chart tracks. main.css has thirteen of these;
+   every one that renders is pinned to a flat value here. Where a
+   neutral pair genuinely needs mixing, use `in srgb`. */
+
+.numbers-proof {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-lift) 100%);
+}
+
+.section.paper-low,
+.paper-low {
+  background: var(--surface-lift);
+}
+
+.proof-stat-card,
+.proof-stat-stack,
+.institution-proof-card,
+.acceptance-card,
+.outcome-card,
+.story-card-top,
+.photo-slot {
+  background: var(--surface);
+}
+
+.team-person {
+  background: var(--support-pale);
+}
+
+.service-card {
+  background:
+    linear-gradient(135deg,
+      var(--support-pale),
+      color-mix(in srgb, var(--support-pale) 78%, var(--surface))),
+    linear-gradient(90deg, color-mix(in oklch, var(--core-deep) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in oklch, var(--core-deep) 7%, transparent) 1px, transparent 1px);
+  background-size: auto, 76px 76px, 76px 76px;
+}
+
+/* Both credibility strips in the hero are Core grounds now, not Surface
+   panels, so their labels take the reversed pairing. Core on Core would
+   disappear. Both also move up to Text Bold: a Medium cut at 11px
+   recedes on Core whatever its contrast ratio measures. */
+.hero-alumni-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--label-on-core);
+}
+
+.trust-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--surface);
+}
+
+.trust-note {
+  color: var(--label-on-core);
+}
+
+
+/* ── The mark ──────────────────────────────────────────────────── */
+/* The pages still contain the old circle-and-triangle placeholder SVG
+   and a "Blue Ocean / Education" text wordmark. Both are replaced
+   here rather than in markup: the inner svg and the wordmark are
+   hidden, and .brand-mark is masked with the real lockup, so it takes
+   any colour and stays exact at every size.
+
+   One colour at a time. Surface on Core in the header and the footer,
+   which is the approved reversed pairing. */
+
+.brand {
+  gap: 0;
+}
+
+.brand-mark {
+  display: block;
+  width: 187px;
+  height: 40px;
+  color: var(--surface);
+  background-color: currentColor;
+  -webkit-mask: url("brand/logo-lockup.svg") no-repeat center / contain;
+  mask: url("brand/logo-lockup.svg") no-repeat center / contain;
+}
+
+.brand-mark > svg {
+  display: none;
+}
+
+.brand-word {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.footer-brand .brand-mark {
+  width: 215px;
+  height: 46px;
+}
+
+/* main.css pins .brand-mark and .brand-mark svg to 34px and 32px
+   squares at these widths, sized for the old placeholder mark. Those
+   rules have to be answered at each breakpoint, not just once. */
+@media (max-width: 920px) {
+  .brand-mark {
+    width: 187px;
+    height: 40px;
+  }
+  .footer-brand .brand-mark {
+    width: 187px;
+    height: 40px;
+  }
+}
+
+/* On a phone the lockup would fall under its 120px minimum once the
+   nav tightens, so the header takes the BO mark. The footer keeps the
+   lockup, where there is room for the full name. */
+@media (max-width: 720px) {
+  .site-header .brand-mark {
+    width: 74px;
+    height: 38px;
+    -webkit-mask-image: url("brand/logo-bo.svg");
+    mask-image: url("brand/logo-bo.svg");
+  }
+}
+
+@media (max-width: 640px) {
+  .site-header .brand-mark {
+    width: 66px;
+    height: 34px;
+  }
+  .footer-brand .brand-mark {
+    width: 169px;
+    height: 36px;
+  }
+}
+
+
+/* The case studies carry a text-only brand instead of .brand-mark,
+   so the lockup is masked onto the link itself and the text hidden. */
+.case-nav .brand {
+  display: block;
+  width: 187px;
+  height: 36px;
+  overflow: hidden;
+  text-indent: -200vw;
+  background-color: var(--surface);
+  -webkit-mask: url("brand/logo-lockup.svg") no-repeat center left / contain;
+  mask: url("brand/logo-lockup.svg") no-repeat center left / contain;
+}
+
+@media (max-width: 640px) {
+  .case-nav .brand {
+    width: 66px;
+    height: 34px;
+    -webkit-mask-image: url("brand/logo-bo.svg");
+    mask-image: url("brand/logo-bo.svg");
+  }
+}
+
+
+/* ── Footer hierarchy ──────────────────────────────────────────── */
+/* Four levels, told apart by brightness and letterform rather than
+   size alone. Two bugs this replaces: the h3 column headings were
+   13px while their own links were 14px, and plain address <li> text
+   had no size rule at all, so it inherited 16px and became the
+   largest thing in the column. */
+
+.footer h3 {
+  color: color-mix(in srgb, var(--surface) 88%, var(--core));
+  margin: 0 0 20px;
+}
+
+.footer p {
+  font-size: 14px;
+  line-height: 1.72;
+  max-width: 46ch;
+  color: color-mix(in srgb, var(--surface) 56%, var(--core));
+}
+
+.footer ul {
+  gap: 12px;
+}
+
+.footer ul li {
+  font-size: 14px;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--surface) 56%, var(--core));
+}
+
+.footer ul a {
+  font-size: 14px;
+  font-weight: 500;
+  color: color-mix(in srgb, var(--surface) 78%, var(--core));
+  transition: color 140ms ease;
+}
+
+.footer ul a:hover {
+  color: var(--support-light);
+}
+
+.footer-bottom {
+  font-size: 12px;
+  color: color-mix(in srgb, var(--surface) 54%, var(--core));
+}
+
+
+/* ── Retired ───────────────────────────────────────────────────── */
+/* Ocean Ember is one palette, so the green and blue theme switch has
+   nothing left to switch. */
+
+.theme-toggle {
+  display: none !important;
+}

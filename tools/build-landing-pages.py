@@ -91,7 +91,25 @@ SITE_ORIGIN = "https://blueoceanedu.com/"
 # Folders each landing directory needs its own copy of, because it is
 # self-contained. Source is the repo root.
 ASSET_DIRS = ["alumni-logos", "press-logos", "uni-logos", "admits-blue",
-              "blue-profile-arch", "counsel-logos", "counsel-portraits"]
+              "blue-profile-arch", "counsel-logos", "counsel-portraits",
+              # `fonts` and `brand` are here because each landing folder is
+              # also deployed as the ROOT of its own Cloudflare Pages project
+              # (lp.blueoceanedu.com, iblp.blueoceanedu.com). The pages link
+              # `../ocean-ember.css` and `../brand/favicon.svg`, and `..`
+              # CLAMPS at the root rather than escaping it, so from a project
+              # root both resolve to `/ocean-ember.css` and `/brand/...`.
+              #
+              # Without these copies that is a 404, and Pages answers a 404
+              # with index.html at status 200. The browser gets `text/html`
+              # where it asked for a stylesheet, refuses it, and the whole
+              # Ocean Ember layer silently does not apply: both subdomains
+              # served the old placeholder logo, Bricolage Grotesque and the
+              # pre-rebrand palette for as long as they have been up.
+              #
+              # `ocean-ember.css` resolves its own url() against itself, so
+              # `fonts/` and `brand/` have to sit beside it, which is what
+              # these two entries are for.
+              "fonts", "brand"]
 
 # Single files, same reason. `founder/sanjay.webp` is the only file used out of
 # a 944KB folder, so it is named rather than copied wholesale.
@@ -101,10 +119,18 @@ ASSET_DIRS = ["alumni-logos", "press-logos", "uni-logos", "admits-blue",
 # under 900px. `hero-student.webp` is deliberately absent: the cutout lives in
 # index.html's framed hero, which is the one part of the page these folders
 # replace.
+#
+# `ocean-ember.css` ships for the same reason `fonts` and `brand` do: served as
+# its own Pages root, a landing folder has no parent to climb to. Served from
+# blueoceanedu.com/lp/ the climb still reaches the repo root copy, so this one
+# is only ever read on the subdomains. It is a copy, not a link, which means
+# **a change to ocean-ember.css needs a rebuild to reach lp/ and iblp/**, the
+# same rule main.css already lives by.
 ASSET_FILES = ["school-fees.js", "lead-events.js",
                "hero-campus.webp", "hero-campus-1200.webp",
                "institution-harvard.webp", "institution-oxford.webp",
-               "founder/sanjay.webp", "harvard-hall.webp"]
+               "founder/sanjay.webp", "harvard-hall.webp",
+               "ocean-ember.css"]
 
 
 def fail(msg):

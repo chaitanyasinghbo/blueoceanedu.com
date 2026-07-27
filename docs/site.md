@@ -505,8 +505,50 @@ python3 tools/build-landing-pages.py
 - **Nav links, actions and the mobile panel are hidden in CSS, not stripped from the markup.** The header keeps one shape across all four pages, and a change to `index.html`'s nav cannot break the build.
 - **`start.html` links become `#formCard`.** The form is already on the page.
 - **Every other site link becomes absolute** to `https://blueoceanedu.com/`, because a landing page is often served on its own hostname. **The build fails on any relative `.html` link it does not recognise**, which is the check that would have caught the four `case-studies/` links that were about to ship dead.
-- **Assets are copied, not linked.** `main.css`, `school-fees.js`, `back copy.png` and every logo folder go into both directories. The landing folders are served self-contained and nothing in them may reach up to the repo root. The two exceptions are `../ocean-ember.css` and `../brand/favicon.svg`, which the pages climb for.
+- **Assets are copied, not linked, and there are no exceptions.** `main.css`, `school-fees.js`, both sizes of the hero photograph, `ocean-ember.css`, `fonts/`, `brand/` and every logo folder go into both directories. **Nothing in a landing folder may reach up to the repo root**, because each folder is also the root of its own Cloudflare Pages project. See *Each landing folder is a Pages root* below, which is the bug this rule exists to prevent.
 - **Missing assets warn, they do not fail.** `index.html` ships four dead references inside the archived student-stories section; a build that refuses to run until an unrelated archived section is cleaned up is a build nobody runs.
+
+### Each landing folder is a Pages root
+
+The two landing folders are served **two different ways**, and only one of them
+was ever tested:
+
+| URL | Served from | `..` reaches |
+|---|---|---|
+| `blueoceanedu.com/lp/` | the repo root, `lp/` is a subdirectory | the repo root |
+| `lp.blueoceanedu.com/` | the `blueocean-lp` Pages project, `lp/` **is** the root | nothing |
+
+`..` **clamps at the root** rather than escaping it, so on the subdomain
+`../ocean-ember.css` resolves to `/ocean-ember.css`, which did not exist.
+
+**Cloudflare Pages answers a missing path with `index.html` at status `200`.**
+So the request did not fail loudly. The browser asked for a stylesheet, got
+`text/html` with a `200`, refused it on MIME grounds, and carried on. The whole
+Ocean Ember layer silently did not apply: `lp.blueoceanedu.com` and
+`iblp.blueoceanedu.com` served the old circle-and-triangle placeholder mark,
+Bricolage Grotesque and EB Garamond, and the pre-rebrand blue palette with a
+blue CTA instead of Signal, for as long as those subdomains have been up. The
+same 200-with-HTML behaviour is why probing these projects with a status code
+proves nothing. **Check `content-type`, not the status.**
+
+`ocean-ember.css`, `fonts/` and `brand/` are therefore copied into both folders
+like everything else. `ocean-ember.css` resolves its own `url()` against
+itself, so `fonts/` and `brand/` have to sit beside it. The copies are only
+ever read on the subdomains, since from `blueoceanedu.com/lp/` the same climb
+still lands on the repo-root copy, so this is additive and both serving modes
+work off one set of links.
+
+**A change to `ocean-ember.css` now needs a builder run to reach `lp/` and
+`iblp/`**, exactly as `main.css` already did.
+
+To test it the way it is actually served, serve the folder as its own root:
+
+```
+python3 -m http.server 8910 --directory lp
+```
+
+and confirm `getComputedStyle(document.body).fontFamily` reports `NHG Text`
+rather than `Bricolage Grotesque`.
 
 ### The four strings that differ
 
@@ -896,11 +938,11 @@ Three things about that block are not preference:
   discovered until it parses.
 
 `localise()` in the builder rewrites `href="fonts/` to `href="../fonts/`, the
-same climb `ocean-ember.css` makes. `fonts/` is deliberately **not** in
-`ASSET_DIRS`: `url()` inside `ocean-ember.css` resolves against the stylesheet,
-which is at the root, so both landing folders already share one copy of the
-faces. A preload left relative would fetch `/lp/fonts/` and 404, and it would
-fail *quietly*, because the real load still comes from the stylesheet.
+same climb `ocean-ember.css` makes, so that a landing page served from
+`blueoceanedu.com/lp/` reads the repo-root copy. `fonts/` **is** in
+`ASSET_DIRS` as well, because on `lp.blueoceanedu.com` the folder is the Pages
+root and there is nothing above it to climb to. See *Each landing folder is a
+Pages root*.
 
 `start.html` additionally preconnects to `assets.calendly.com` and
 `calendly.com`. The scheduler is still mounted on submit and nothing is fetched
