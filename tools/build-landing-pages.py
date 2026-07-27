@@ -184,6 +184,41 @@ def check_no_heading_backgrounds(where):
                      % (where, sel))
 
 
+def check_fader_reduced_motion():
+    """Fail if the institution card has no picture under reduced motion.
+
+    The blanket `prefers-reduced-motion` block forces `animation-duration:
+    1ms` and `animation-iteration-count: 1` on everything. A cross-fade ends
+    on `opacity: 0` by design, so under that rule all three frames of the
+    institution fader finished invisible a millisecond after the card was
+    revealed, leaving only the blurred 32px placeholder behind them. The card
+    read as a slideshow frozen on its first slide, on every page it appears
+    on, for every visitor with the accessibility setting on.
+
+    Nothing in the CSS is invalid, and the animation genuinely runs, so this
+    is another failure no brace or syntax check can see. The fix is a
+    reduced-motion rule that drops the animation and shows frame 1 outright;
+    this asserts that rule is still there.
+    """
+    css = re.sub(r"/\*.*?\*/", "", (ROOT / "main.css").read_text(), flags=re.S)
+    for m in re.finditer(r"@media[^{]*prefers-reduced-motion[^{]*\{", css):
+        depth, i = 1, m.end()
+        while depth and i < len(css):
+            depth += (css[i] == "{") - (css[i] == "}")
+            i += 1
+        block = css[m.end():i - 1]
+        if not re.search(r"\.institution-fader\s+img\s*\{[^}]*animation\s*:\s*none",
+                         block):
+            continue
+        if re.search(r"\.institution-fader\s+img:first-child\s*\{[^}]*opacity\s*:\s*1",
+                     block):
+            return
+    fail("main.css: no reduced-motion rule leaves the institution fader with a "
+         "visible frame. Without one the blanket reduced-motion block ends the "
+         "cross-fade on opacity 0 and the card shows nothing but its "
+         "placeholder.")
+
+
 def check_css_balance(css, where):
     """Fail on an unbalanced brace instead of shipping a swallowed stylesheet.
 
@@ -291,6 +326,7 @@ def build_page(index_html, partial, cfg):
     # in sync without being duplicated here.
     check_css_balance(partial["style"], "tools/landing-hero.html @style")
     check_no_heading_backgrounds("ocean-ember.css")
+    check_fader_reduced_motion()
 
     style_end = html.rfind("</style>")
     if style_end == -1:

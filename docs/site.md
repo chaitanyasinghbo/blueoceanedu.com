@@ -966,6 +966,39 @@ brand layer already flattens it before setting a background in `main.css`.
 The three frames were also resized for the box they actually occupy, which is
 384x444 at most. They were 486KB together and are 289KB now.
 
+**Reduced motion needs its own rule, and the blanket one is not it.** The
+`@media (prefers-reduced-motion: reduce)` block at the end of `main.css` forces
+`animation-duration: 1ms !important` and `animation-iteration-count: 1
+!important` on everything. That is correct for a fade-in, which ends on the
+state you want to keep. A cross-fade ends on `opacity: 0` by design, so all
+three frames finished invisible a millisecond after the card was revealed and
+stayed that way. What was left on screen was the placeholder plate underneath
+them, so the card read as a slideshow frozen on a blurred Harvard, on all three
+pages, permanently.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .institution-fader img              { animation: none !important; }
+  .institution-fader img:first-child  { opacity: 1; }
+}
+```
+
+`animation-name` is the property that has to be overridden. Shortening or
+stopping the cycle in the blanket block cannot bring the frames back, because
+the blanket block never touches the name and the keyframes still resolve to
+`opacity: 0`. Reduced motion means no motion, not no picture.
+
+The setting behind it is the operating system's own: *Reduce Motion* under
+Accessibility on iOS, *Reduce motion* under Accessibility > Display on macOS,
+and the equivalent on Android and Windows. A visitor who has it on gets it on
+every page, silently, with nothing on screen to say why the card is frozen, so
+the failure is invisible to anyone testing without it.
+
+`check_fader_reduced_motion()` in the builder fails the build if the rule goes
+missing. **Any animation whose last keyframe is the invisible one needs the same
+treatment** — check the end state against the blanket block before adding one.
+The press marquee already has its own `animation: none` for the same reason.
+
 ### Resource hints, and why they sit outside the sentinels
 
 Every page opens the same way, **before** the `<!-- @analytics -->` block:

@@ -843,6 +843,32 @@
       40%, 100% { opacity: 0; transform: scale(1.015); }
     }
 
+    /* Reduced motion gets a photograph, not a frozen blur.
+
+       The blanket `prefers-reduced-motion` block at the end of this file
+       flattens every animation on the site to `1ms` and a single iteration.
+       That is right for a fade-in, which ends on the state you want to keep.
+       It is wrong for a cross-fade, which ends on `opacity: 0` by design: all
+       three frames finished invisible a millisecond after the card was
+       revealed and stayed that way. What was left on screen was the 32px
+       placeholder plate underneath them, so the card read as a slideshow
+       stuck on a blurred Harvard, on every page that carries it.
+
+       Reduced motion means no motion, not no picture. The animation is
+       dropped and frame 1 is shown outright, so the card is a still
+       photograph. `animation-name` is the property that has to be overridden:
+       the blanket block forces duration and iteration-count only, so shorten-
+       ing or stopping the cycle there cannot get the frames back. */
+    @media (prefers-reduced-motion: reduce) {
+      .institution-fader img {
+        animation: none !important;
+      }
+
+      .institution-fader img:first-child {
+        opacity: 1;
+      }
+    }
+
     .proof-stat-stack {
       display: grid;
       grid-template-columns: 1fr;
