@@ -1572,17 +1572,22 @@
 
     /* Target or not, one column, no grades in between.
 
-       Two things decide it: the US is the first or second choice, and the
-       school charges 5L a year or more. Every input behind the answer sits on
-       the same row, so a wrong call is always visible. */
+       Three things decide it: the US is the first or second choice, the school
+       is one the list carries, and it charges 5L a year or more. Every input
+       behind the answer sits on the same row, so a wrong call is always
+       visible. */
     const TARGET_FEE_FLOOR = 500000;
 
-    function targetAudience(annualFee, ranked) {
+    function targetAudience(annualFee, ranked, matchMethod) {
       if (ranked.slice(0, 2).indexOf('US') === -1) return 'Non-target';
-      /* An unknown fee is not a failed fee. The list holds 112 schools, so a
-         school we do not carry says nothing about the family, and dropping a
-         US-first parent off the callback list is the expensive mistake.
-         school_fee_match_method reads `none` on those rows. */
+      /* A school the list does not carry is Non-target. The 112 are the schools
+         worth a callback, so a name that matches none of them is the answer
+         rather than a gap in it. school_fee_match_method reads `none` on those
+         rows, so the call is checkable.
+
+         A school that does match but publishes no fee stays Target: it is on
+         the list and only the number is missing. */
+      if (matchMethod === 'none') return 'Non-target';
       if (annualFee && annualFee < TARGET_FEE_FLOOR) return 'Non-target';
       return 'Target';
     }
@@ -1635,7 +1640,7 @@
         country_prefs:  picks.join(' > '),
         financial_aid: scholarship.options[scholarship.selectedIndex].text,
         financial_aid_code: scholarship.value,
-        target_audience: targetAudience(fees.annualFee, picks),
+        target_audience: targetAudience(fees.annualFee, picks, fees.matchMethod),
         page_url:     window.location.href,
         page_title:   document.title
       };

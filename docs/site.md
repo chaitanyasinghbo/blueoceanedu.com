@@ -249,18 +249,21 @@ The grid is the control, so the error state sits on `.rank-grid.field-error` rat
 
 One computed column on the sheet, and it says `Target` or `Non-target`. Nothing in between, because a four-way triage label gets argued with and a binary gets acted on.
 
-Two conditions, both required:
+Three conditions, all required:
 
 1. **The US is the first or second choice.** Third does not count.
-2. **The school charges 5L a year or more**, on the stream the student's board actually puts them in.
+2. **The school is one the list carries**, matched exactly from the dropdown or fuzzily from a typed name.
+3. **It charges 5L a year or more**, on the stream the student's board actually puts them in.
 
 Board is load-bearing here. Shiv Nadar School Sector 26A is 10.36L on IB and 4.21L on CBSE, so the same school reads `Target` for an IB student and `Non-target` for a CBSE one. That is the intended behaviour, not a rounding problem.
 
-**An unknown fee does not fail the test.** A school outside the 112 returns `Target` if the US condition holds, because the list is a sample and dropping a US-first parent over a missing CSV row is the expensive mistake. `school_fee_match_method` reads `none` on those rows, so they are easy to spot and easy to spot-check.
+**A school the list does not carry is `Non-target`.** The 112 are the schools worth a callback, so a name that matches none of them is the answer and not a gap in it. Those rows read `none` in `school_fee_match_method`, which is what condition 2 tests, so the call is checkable on the row.
 
-The floor is `TARGET_FEE_FLOOR` in the inline script, and every input behind the verdict ships on the same row.
+**A matched school with no published fee stays `Target`.** It is on the list and only the number is missing, so the fee test is skipped rather than failed. `school_fee_match_method` reads `exact` or `fuzzy` and `school_fee_basis` reads `No fee published`.
 
-Every input behind it ships on the same row, so it is always checkable. **Do not let it become a filter in the sheet.** It is there to order a callback list, and a family whose school is simply not in the 112 will read as unknown.
+The floor is `TARGET_FEE_FLOOR` in the inline script, and the three inputs behind the verdict — `country_pref_1`/`country_pref_2`, `school_fee_match_method` and `school_fee_annual_inr` — all ship on the same row, so it is always checkable.
+
+The function lives in **two** places, `start.html` and `tools/landing-hero.html`, and the landing copies are build output. Change both, then run the builder. The Apps Script only records the column; it holds no school list and computes nothing.
 
 ### The scheduler
 
@@ -298,6 +301,18 @@ The script is **header-driven**: row 1 is the schema, a posted key with no colum
 **Timestamps are IST.** The forms send a UTC instant, which is the correct thing for a browser to send, and the script pins the spreadsheet timezone to `Asia/Kolkata` so every row reads in IST. The value stays a real date, not a preformatted string, so the column still sorts and filters; `dd-MMM-yyyy HH:mm:ss` is display only. The timezone is checked before it is written, because setting it on every submission is an API call for nothing.
 
 The forms post with `mode: 'no-cors'` and never read the response, so a misconfigured deployment fails silently. The deployment has to stay on **Execute as: Me** and **Who has access: Anyone**.
+
+#### Not everything that posts here is a lead
+
+`next-steps.html` also carries a newsletter signup, and it posts to this same endpoint. It used to append to `Leads` carrying the name, email, phone, grade, school and funding answer copied off the stored lead, so it read as a second lead for a family that had already submitted one. Almost everyone who books produces one, because the form is prefilled and sits on the page they land on straight after booking. Six of the first twenty-five rows were this.
+
+**The script routes on `form_source`.** `SHEET_ROUTES` maps a value to a tab and its own column order; anything not named there is a lead and lands on `Leads`. Routing on a value the page already sends, rather than letting the post name its own destination, is deliberate: a `sheet` parameter lets a stray request create tabs.
+
+The newsletter tab is narrower than `Leads` and carries `lead_timestamp`, the timestamp of the lead's own row, so a subscription ties back to the submission it came from without matching on email.
+
+Nothing here is deduplicated. **A second row for the same family on `Leads` is a real second submission** and should stay: one family filled the form twice within three minutes under a different school, grade and board, which is a family correcting itself and worth seeing.
+
+**Routing applies to what arrives after the deployment.** Rows already sitting in `Leads` stay where they are. Clean those up by hand, and note that the newsletter rows are identifiable on `form_source` alone.
 
 `.consul-steps` names the same three-step join process `fit.html` carries as `.join-steps`: diagnostic call, student essay, strategy call. Here each step is a number, a name, and **one line**, set as a hairline-ruled list on the dark hero ground rather than the bordered panel grid. It sits beside the form in a narrow column, and the full paragraphs ran the column past the fold on desktop and pushed the form most of a screen down on a phone. `fit.html` remains the full-length version and is where the reasoning belongs. **Keep the two in agreement on what the three steps are.** The older `.consul-assurances` list it replaced is gone.
 

@@ -19,9 +19,21 @@
  * is why this script is header-driven rather than a fixed column list. A key
  * it has never seen becomes a new column on the right; a key a page omits
  * leaves that cell blank. Neither case needs a code change here.
+ *
+ * Not everything that posts here is a lead. `next-steps.html` also carries a
+ * newsletter signup, and it is prefilled from the lead the family just
+ * submitted, so subscribing is one click on the page they land on after
+ * booking. Almost everyone who books does it. Those rows used to append to
+ * `Leads` carrying the same name, email, phone, grade and school, which made
+ * one family read as two leads. They are routed to their own tab now, by
+ * `form_source`, and `Leads` holds submissions of the consultation form only.
+ *
+ * Routing applies to what arrives after the deployment. Rows already in
+ * `Leads` stay where they are and are cleaned up by hand.
  */
 
 var SHEET_NAME = 'Leads';
+var NEWSLETTER_SHEET_NAME = 'Newsletter';
 var TIME_ZONE = 'Asia/Kolkata';
 var TIME_FORMAT = 'dd-MMM-yyyy HH:mm:ss';
 
@@ -69,15 +81,51 @@ var PREFERRED_ORDER = [
   'page_title'
 ];
 
+/* The newsletter tab. Same idea, fewer columns, because the signup posts what
+   it can copy off the stored lead and nothing more. `lead_timestamp` is the
+   timestamp of that lead's own row, so a subscription can be tied back to the
+   submission it came from without matching on email. */
+var NEWSLETTER_ORDER = [
+  'timestamp',
+  'form_source',
+  'first_name',
+  'last_name',
+  'email',
+  'phone',
+  'user_type',
+  'grade',
+  'school_name',
+  'financial_aid',
+  'lead_timestamp',
+  'page_url',
+  'page_title'
+];
+
+/* Which tab a post lands on, keyed by `form_source`. Anything not named here
+   is a lead and goes to `Leads`, so a new landing page needs no entry and a
+   page that stops being a lead form needs one line.
+
+   Routing on a value the page sends is deliberate: the alternative is letting
+   the post name its own destination, which lets a stray request create tabs. */
+var SHEET_ROUTES = {
+  newsletter_next_steps: { name: NEWSLETTER_SHEET_NAME, order: NEWSLETTER_ORDER }
+};
+
+function routeFor_(formSource) {
+  var route = SHEET_ROUTES[String(formSource || '')];
+  return route || { name: SHEET_NAME, order: PREFERRED_ORDER };
+}
+
 function doPost(e) {
   /* One writer at a time. Two forms submitting in the same second otherwise
      read the same last row and one overwrites the other. */
   var lock = LockService.getScriptLock();
   lock.waitLock(30000);
   try {
-    var sheet = getSheet_();
     var data = (e && e.parameter) ? e.parameter : {};
-    var headers = getHeaders_(sheet);
+    var route = routeFor_(data.form_source);
+    var sheet = getSheet_(route.name, route.order);
+    var headers = getHeaders_(sheet, route.order);
 
     /* Any key we have not seen becomes a column. */
     var fresh = [];
@@ -126,7 +174,9 @@ function doGet() {
   return json_({ ok: true, service: 'Blue Ocean lead sheet' });
 }
 
-function getSheet_() {
+function getSheet_(name, order) {
+  name = name || SHEET_NAME;
+  order = order || PREFERRED_ORDER;
   var book = SpreadsheetApp.getActiveSpreadsheet();
 
   /* The forms send a UTC instant, which is the right thing to send. What makes
@@ -138,11 +188,12 @@ function getSheet_() {
     book.setSpreadsheetTimeZone(TIME_ZONE);
   }
 
-  var sheet = book.getSheetByName(SHEET_NAME);
+  var sheet = book.getSheetByName(name);
   if (!sheet) {
-    sheet = book.insertSheet(SHEET_NAME);
-    sheet.getRange(1, 1, 1, PREFERRED_ORDER.length).setValues([PREFERRED_ORDER]);
-    styleHeader_(sheet, PREFERRED_ORDER.length);
+    sheet = book.insertSheet(name);
+    sheet.getRange(1, 1, 1, order.length).setValues([order]);
+    styleHeader_(sheet, order.length);
+    formatTimestampColumn_(sheet, order);
   }
   return sheet;
 }
@@ -156,11 +207,12 @@ function formatTimestampColumn_(sheet, headers) {
        .setNumberFormat(TIME_FORMAT);
 }
 
-function getHeaders_(sheet) {
+function getHeaders_(sheet, order) {
+  order = order || PREFERRED_ORDER;
   if (sheet.getLastColumn() === 0) {
-    sheet.getRange(1, 1, 1, PREFERRED_ORDER.length).setValues([PREFERRED_ORDER]);
-    styleHeader_(sheet, PREFERRED_ORDER.length);
-    return PREFERRED_ORDER.slice();
+    sheet.getRange(1, 1, 1, order.length).setValues([order]);
+    styleHeader_(sheet, order.length);
+    return order.slice();
   }
   return sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0].map(String);
 }

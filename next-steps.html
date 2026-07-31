@@ -479,7 +479,15 @@
       newsletterEmail.value = savedLead.email;
     }
 
-    /* Newsletter signup, posts to the same sheet as the main form */
+    /* Newsletter signup. Same endpoint as the consultation form, its own tab.
+
+       The Apps Script routes on `form_source`, so `newsletter_next_steps`
+       lands on `Newsletter` and never on `Leads`. That routing is the whole
+       reason this can keep copying the family's details off the stored lead:
+       the form is prefilled and sits on the page they land on after booking,
+       so nearly everyone who books subscribes, and on the leads tab those
+       rows made one family read as two. `lead_timestamp` ties the
+       subscription back to its own lead row without matching on email. */
     const SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxzYB2CtlMlPP0H9zCeEJAElhuSRWnF5RdyiL75JH_G2PcOn7ExTbxdc6kDev63ssMo8w/exec';
 
     function setNewsletterState(isSubmitting, message, tone) {
@@ -505,6 +513,7 @@
         grade: savedLead?.grade || '',
         school_name: savedLead?.school_name || '',
         financial_aid: savedLead?.financial_aid || '',
+        lead_timestamp: savedLead?.timestamp || '',
         page_url: window.location.href,
         page_title: document.title
       };
