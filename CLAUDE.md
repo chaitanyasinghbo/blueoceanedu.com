@@ -18,7 +18,7 @@ Do not make the site sound like a generic college consultancy.
 
 ## Analytics and the conversion
 
-**One analytics block, on every page.** It sits between the `<!-- @analytics -->` sentinels at the top of every `<head>`: GA4 `G-2STB24PJGQ` and Meta pixel `754270597536586`. The only line that differs per page is the dataLayer pageview event, and the landing build swaps it. Keep the block byte-identical everywhere else or that swap silently stops matching.
+**One analytics block, on every page.** It sits between the `<!-- @analytics -->` sentinels at the top of every `<head>`: GA4 `G-2STB24PJGQ`, Meta pixel `754270597536586`, and PostHog. The only line that differs per page is the dataLayer pageview event, and the landing build swaps it. Keep the block byte-identical everywhere else or that swap silently stops matching. The build now fails if two root pages disagree.
 
 **The funnel has two steps, and each fires its own event.** All three forms — `start.html`, `lp/`, `iblp/` — behave the same way:
 
@@ -43,6 +43,14 @@ All of this lives in `lead-events.js`, loaded by every page that fires an event 
 - **One event per lead per step**, keyed to the lead's own timestamp, so a refresh or a second tab cannot count again while a genuine second submission still can.
 
 `fbq` gets an `eventID` of `<step>-<timestamp>` so a server-side Conversions API event for the same step can be deduplicated against it later.
+
+**PostHog's key and every capture option live in `posthog-init.js`, and nowhere else.** Each page carries two lines: an inline stub that queues, and a deferred tag for that file. The stub has to be inline and synchronous, because an inline script at the foot of the body runs *before* any deferred one and `next-steps.html` fires the booking from exactly there. It only queues, which is what lets the library be deferred and cost the render nothing.
+
+It ships with no key. Until `PROJECT_KEY` is set it appends no script, requests nothing, and every call is a silent no-op. PostHog gets the same two funnel steps under the dataLayer's own name lowercased, `lead_submitted` and `booking_completed`, derived rather than written a second time so the two cannot drift. `lp-v2` adds `target_lead` and `non_target_lead` with the qualification reason on them.
+
+**Session replay masks every input**, and that is not a preference. `maskAllInputs` is restated explicitly in `posthog-init.js` because it is the whole basis on which recording a page that collects a child's name, a parent's phone number and a school is acceptable. Do not set it false.
+
+**`tools/posthog-daily.py` is the morning report**, and it needs a *Personal* API key, which is not the `phc_` key in `posthog-init.js`. That one is publishable and write-only; this one reads the project back out. Read-only, scoped to `query` and `project`, never committed.
 
 **Every `BOEvents` call is wrapped in a `try`, and must stay that way.** A missing script tag once left `BOEvents` undefined, and the bare call threw on the line before the scheduler is revealed — `Request Consultation` posted the lead and then did nothing visible. Analytics is always what gives way, never the booking. The build fails if a page calls `BOEvents` without loading `lead-events.js`.
 
@@ -82,11 +90,58 @@ Things the builder already handles, so do not do them by hand:
 - Nav links, actions and the mobile panel are hidden by the hero partial's CSS rather than stripped from the markup, so a change to `index.html`'s nav cannot break the build
 - Every `start.html` link becomes `#formCard`, because the form is already on the page
 - Every other site link becomes absolute to `blueoceanedu.com`, because a landing page is often served on its own hostname. The build **fails** on any relative `.html` link it does not recognise; add it to `SITE_PAGES` or `SITE_PATH_PREFIXES`
-- `main.css`, `school-fees.js` and every logo folder are copied into both directories, because each one is served self-contained and nothing in it may reach up to the repo root
+- `main.css`, `school-fees.js`, `posthog-init.js` and every logo folder are copied into both directories, because each one is served self-contained and nothing in it may reach up to the repo root
+- `lp-v2` is outside this build but is checked by it: the build **fails** if its copy of `lead-events.js` or `posthog-init.js` has drifted from the root. Copy the file across by hand
 
 `lp` and `iblp` differ in exactly five strings: the title, the GA4 pageview event, the GA4 thank-you event, the h1, and the `form_source` on the lead payload. A sixth difference belongs in the `PAGES` list, never in a generated file.
 
 **The hero partial holds its own copy of the form's CSS, and the build cannot tell when it falls behind `start.html`.** A missing `.field[hidden] { display: none; }` left three conditional fields on screen permanently on both landing pages and nowhere else. After any change to the form in `start.html`, run the selector diff in `docs/site.md` under *The form*.
+
+## The head is generated too, and so is the FAQ
+
+Four things are build output alongside the landing pages. None is hand-edited:
+
+| Generated | Written by |
+| --- | --- |
+| The `@seo` block in every page's `<head>` | `tools/build-seo.py` |
+| The `.faq-list` on `fit.html` | `tools/build-faq.py` |
+| `sitemap.xml` | `tools/build-sitemap.py` |
+
+```
+python3 tools/build-seo.py
+python3 tools/build-faq.py
+python3 tools/build-landing-pages.py   # checks both, then rebuilds the sitemap
+```
+
+`build-landing-pages.py` **fails** if either of the first two is stale, because
+the landing pages inherit `index.html`'s head wholesale and would otherwise
+copy a stale canonical into four generated files.
+
+**The problem the schema solves is a name collision, not a ranking problem.**
+Four unrelated businesses trade as some form of *Blue Ocean*, and one of them, a
+Vietnamese study-abroad agency, holds `linkedin.com/company/blue-ocean-education`
+and `youtube.com/@blueoceaneducation`. Wikipedia carries two other men named
+Sanjay Kumar. Two rules follow and neither is negotiable:
+
+- **Every URL in `sameAs` resolves and belongs to us.** One wrong entry asserts,
+  in machine-readable terms, that we are somebody else.
+- **Every claim in the schema is visible on the page.** The footer gained an
+  opening-hours line the same day `openingHoursSpecification` was added, and
+  `hasOfferCatalog` ships on `index.html` alone because that is the one page
+  naming the four service tracks.
+
+**URLs have no `.html`.** Cloudflare Pages 308s `/founder.html` to `/founder`,
+so canonicals, `og:url`, `@id` values and the sitemap all use the extensionless
+form. The `href`s in the markup stay as they are; a 308 consolidates, and the
+canonical is what decides the indexed URL.
+
+**`404.html` is load-bearing.** Without it, Pages answers every unmatched path
+with `index.html` at status 200, which is how `robots.txt` and `sitemap.xml`
+both used to return the home page. It is a copy of `fit.html`'s shell and shares
+no build step with it, so a nav or footer change has to be made in both.
+
+Full reasoning, and the six off-site items no file in this repo can carry, are
+in `docs/site.md` under *Search, answer engines, and the entity*.
 
 ## Scroll services/outcomes pattern
 

@@ -22,6 +22,7 @@
        the fonts are not discovered until it parses. -->
   <link rel="preconnect" href="https://www.googletagmanager.com">
   <link rel="preconnect" href="https://connect.facebook.net">
+  <link rel="preconnect" href="https://us-assets.i.posthog.com">
   <link rel="preload" href="../fonts/NHGDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/NHGText-Roman.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/NHGText-Medium.woff2" as="font" type="font/woff2" crossorigin>
@@ -57,10 +58,43 @@
   src="https://www.facebook.com/tr?id=754270597536586&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
+  <!-- PostHog. The key, the region and every capture option live in
+       posthog-init.js, the one file to edit; these lines are byte-identical
+       on every page like the rest of the block.
+
+       The stub is inline and synchronous because an inline script at the foot
+       of the body runs BEFORE any deferred one, and next-steps.html fires the
+       booking from exactly there. It only queues, which is what lets the
+       library itself be deferred and cost the render nothing. -->
+  <script>
+    window.BOPostHog = { _q: [],
+      capture: function () { if (this._q.length < 50) this._q.push(['capture', [].slice.call(arguments)]); },
+      identify: function () { if (this._q.length < 50) this._q.push(['identify', [].slice.call(arguments)]); } };
+  </script>
+  <script defer src="posthog-init.js"></script>
   <!-- /@analytics -->
   <link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+  <!-- @seo -->
+  <!-- Written by tools/build-landing-pages.py, replacing the block
+       tools/build-seo.py puts in index.html. Generated twice over:
+       do not hand-edit either copy. -->
   <title>Admissions | Blue Ocean Education</title>
   <meta name="description" content="Blue Ocean helps ambitious Indian students develop the depth, originality, and discipline required to compete for the world's most selective universities.">
+  <meta name="robots" content="noindex, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Blue Ocean Education">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:title" content="Admissions | Blue Ocean Education">
+  <meta property="og:description" content="Blue Ocean helps ambitious Indian students develop the depth, originality, and discipline required to compete for the world's most selective universities.">
+  <meta property="og:image" content="https://blueoceanedu.com/og-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Admissions | Blue Ocean Education">
+  <meta name="twitter:description" content="Blue Ocean helps ambitious Indian students develop the depth, originality, and discipline required to compete for the world's most selective universities.">
+  <meta name="twitter:image" content="https://blueoceanedu.com/og-card.jpg">
+  <!-- /@seo -->
   <link rel="stylesheet" href="main.css">
   <style>
     /* ── Theme toggle ───────────────────────────────── */
@@ -2364,6 +2398,7 @@
             <li><a href="mailto:admissions@blueoceanedu.com">admissions@blueoceanedu.com</a></li>
             <li>6, School Lane, Connaught Place</li>
             <li>New Delhi, 110001</li>
+            <li>Mon to Sat, 10am to 7pm IST</li>
           </ul>
         </div>
       </div>
@@ -2652,7 +2687,7 @@
     /* ── School city and school ───────────────────────
        The city drives the school list, so a family picks from ten names
        rather than scrolling past a hundred. Either dropdown can fall back to
-       a text field, because the list is 112 schools and India has thousands.
+       a text field, because the list is 118 schools and India has thousands.
        A typed name is still matched against the list at submit time. */
     const citySelect      = document.getElementById('schoolCity');
     const cityOtherField  = document.getElementById('schoolCityOtherField');
@@ -2864,7 +2899,7 @@
 
     function targetAudience(annualFee, ranked, matchMethod) {
       if (ranked.slice(0, 2).indexOf('US') === -1) return 'Non-target';
-      /* A school the list does not carry is Non-target. The 112 are the schools
+      /* A school the list does not carry is Non-target. The 118 are the schools
          worth a callback, so a name that matches none of them is the answer
          rather than a gap in it. school_fee_match_method reads `none` on those
          rows, so the call is checkable.

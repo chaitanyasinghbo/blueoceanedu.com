@@ -31,6 +31,7 @@ may reach up to the repo root. That is why the script copies rather than links.
 
 import re
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -73,7 +74,44 @@ DESCRIPTION = ("Blue Ocean helps ambitious Indian students develop the depth, "
 # second block here instead would give the landing pages two pixels and count
 # every visit twice.
 PAGEVIEW_MARKER = 'dataLayer.push({ "event": "SITE_PAGEVIEW" });'
+
+# The @analytics sentinels. The block between them is asserted identical on
+# every root page below, which is the check that was missing when PostHog was
+# added: the key and its options live in posthog-init.js, but the two lines
+# that load it are in eleven heads and have to stay the same eleven lines.
+ANALYTICS_OPEN = "<!-- @analytics"
+ANALYTICS_CLOSE = "<!-- /@analytics -->"
+
+# lp-v2 is hand-maintained and deliberately outside this build, for the reasons
+# in lp-v2/README.md. It is still served self-contained, so it carries its own
+# copies of the two files that hold the conversion and the analytics config. A
+# copy quietly falling behind is precisely the drift this script exists to
+# stop, so both are checked even though neither is generated.
+LPV2_SHARED = ["lead-events.js", "posthog-init.js"]
 THANKYOU_MARKER = 'dataLayer.push({ "event": "SITE_THANKYOUPAGE" });'
+
+# The search block, written into every root page by tools/build-seo.py between
+# these two sentinels. A landing page inherits index.html's head wholesale, so
+# without a swap here all four generated pages would ship the home page's
+# canonical, the home page's `og:url`, and a second and third full copy of the
+# organisation and founder schema.
+#
+# What they get instead is `noindex, follow` and no schema at all, for two
+# reasons that are worth writing down because the instinct is to leave them
+# indexable and hope for extra coverage.
+#
+# **Below the hero these pages ARE index.html.** Same proof, same method, same
+# outcomes, same team, same admits wall. Indexed, they are two near-duplicates
+# of the one page the site most needs to rank, served on their own hostnames,
+# which is the textbook way to split a domain's authority three ways.
+#
+# **`noindex` and a canonical are not the same instruction and do not stack.**
+# A canonical says "index the other one instead"; `noindex` says "index
+# neither". Sending both lets a crawler pick, so only one ships, and for an ad
+# landing page whose whole job is to receive paid traffic it is `noindex`.
+# `follow` stays, so the links out to the real pages still pass.
+SEO_OPEN = "<!-- @seo -->"
+SEO_CLOSE = "<!-- /@seo -->"
 
 # Site pages a landing page links out to. A landing page is often served on its
 # own hostname, so every one of these has to be absolute or it 404s.
@@ -126,7 +164,7 @@ ASSET_DIRS = ["alumni-logos", "press-logos", "uni-logos", "admits-blue",
 # is only ever read on the subdomains. It is a copy, not a link, which means
 # **a change to ocean-ember.css needs a rebuild to reach lp/ and iblp/**, the
 # same rule main.css already lives by.
-ASSET_FILES = ["school-fees.js", "lead-events.js",
+ASSET_FILES = ["school-fees.js", "lead-events.js", "posthog-init.js",
                "hero-campus.webp", "hero-campus-1200.webp", "hero-campus-900.webp",
                "institution-harvard.webp", "institution-oxford.webp",
                "founder/sanjay.webp", "harvard-hall.webp",
@@ -135,6 +173,51 @@ ASSET_FILES = ["school-fees.js", "lead-events.js",
 
 def fail(msg):
     sys.exit("build-landing-pages: " + msg)
+
+
+def esc(text):
+    return (text.replace("&", "&amp;").replace("<", "&lt;")
+                .replace(">", "&gt;").replace('"', "&quot;"))
+
+
+def swap_seo(html, title, description, where):
+    """Replace the generated search block with the landing-page one.
+
+    Open Graph survives the swap because these URLs are pasted into WhatsApp
+    and Instagram all day and a link with no card is a link nobody taps. The
+    canonical and the JSON-LD do not, for the reasons above SEO_OPEN.
+    """
+    start = html.find(SEO_OPEN)
+    end = html.find(SEO_CLOSE)
+    if start == -1 or end == -1 or end < start:
+        fail("%s has no @seo block to swap. Run `python3 tools/build-seo.py` "
+             "first: the landing pages inherit their head from index.html and "
+             "cannot ship the site's canonical." % where)
+
+    block = "\n".join([
+        SEO_OPEN,
+        "  <!-- Written by tools/build-landing-pages.py, replacing the block",
+        "       tools/build-seo.py puts in index.html. Generated twice over:",
+        "       do not hand-edit either copy. -->",
+        "  <title>%s</title>" % esc(title),
+        '  <meta name="description" content="%s">' % esc(description),
+        '  <meta name="robots" content="noindex, follow">',
+        "",
+        '  <meta property="og:type" content="website">',
+        '  <meta property="og:site_name" content="Blue Ocean Education">',
+        '  <meta property="og:locale" content="en_IN">',
+        '  <meta property="og:title" content="%s">' % esc(title),
+        '  <meta property="og:description" content="%s">' % esc(description),
+        '  <meta property="og:image" content="%sog-card.jpg">' % SITE_ORIGIN,
+        '  <meta property="og:image:width" content="1200">',
+        '  <meta property="og:image:height" content="630">',
+        '  <meta name="twitter:card" content="summary_large_image">',
+        '  <meta name="twitter:title" content="%s">' % esc(title),
+        '  <meta name="twitter:description" content="%s">' % esc(description),
+        '  <meta name="twitter:image" content="%sog-card.jpg">' % SITE_ORIGIN,
+        "  " + SEO_CLOSE,
+    ])
+    return html[:start] + block + html[end + len(SEO_CLOSE):]
 
 
 def read_partial(path):
@@ -236,6 +319,63 @@ def check_css_balance(css, where):
              % (where, abs(depth), "brace" if abs(depth) == 1 else "braces"))
 
 
+def analytics_block(html, where):
+    start = html.find(ANALYTICS_OPEN)
+    end = html.find(ANALYTICS_CLOSE)
+    if start == -1 or end == -1 or end < start:
+        fail("%s has no @analytics block" % where)
+    return html[start:end + len(ANALYTICS_CLOSE)]
+
+
+def check_analytics_identical():
+    """Fail if the @analytics block differs between two root pages.
+
+    The block is byte-identical everywhere except one line, the dataLayer
+    pageview event, which build_page and build_next_steps swap. That rule was
+    written down and enforced by nothing, which is survivable while the block
+    holds two hardcoded ids and stops being survivable the moment it holds a
+    third thing that can be half-installed.
+
+    So this reads every root page, blanks the one line that is allowed to
+    differ, and asserts one distinct block remains. It also asserts PostHog is
+    in it, because a page that quietly lacks the stub does not error: it
+    collects nothing, and looks exactly like a page nobody visited.
+    """
+    blocks = {}
+    for path in sorted(ROOT.glob("*.html")):
+        block = analytics_block(path.read_text(), path.name)
+        if "posthog-init.js" not in block or "window.BOPostHog" not in block:
+            fail("%s: the @analytics block does not load PostHog. Every page "
+                 "carries the same stub and the same deferred tag; a page "
+                 "without them collects nothing and reads as untrafficked."
+                 % path.name)
+        key = re.sub(r'"event": "[A-Z_]+"', '"event": "SWAPPED"', block)
+        blocks.setdefault(key, []).append(path.name)
+
+    if len(blocks) > 1:
+        groups = " | ".join(", ".join(names) for names in blocks.values())
+        fail("the @analytics block is not identical across the root pages, so "
+             "they are no longer measuring the same thing. Groups that agree "
+             "with each other: " + groups)
+
+
+def check_lp_v2_shared():
+    """Fail if lp-v2's copy of a shared script has fallen behind the root."""
+    target = ROOT / "lp-v2"
+    if not target.is_dir():
+        return
+    for name in LPV2_SHARED:
+        dst = target / name
+        if not dst.is_file():
+            fail("lp-v2/%s is missing. lp-v2 is served self-contained and is "
+                 "outside this build, so the copy is manual: cp %s lp-v2/"
+                 % (name, name))
+        if (ROOT / name).read_bytes() != dst.read_bytes():
+            fail("lp-v2/%s has drifted from the root copy, so the landing page "
+                 "and the site are counting differently. Copy it across: "
+                 "cp %s lp-v2/" % (name, name))
+
+
 def check_scripts_present(html, where):
     """Every page that calls BOEvents must actually load lead-events.js.
 
@@ -250,6 +390,13 @@ def check_scripts_present(html, where):
     loads = '<script src="lead-events.js"></script>' in html
     if calls and not loads:
         fail("%s calls BOEvents but never loads lead-events.js" % where)
+
+    # Same failure, one layer along. lead-events.js hands every event to
+    # BOPostHog, and the deferred tag is what turns that queue into anything.
+    if 'window.BOPostHog' in html \
+       and '<script defer src="posthog-init.js"></script>' not in html:
+        fail("%s defines the BOPostHog stub but never loads posthog-init.js, "
+             "so every event it queues is dropped" % where)
 
 
 def localise(html):
@@ -299,8 +446,12 @@ def build_next_steps(source_html, cfg):
     html = html.replace(THANKYOU_MARKER,
                         THANKYOU_MARKER.replace("SITE_THANKYOUPAGE",
                                                 cfg["thankyou_event"]), 1)
-    html = re.sub(r"<title>[^<]*</title>",
-                  "<title>Next Steps | %s</title>" % cfg["title"], html, count=1)
+    html = swap_seo(
+        html,
+        "Next Steps | %s" % cfg["title"],
+        "Your diagnostic call is booked. Here are the most useful next steps "
+        "while a Blue Ocean advisor reviews the profile.",
+        "%s/next-steps.html source" % cfg["dir"])
     return localise(html)
 
 
@@ -314,10 +465,7 @@ def build_page(index_html, partial, cfg):
     html = html.replace(PAGEVIEW_MARKER,
                         PAGEVIEW_MARKER.replace("SITE_PAGEVIEW",
                                                 cfg["pageview_event"]), 1)
-    html = re.sub(r"<title>[^<]*</title>",
-                  "<title>%s</title>" % cfg["title"], html, count=1)
-    html = re.sub(r'(<meta name="description" content=")[^"]*(")',
-                  lambda m: m.group(1) + DESCRIPTION + m.group(2), html, count=1)
+    html = swap_seo(html, cfg["title"], DESCRIPTION, "index.html source")
 
     # ── hero ─────────────────────────────────────────────────────────
     # The partial's style goes at the end of index.html's own inline style, so
@@ -406,6 +554,23 @@ def audit_assets(html, target, report):
                       "(index.html has the same gap)" % (target.name, m))
 
 
+def run_sibling(script, args, must_pass):
+    """Run another builder in this folder and report what it said.
+
+    The landing pages inherit index.html's head, so a stale @seo block would
+    be copied into four generated files before anyone noticed. Checking it
+    here means the one command everybody already runs is the one that catches
+    it. The sitemap is rebuilt rather than checked, because it is generated
+    from git and there is never a reason not to have it current.
+    """
+    result = subprocess.run([sys.executable, str(ROOT / "tools" / script)] + args,
+                            capture_output=True, text=True)
+    output = (result.stdout + result.stderr).strip()
+    if result.returncode and must_pass:
+        fail("%s\n  (from tools/%s)" % (output, script))
+    return output
+
+
 def main():
     index_path = ROOT / "index.html"
     next_steps_path = ROOT / "next-steps.html"
@@ -413,6 +578,11 @@ def main():
     for p in (index_path, next_steps_path, partial_path, ROOT / "main.css"):
         if not p.is_file():
             fail("cannot find %s" % p)
+
+    run_sibling("build-seo.py", ["--check"], must_pass=True)
+    run_sibling("build-faq.py", ["--check"], must_pass=True)
+    check_analytics_identical()
+    check_lp_v2_shared()
 
     index_html = index_path.read_text()
     next_steps_html = next_steps_path.read_text()
@@ -444,6 +614,7 @@ def main():
     print("build-landing-pages: wrote")
     for line in report:
         print(line)
+    print(run_sibling("build-sitemap.py", [], must_pass=True))
 
 
 if __name__ == "__main__":

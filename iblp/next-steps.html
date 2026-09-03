@@ -22,6 +22,7 @@
        the fonts are not discovered until it parses. -->
   <link rel="preconnect" href="https://www.googletagmanager.com">
   <link rel="preconnect" href="https://connect.facebook.net">
+  <link rel="preconnect" href="https://us-assets.i.posthog.com">
   <link rel="preload" href="../fonts/NHGDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/NHGText-Roman.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/NHGText-Medium.woff2" as="font" type="font/woff2" crossorigin>
@@ -57,10 +58,43 @@
   src="https://www.facebook.com/tr?id=754270597536586&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
+  <!-- PostHog. The key, the region and every capture option live in
+       posthog-init.js, the one file to edit; these lines are byte-identical
+       on every page like the rest of the block.
+
+       The stub is inline and synchronous because an inline script at the foot
+       of the body runs BEFORE any deferred one, and next-steps.html fires the
+       booking from exactly there. It only queues, which is what lets the
+       library itself be deferred and cost the render nothing. -->
+  <script>
+    window.BOPostHog = { _q: [],
+      capture: function () { if (this._q.length < 50) this._q.push(['capture', [].slice.call(arguments)]); },
+      identify: function () { if (this._q.length < 50) this._q.push(['identify', [].slice.call(arguments)]); } };
+  </script>
+  <script defer src="posthog-init.js"></script>
   <!-- /@analytics -->
   <link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+  <!-- @seo -->
+  <!-- Written by tools/build-landing-pages.py, replacing the block
+       tools/build-seo.py puts in index.html. Generated twice over:
+       do not hand-edit either copy. -->
   <title>Next Steps | IBDP Admissions | Blue Ocean Education</title>
-  <meta name="description" content="Your diagnostic call is booked. Here are the five most useful next steps while a Blue Ocean advisor reviews your profile.">
+  <meta name="description" content="Your diagnostic call is booked. Here are the most useful next steps while a Blue Ocean advisor reviews the profile.">
+  <meta name="robots" content="noindex, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Blue Ocean Education">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:title" content="Next Steps | IBDP Admissions | Blue Ocean Education">
+  <meta property="og:description" content="Your diagnostic call is booked. Here are the most useful next steps while a Blue Ocean advisor reviews the profile.">
+  <meta property="og:image" content="https://blueoceanedu.com/og-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Next Steps | IBDP Admissions | Blue Ocean Education">
+  <meta name="twitter:description" content="Your diagnostic call is booked. Here are the most useful next steps while a Blue Ocean advisor reviews the profile.">
+  <meta name="twitter:image" content="https://blueoceanedu.com/og-card.jpg">
+  <!-- /@seo -->
   <link rel="stylesheet" href="main.css">
   <style>
 
@@ -401,6 +435,7 @@
             <li><a href="mailto:admissions@blueoceanedu.com">admissions@blueoceanedu.com</a></li>
             <li>6, School Lane, Connaught Place</li>
             <li>New Delhi, 110001</li>
+            <li>Mon to Sat, 10am to 7pm IST</li>
           </ul>
         </div>
       </div>

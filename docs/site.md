@@ -157,24 +157,21 @@ Every institution named on the page is linked to itself: Delhi University, JNU, 
 
 ## Search and answer engines
 
-`founder.html` is the first page on the site to carry a full head block, and it is the pattern for the rest.
-
-- `<link rel="canonical">` on `https://blueoceanedu.com/`, which is the domain `lp/` and `iblp/` already use in their absolute footer links. The brochure files use `blueocean.education`, which is a different property and is not the canonical host.
-- Open Graph as `og:type: profile`, with `founder/commencement.jpg` at its real 900 by 1350 as the card image, plus the Twitter summary card.
-- One `application/ld+json` block holding a six-node `@graph`: `ProfilePage`, `WebSite`, `BreadcrumbList`, `Person`, `Book`, and `Organization`.
-
-The `Person` node is the one that matters and it is stable IDed as `https://blueoceanedu.com/#sanjay-kumar`, so other pages can reference the same person without redefining him. It carries `alumniOf` with a URL each, `hasCredential` for the MPA and the PhD, `award` for the Mason Fellowship, `knowsAbout`, `birthPlace`, and a `sameAs` list of seven third-party pages that name him. `Book` describes *Katihar to Kennedy* with the library's own citation and points at both the Amazon listing and the Harvard Kennedy School collection page.
-
-Two rules for anything added here. **Every claim in the schema has to be visible on the page**, because a `Person` node that outruns its own page is what an audit flags. And **every URL in `sameAs` has to resolve**, which is why neither `edjustice.in` nor `sanjaykumar.in` is in the list.
+`founder.html` was the first page to carry a full head block and was the pattern for the rest. That block is now generated for every page by `tools/build-seo.py`, and the founder page's share of it is the `Person` node and the `Book` node. See [Search, answer engines, and the entity](#search-answer-engines-and-the-entity) at the end of this file for the whole system.
 
 ### `fit.html` — Right Fit and how to join
 
 1. Page header
 2. Right Fit / Selective by design (`id="fit"`)
 3. **How to join** — three numbered `.join-step` blocks (diagnostic call, student essay, strategy call), the `.join-pair` panels (after a yes, what we never do), and the `.join-fee` panel
-4. CTA, Footer, Sticky CTA bar
+4. **The questions families ask** (`id="questions"`) — the `.faq-list`, generated
+5. CTA, Footer, Sticky CTA bar
 
 Fees are deliberately not published. The `.join-fee` panel says one fee covers everything and that it scales with program length; the figures live in `docs/product.md` and are shared on the strategy call.
+
+**The FAQ is generated, not written here.** The question and answer pairs live in the `FAQ` list in `tools/build-seo.py`, which builds both the `FAQPage` node in this page's head and, through `tools/build-faq.py`, the markup between the `@faq` sentinels. Editing the markup by hand is reverted by the next run and, worse, silently puts the visible answer out of step with the schema answer, which is a policy violation rather than a cosmetic one. Add or change a question in `tools/build-seo.py`, then run both builders.
+
+The block is `<details>` elements, not a scripted accordion, so an answer is findable with the browser's own page search whether or not it is open and a crawler reads a closed answer exactly as it reads an open one. Only the first ships open.
 
 ### `start.html` — Request a Consultation (CTA landing page)
 
@@ -202,7 +199,9 @@ Both dropdowns carry an **Other** option and so does Board. Choosing it reveals 
 
 Picking **Other city** hides the school dropdown entirely rather than showing an empty one, because a city we hold no schools for has no list to offer.
 
-`school-fees.js` holds 112 schools across 30 cities from `Indian_Schools_Fees_Complete_Reviewed_2026.csv`. The list is a sample of the schools our families come from, not a register, which is why Other is on every one of these fields.
+`school-fees.js` holds 118 schools across 30 cities from `Indian_Schools_Fees_Complete_Reviewed_2026.csv`. The list is a sample of the schools our families come from, not a register, which is why Other is on every one of these fields.
+
+**The count is written down in four places** and the builder checks none of them: this line, the round-trip line below, the `Non-target` paragraph under *`target_audience`*, and two comments each in `start.html` and `tools/landing-hero.html`. Grep the old number after adding a row.
 
 ### Fees are collected, never shown
 
@@ -216,7 +215,7 @@ The form never renders a fee. `BOSchools.resolveFee(school, city, board)` runs a
 | `school_general_fee_inr` | The CSV's general figure, same rule |
 | `school_fee_annual_inr` | The one that applies to this student's board |
 
-Both raw columns ship on every row so the sheet always holds the source numbers and never only a derived one. `school_fee_band` is a convenience for scanning and sits beside them, not in place of them. A round-trip test asserts all 112 rows resolve to their exact CSV figures.
+Both raw columns ship on every row so the sheet always holds the source numbers and never only a derived one. `school_fee_band` is a convenience for scanning and sits beside them, not in place of them. A round-trip test asserts all 118 rows resolve to their exact CSV figures, on both board streams and in all three served copies of `school-fees.js`.
 
 **The CSV stays the source of truth.** `school-fees.js` is generated from it, not maintained by hand:
 
@@ -257,7 +256,7 @@ Three conditions, all required:
 
 Board is load-bearing here. Shiv Nadar School Sector 26A is 10.36L on IB and 4.21L on CBSE, so the same school reads `Target` for an IB student and `Non-target` for a CBSE one. That is the intended behaviour, not a rounding problem.
 
-**A school the list does not carry is `Non-target`.** The 112 are the schools worth a callback, so a name that matches none of them is the answer and not a gap in it. Those rows read `none` in `school_fee_match_method`, which is what condition 2 tests, so the call is checkable on the row.
+**A school the list does not carry is `Non-target`.** The 118 are the schools worth a callback, so a name that matches none of them is the answer and not a gap in it. Those rows read `none` in `school_fee_match_method`, which is what condition 2 tests, so the call is checkable on the row.
 
 **A matched school with no published fee stays `Target`.** It is on the list and only the number is missing, so the fee test is skipped rather than failed. `school_fee_match_method` reads `exact` or `fuzzy` and `school_fee_basis` reads `No fee published`.
 
@@ -632,6 +631,88 @@ If `sessionStorage` is denied the event fires anyway. Counting a lead twice is t
 `fbq` carries `content_name` (the `form_source`), `content_category` (the grade), and an `eventID` of `<step>-<timestamp>` so a server-side Conversions API event for the same step can be deduplicated against it later.
 
 Verified in a browser with `fbq` stubbed: one `Lead` and one `Schedule` from a full run, doubles suppressed on repeat calls, and nothing at all with no stored lead.
+
+### PostHog, next to GA4 and the pixel
+
+**The key and every capture option live in `posthog-init.js`, and nowhere
+else.** Each page carries two lines in its `@analytics` block: a three-line
+stub that queues, and a deferred tag for that file. So changing the key, the
+region, or whether session replay runs is one edit to one file rather than an
+edit to eleven heads and four generated ones.
+
+**The stub is inline and synchronous, and it has to be.** An inline script at
+the foot of the body runs *before* any deferred script, and `next-steps.html`
+fires the booking from exactly there. A deferred `BOPostHog` would be
+undefined at the moment the one event that matters most is sent. The stub only
+queues, which is what lets the library itself be deferred and cost the render
+nothing.
+
+Three paths, all verified in headless Chrome against a stand-in for PostHog's
+`array.js`, so nothing was sent anywhere:
+
+| State | What happens |
+| --- | --- |
+| No key set, which is how it ships | No script tag is appended, nothing is requested, `capture` is a no-op, no console errors |
+| Key set | `array.js` loads, `init` runs, and the queue drains in order, so an event fired before the library arrived still counts |
+| Script blocked | `onerror` clears the queue and every later call is a no-op |
+
+**PostHog gets the same two funnel steps, under the dataLayer's own name
+lowercased.** `LEAD_SUBMITTED` becomes `lead_submitted`, `BOOKING_COMPLETED`
+becomes `booking_completed`. Deriving the name rather than writing it a second
+time is what stops the two drifting into meaning different things. `lp-v2`
+adds `target_lead` and `non_target_lead` carrying `lead_reason`, because the
+distribution of reasons is what says which condition is killing the most
+leads.
+
+**Every input is masked in a recording.** `maskAllInputs` is PostHog's default
+and it is restated explicitly in `posthog-init.js` because it is the whole
+basis on which replay is acceptable on a page that collects a child's name, a
+parent's phone number and a school. `maskTextSelector` is `[data-ph-mask]`, so
+hiding an element from a recording is a markup change rather than another edit
+to that file.
+
+**A submitted lead is identified by email**, which is what makes the recording
+of the session that produced a booking findable from the booking. PostHog is
+the fourth place those details already go at that same moment, after the lead
+sheet, the Meta pixel and Calendly. `IDENTIFY_LEADS` at the top of
+`lead-events.js` turns it off; the events still fire without it.
+
+**`cross_subdomain_cookie` is on.** The site is served from
+`blueoceanedu.com`, `lp.blueoceanedu.com` and `iblp.blueoceanedu.com`, and
+without it a family who lands on an ad page and then reads the main site is
+two people.
+
+`tools/build-landing-pages.py` now fails on three things it could not see
+before: an `@analytics` block that differs between two root pages, a page
+whose block does not load PostHog at all, and an `lp-v2` copy of
+`lead-events.js` or `posthog-init.js` that has drifted from the root. The
+first two matter because a page that quietly lacks the stub does not error.
+It collects nothing, and reads exactly like a page nobody visited.
+
+### The morning report
+
+`tools/posthog-daily.py` prints yesterday against the seven days before it:
+visitors, pageviews, sessions, leads, bookings, the two conversion rates, rage
+clicks, then top pages, referrers, campaigns, leads by form, and the `lp-v2`
+qualification split.
+
+```
+export POSTHOG_PERSONAL_API_KEY=phx_...
+python3 tools/posthog-daily.py
+```
+
+**That is a different key from the one in `posthog-init.js`.** The `phc_` key
+is publishable and can only write events. This one reads the whole project
+back out, so it is created read-only, scoped to `query` and `project` alone,
+and never committed, never put in a page.
+
+The day boundary is `Asia/Kolkata` by default rather than whatever the machine
+happens to be set to, because a report whose day moves with the operator is
+not comparable to yesterday's. `--tz` overrides it.
+
+Each query runs independently and a failing one prints as unavailable rather
+than taking the report down with it. A morning report missing one line is
+worth having; a morning with no report is not.
 
 ### `next-steps.html` after the booking
 
@@ -1535,6 +1616,143 @@ Several sections size themselves in viewport units: `.service-card` is `min-heig
 python3 -c "s=open('method.html').read(); \
 open('_shot.html','w').write(s.replace('</head>','<style>.service-card{min-height:120px!important}.services-pyramid-right .service-row{min-height:0!important;opacity:1!important}</style></head>',1))"
 ```
+
+---
+
+## Search, answer engines, and the entity
+
+Four files are generated and none of them is hand-edited:
+
+| File | Written by | Run it when |
+|---|---|---|
+| The `@seo` block in every page's `<head>` | `tools/build-seo.py` | a title, description, schema node or FAQ answer changes |
+| The `.faq-list` on `fit.html` | `tools/build-faq.py` | the `FAQ` list in `build-seo.py` changes |
+| `sitemap.xml` | `tools/build-sitemap.py` | any page is added, removed or committed |
+| The `@seo` block in `lp/` and `iblp/` | `tools/build-landing-pages.py` | always, it is part of that build |
+
+```
+python3 tools/build-seo.py
+python3 tools/build-faq.py
+python3 tools/build-landing-pages.py      # checks the two above, then rebuilds
+                                          # the landing pages and the sitemap
+```
+
+`build-landing-pages.py` runs `build-seo.py --check` and `build-faq.py --check`
+before it does anything and **fails** if either is stale, then rebuilds the
+sitemap at the end. That is deliberate: the landing pages inherit index.html's
+head wholesale, so a stale `@seo` block would be copied into four generated
+files before anyone noticed.
+
+### The problem this is solving is a name collision, not a ranking problem
+
+Searching the brand does not return a weak result. It returns the wrong
+company. At the time this was written, `Blue Ocean Education` on Google
+surfaced a Vietnamese study-abroad agency holding
+`linkedin.com/company/blue-ocean-education` and
+`youtube.com/@blueoceaneducation`, a supply-chain training institute at
+`blueoceanacademy.in`, an IT consultancy trading as Blue Ocean Learning, and a
+recruitment firm called Blue Ocean International Consulting. Wikipedia carries
+two men named Sanjay Kumar, a psephologist and a housing activist, and neither
+is ours.
+
+Everything below follows from that. The schema is not decoration on top of good
+copy; it is the only machine-readable statement that these are separate
+entities.
+
+Three properties do that work and they are worth knowing by name:
+
+- **`disambiguatingDescription`** on both the organisation and the person. It
+  exists in schema.org precisely for entities whose names collide, and it says
+  in one sentence which Blue Ocean and which Sanjay Kumar this is.
+- **`alternateName`** on the organisation, covering the forms families actually
+  type. Queries do not belong here. `Blue Ocean Education Consulting India` is
+  a name; `blue ocean education dr sanjay` is a search, and putting it here
+  reads as keyword stuffing.
+- **`sameAs`**, which is the strongest of the three and the easiest to poison.
+  A `sameAs` pointing at the Vietnamese company's LinkedIn would assert, in
+  machine-readable terms, that we are them.
+
+**Every URL in `sameAs` resolves and belongs to us.** This is why the
+organisation currently carries exactly one, the Instagram account. It is thin,
+and the fix is off-site: claim a LinkedIn company page, a Google Business
+Profile and a Crunchbase entry, then add them here. `edjustice.in` and
+`sanjaykumar.in` stay out for the ordinary reason, that they are dead.
+
+**Every claim in the schema is visible on the page.** A `Person` node that
+outruns its own page is what an audit flags, and an organisation claiming hours
+the site never shows is the same failure. This is why the footer gained a
+`Mon to Sat, 10am to 7pm IST` line the same day `openingHoursSpecification` was
+added, and why `hasOfferCatalog` ships on `index.html` alone: that is the one
+page naming the four service tracks.
+
+### URLs have no `.html`
+
+Cloudflare Pages answers `/founder.html` with a **308** to `/founder`. The
+extensionless form is what the site serves, so it is what every canonical,
+`og:url`, `@id` and sitemap entry states.
+
+The links in the markup are still written `founder.html`. That is not an
+oversight. A 308 is followed and consolidated, local preview over
+`python3 -m http.server` keeps working, and rewriting several hundred `href`s
+to gain nothing risks breaking one. **The canonical decides which URL is
+indexed, not the internal link.**
+
+### `404.html` exists because the alternative is infinite duplicate pages
+
+Cloudflare Pages, with no `404.html` at the root, answers every unmatched path
+with `index.html` **at status 200**. Before this file existed,
+`blueoceanedu.com/robots.txt` and `blueoceanedu.com/sitemap.xml` both returned
+the home page, 83KB each, and so did every typo, every stale campaign URL and
+every path a crawler ever guessed. To a search engine that is an unbounded
+space of duplicate pages, each one claiming to be the home page.
+
+The page is a copy of `fit.html`'s shell with its `<main>` replaced. **It shares
+no build step with `fit.html`, so a change to the nav or the footer has to be
+made in both.** It carries `noindex, follow` and no schema.
+
+### `robots.txt` disallows nothing
+
+Pages that should stay out of an index carry `<meta name="robots"
+content="noindex, follow">` instead: `next-steps.html`, `404.html`, and the four
+generated landing pages. A path blocked in `robots.txt` is never fetched, so the
+`noindex` on it is never read, and the URL can still surface as a bare link with
+no title under it.
+
+The AI crawlers are named explicitly rather than left to the wildcard. Two kinds
+are named and they are not the same thing: `GPTBot`, `ClaudeBot` and `CCBot`
+train, while `ChatGPT-User`, `Perplexity-User` and `Claude-User` fetch a page
+live to answer one question. Blocking the second kind removes the site from the
+answer, not from the training set.
+
+### The share card
+
+`og-card.jpg` is 1200x630, cropped from `hero-campus.webp`. It is **the one
+deliberate exception** to the no-new-JPEG rule in `CLAUDE.md`: an OG card is
+never fetched by the page, so it costs the site nothing, and LinkedIn's preview
+renderer still does not draw WebP reliably. Rebuild it from `hero-campus.webp`,
+not from the served copy of itself.
+
+`founder.html` overrides it with `founder/commencement.jpg` at its real 900 by
+1350, because a profile card should show the person.
+
+### What is not in the repo, and has to be done by hand
+
+These are the parts of the same job that no file here can carry. They are
+listed so the next person does not assume the schema covers them.
+
+1. **`www.blueoceanedu.com` does not resolve at all.** Add it as a custom
+   domain in Cloudflare Pages and redirect it to the apex.
+2. **No Google Business Profile.** It is the single biggest lever on
+   "admissions consultant in Delhi" and nothing on the site substitutes for it.
+3. **No LinkedIn company page.** The obvious handle is held by the Vietnamese
+   company; claim a different one and add it to `sameAs`.
+4. **No Wikidata item.** A sourced item is what most reliably separates
+   colliding entities in Google's Knowledge Graph.
+5. **Search Console and Bing Webmaster Tools** are not verified, so nothing
+   above can be measured. Submit `sitemap.xml` from both.
+6. **`blueocean.education` no longer resolves.** It is the old property, it is
+   still what search engines and language models return for the brand, and if
+   the domain is still owned it should 301 to this one.
 
 ---
 

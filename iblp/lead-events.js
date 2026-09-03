@@ -22,6 +22,18 @@ window.BOEvents = (function () {
 
   var LEAD_KEY = 'blueOceanLead';
 
+  /* Whether a submitted lead is tied to its PostHog session.
+
+     PostHog is the fourth place these details already go at the same moment
+     -- the lead sheet, the Meta pixel and Calendly are the other three -- and
+     without this there is no route from a booking back to the recording of
+     the session that produced it, which is most of the reason for having
+     session replay at all.
+
+     Set it false to keep PostHog anonymous. The two events still fire and the
+     funnel still works; only the link from a family to a session is lost. */
+  var IDENTIFY_LEADS = true;
+
   function save(payload) {
     try {
       sessionStorage.setItem(LEAD_KEY, JSON.stringify(payload));
@@ -79,6 +91,32 @@ window.BOEvents = (function () {
       lead_source: lead.form_source || 'unknown',
       lead_grade: lead.grade || '',
       lead_target: lead.target_audience || ''
+    });
+
+    /* PostHog gets the same step under the dataLayer's own name, lowercased,
+       so the two names cannot drift into meaning different things.
+
+       `window.BOPostHog` is the queueing stub every page defines inline in its
+       @analytics block. It exists before this file runs and stays safe to call
+       whether PostHog has loaded, is still loading, or was blocked outright,
+       which is why there is no guard here beyond its existence. */
+    if (window.BOPostHog) {
+      window.BOPostHog.capture(dataLayerEvent.toLowerCase(), {
+        lead_source: lead.form_source || 'unknown',
+        lead_grade: lead.grade || '',
+        lead_target: lead.target_audience || ''
+      });
+    }
+  }
+
+  function identify(lead) {
+    if (!IDENTIFY_LEADS || !lead || !lead.email || !window.BOPostHog) return;
+    window.BOPostHog.identify(lead.email, {
+      email: lead.email,
+      name: [lead.first_name, lead.last_name].filter(Boolean).join(' ').trim(),
+      grade: lead.grade || '',
+      form_source: lead.form_source || '',
+      target_audience: lead.target_audience || ''
     });
   }
 
@@ -276,6 +314,7 @@ window.BOEvents = (function () {
     /* The form was submitted. Fires on the page that holds the form. */
     lead: function (payload) {
       save(payload);
+      identify(payload);
       fire('lead', 'Lead', 'LEAD_SUBMITTED', payload);
     },
 

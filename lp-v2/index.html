@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blue Ocean Education | Founder-led admissions for Grades 8 to 11</title>
+<meta name="description" content="A founder-led admissions practice for parents of students in Grades 8 to 11 at IB, IGCSE, A Level, AP and top CBSE and ICSE schools. Thirty minute introduction call.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0F1D2A">
+
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<link rel="preconnect" href="https://connect.facebook.net">
+<link rel="preconnect" href="https://us-assets.i.posthog.com">
+<link rel="preload" href="fonts/NHGDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/NHGText-Roman.woff2" as="font" type="font/woff2" crossorigin>
+
+<!-- @analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2STB24PJGQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date()); gtag('config', 'G-2STB24PJGQ');
+  dataLayer.push({ "event": "LP_V2_PAGEVIEW" });
+</script>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '754270597536586'); fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=754270597536586&ev=PageView&noscript=1"/></noscript>
+<!-- PostHog. Key, region and capture options are all in posthog-init.js.
+     The stub is inline and synchronous because the inline scripts at the foot
+     of this page run before any deferred one; it only queues, so the library
+     itself is deferred and costs the render nothing. -->
+<script>
+window.BOPostHog = { _q: [],
+  capture: function () { if (this._q.length < 50) this._q.push(['capture', [].slice.call(arguments)]); },
+  identify: function () { if (this._q.length < 50) this._q.push(['identify', [].slice.call(arguments)]); } };
+</script>
+<script defer src="posthog-init.js"></script>
+<!-- /@analytics -->
+
+<style>
+@font-face{font-family:"NHG Display";src:url("fonts/NHGDisplay-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"NHG Display";src:url("fonts/NHGDisplay-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"NHG Text";src:url("fonts/NHGText-Roman.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"NHG Text";src:url("fonts/NHGText-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+
+:root{
+  color-scheme:light;
+  --navy:#0F1D2A; --navy-2:#182B3C; --navy-3:#24405A;
+  --paper:#F4F1EA; --paper-2:#EAE5DA; --white:#FFFFFF;
+  --ink:#14181C; --ink-2:#4A545E; --ink-3:#78838E;
+  --on-navy:#EFEDE8; --on-navy-2:#A8BACB; --on-navy-3:#6F8497;
+  --amber:#E0600E; --amber-hi:#F08023;
+  --line:#DCD6C9; --line-navy:#2A455E;
+  --ok:#0F6B5A; --no:#9E3232;
+  --display:"NHG Display",Georgia,serif;
+  --sans:"NHG Text",-apple-system,Arial,sans-serif;
+  --sh:0 1px 2px rgba(15,29,42,.06),0 12px 34px rgba(15,29,42,.10);
+  --sh-lg:0 2px 4px rgba(15,29,42,.08),0 24px 60px rgba(15,29,42,.18);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+h1,h2,h3,h4{font-family:var(--display);font-weight:700;margin:0;letter-spacing:-.02em;line-height:1.08;text-wrap:balance}
+h1{font-size:clamp(1.95rem,4.6vw,3.15rem)}
+h2{font-size:clamp(1.55rem,3.3vw,2.3rem)}
+h3{font-size:1.15rem;letter-spacing:-.01em;line-height:1.25}
+p{margin:0 0 1em}
+strong{font-weight:500}
+.wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 20px}
+.narrow{max-width:720px}
+.eyebrow{font-family:var(--sans);font-weight:500;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;margin:0 0 14px;color:var(--ink-3)}
+.on-dark .eyebrow{color:var(--on-navy-3)}
+section{padding:64px 0}
+@media(max-width:700px){section{padding:48px 0}}
+
+/* ═══ header ═══ */
+.hdr{position:sticky;top:0;z-index:40;background:var(--navy);border-bottom:1px solid var(--line-navy)}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:60px}
+.wm{font-family:var(--display);font-weight:700;font-size:17px;color:var(--on-navy);letter-spacing:-.01em;line-height:1}
+.wm i{display:block;font-family:var(--sans);font-style:normal;font-weight:400;font-size:9.5px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--on-navy-3);margin-top:3px}
+.hdr-r{display:flex;align-items:center;gap:14px}
+.hdr-tel{color:var(--on-navy-2);text-decoration:none;font-size:14px;white-space:nowrap}
+.hdr-tel:hover{color:var(--on-navy)}
+@media(max-width:560px){.hdr-tel{display:none}}
+
+/* ═══ buttons ═══ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--sans);
+  font-weight:500;font-size:15.5px;line-height:1;padding:15px 24px;border:1px solid var(--amber);
+  background:var(--amber);color:#fff;cursor:pointer;text-decoration:none;transition:background .15s,border-color .15s}
+.btn:hover{background:var(--amber-hi);border-color:var(--amber-hi)}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.btn.sm{padding:10px 16px;font-size:14px}
+.btn.block{width:100%}
+.btn.ghost{background:transparent;color:var(--ink-2);border-color:var(--line)}
+.btn.ghost:hover{background:var(--paper-2);border-color:var(--ink-3)}
+.btn.on-navy-ghost{background:transparent;color:var(--on-navy);border-color:var(--navy-3)}
+.btn.on-navy-ghost:hover{background:var(--navy-2)}
+
+/* ═══ hero ═══ */
+.hero{background:var(--navy);color:var(--on-navy);padding:52px 0 60px;position:relative;overflow:hidden}
+@media(max-width:999px){.hero{padding:34px 0 40px}.hero-sub{margin-bottom:20px}.stats{margin-bottom:20px}}
+.hero::after{content:"";position:absolute;inset:auto 0 -55% 40%;height:70%;
+  background:radial-gradient(ellipse at center,rgba(80,137,181,.16),transparent 65%);pointer-events:none}
+.hero .wrap{position:relative;z-index:1}
+.hero-grid{display:grid;gap:34px;align-items:start}
+@media(min-width:1000px){.hero-grid{grid-template-columns:minmax(0,1fr) 436px;gap:56px}}
+.tagpill{display:inline-flex;align-items:center;gap:9px;padding:6px 13px 6px 10px;
+  border:1px solid var(--navy-3);background:rgba(80,137,181,.10);font-size:12.5px;
+  color:var(--on-navy-2);margin-bottom:20px;border-radius:100px}
+.tagpill b{color:var(--on-navy);font-weight:500}
+.tagpill s{width:6px;height:6px;background:var(--amber);border-radius:50%;text-decoration:none;flex:none}
+.hero h1{color:#fff;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:#FFC48A}
+.hero-sub{font-size:1.06rem;line-height:1.55;color:var(--on-navy-2);max-width:31em;margin-bottom:26px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line-navy);
+  border:1px solid var(--line-navy);margin-bottom:26px}
+.stat{background:var(--navy);padding:14px 14px}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.5rem;color:#fff;line-height:1;letter-spacing:-.02em}
+.stat span{display:block;font-size:11.5px;line-height:1.35;color:var(--on-navy-3);margin-top:7px}
+@media(max-width:560px){.stat b{font-size:1.25rem}.stat{padding:12px 10px}}
+.press{display:flex;align-items:center;gap:10px 22px;flex-wrap:wrap;padding-top:20px;border-top:1px solid var(--line-navy)}
+.press span{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--on-navy-3);flex:none}
+.press img{height:15px;width:auto;max-width:88px;object-fit:contain;opacity:.5;filter:brightness(0) invert(1)}
+
+/* ═══ form card ═══ */
+.card{background:var(--white);color:var(--ink);box-shadow:var(--sh-lg);border-top:3px solid var(--amber)}
+.card h2,.card h3{color:var(--ink)}
+.card-in{padding:22px 22px 20px}
+@media(min-width:1000px){.card{position:sticky;top:76px}}
+.card-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:5px}
+.card-h h2{font-size:1.24rem;line-height:1.2}
+.card-sub{font-size:13.5px;line-height:1.45;color:var(--ink-3);margin:0 0 16px}
+.pbar{display:flex;gap:4px;margin-bottom:16px}
+.pbar i{flex:1;height:3px;background:var(--paper-2);display:block}
+.pbar i.on{background:var(--amber)}
+.stepn{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap;padding-top:4px}
+.f{margin:0 0 14px}
+.f[hidden]{display:none}
+.f label,.f .lb{display:block;font-size:12.5px;font-weight:500;color:var(--ink-2);margin-bottom:6px;letter-spacing:.01em}
+.f .nt{font-weight:400;color:var(--ink-3)}
+input[type=text],input[type=email],input[type=tel],select{
+  width:100%;font:inherit;font-size:16px;line-height:1.3;padding:12px 13px;color:var(--ink);
+  background:var(--white);border:1px solid #CFC9BC;border-radius:2px;appearance:none;transition:border-color .12s,box-shadow .12s}
+input::placeholder{color:#A9A398}
+select{background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2378838E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;cursor:pointer}
+select:invalid,select option[disabled]{color:#A9A398}
+input:hover,select:hover{border-color:#B5AE9F}
+input:focus,select:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(224,96,14,.14)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.phone{display:grid;grid-template-columns:98px minmax(0,1fr);gap:8px}
+.chk{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.45;color:var(--ink);
+  cursor:pointer;padding:13px 14px;border:1px solid #CFC9BC;background:var(--paper);border-radius:2px}
+.chk:hover{border-color:#B5AE9F}
+.chk input{flex:none;width:17px;height:17px;margin:1px 0 0;accent-color:var(--amber);cursor:pointer}
+.chk.checked{border-color:var(--amber);background:#FDF4EC}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:13.5px;padding:8px 12px;background:var(--white);border:1px solid #CFC9BC;
+  cursor:pointer;color:var(--ink-2);display:inline-flex;align-items:center;gap:7px;border-radius:2px;transition:.12s}
+.chip:hover{border-color:#B5AE9F}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip u{display:none;font-size:10px;font-weight:500;background:var(--amber);color:#fff;
+  width:16px;height:16px;border-radius:50%;text-decoration:none;align-items:center;justify-content:center;line-height:1}
+.chip.on u{display:inline-flex}
+.hint{font-size:12px;color:var(--ink-3);margin:8px 0 0;line-height:1.4}
+.er{color:var(--no);font-size:12.5px;margin:6px 0 0;display:none;font-weight:500}
+.er.on{display:block}
+.acts{display:flex;gap:9px;margin-top:18px}
+.acts .btn:not(.ghost){flex:1}
+.legal{font-size:11.5px;line-height:1.5;color:var(--ink-3);margin:14px 0 0;padding-top:13px;border-top:1px solid var(--line)}
+.legal a{color:var(--ink-2)}
+.step{display:none}.step.on{display:block}
+.reassure{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;padding-top:13px;border-top:1px solid var(--line);
+  font-size:11.5px;color:var(--ink-3)}
+.reassure b{font-weight:400;display:inline-flex;gap:6px;align-items:center}
+.reassure b::before{content:"";width:5px;height:5px;background:var(--ok);border-radius:50%;flex:none}
+
+/* ═══ outcome panels ═══ */
+.out{display:none}.out.on{display:block}
+.bframe{width:100%;min-height:660px;border:1px solid var(--line);background:var(--paper)}
+.bframe iframe{width:100%;height:100%;min-height:660px;border:0;display:block}
+@media(max-width:640px){.bframe,.bframe iframe{min-height:900px}}
+
+/* ═══ logo wall ═══ */
+.wall{background:var(--navy-2);padding:34px 0;border-top:1px solid var(--line-navy)}
+.wall p{text-align:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--on-navy-3);margin:0 0 22px}
+.wall-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:22px 40px}
+.wall-row img{height:30px;width:auto;opacity:.78;filter:brightness(0) invert(1)}
+@media(max-width:700px){.wall-row{gap:18px 26px}.wall-row img{height:26px}}
+
+/* ═══ generic blocks ═══ */
+.on-dark{background:var(--navy);color:var(--on-navy)}
+.on-dark h2,.on-dark h3{color:#fff}
+.on-dark p{color:var(--on-navy-2)}
+.lead{font-size:1.08rem;line-height:1.6;color:var(--ink-2)}
+.on-dark .lead{color:var(--on-navy-2)}
+.rule{width:44px;height:3px;background:var(--amber);margin:0 0 20px}
+
+.grid2{display:grid;gap:28px}
+@media(min-width:840px){.grid2{grid-template-columns:1fr 1fr;gap:48px}}
+
+/* insight */
+.insight{border-left:3px solid var(--amber);padding-left:22px;margin:26px 0}
+.insight p{font-family:var(--display);font-weight:500;font-size:1.24rem;line-height:1.4;color:var(--ink);margin:0}
+.on-dark .insight p{color:#fff}
+
+/* outcome cards */
+.cards{display:grid;gap:16px;margin-top:26px}
+@media(min-width:620px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:980px){.cards{grid-template-columns:repeat(4,1fr)}}
+.pcard{background:var(--white);box-shadow:var(--sh);padding:18px;display:flex;flex-direction:column}
+.pcard .s{margin-top:auto}
+.pcard img,.pcard .av{width:52px;height:52px;border-radius:50%;object-fit:cover;margin-bottom:12px;display:block}
+.pcard .av{background:var(--navy);color:#fff;font-family:var(--display);font-weight:700;font-size:1.05rem;
+  display:flex;align-items:center;justify-content:center}
+.pcard b{display:block;font-family:var(--display);font-weight:700;font-size:1.05rem}
+.pcard .u{font-size:14px;color:var(--ink-2);margin-top:5px;line-height:1.4}
+.pcard .s{font-size:12.5px;color:var(--ok);margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-weight:500}
+
+/* founder */
+.fnd{display:grid;gap:26px;align-items:center}
+@media(min-width:840px){.fnd{grid-template-columns:270px 1fr;gap:44px}}
+.fnd img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 22%;box-shadow:var(--sh)}
+.creds{display:grid;gap:8px;margin-top:18px}
+.creds div{display:flex;gap:11px;font-size:14px;line-height:1.4;color:var(--ink-2)}
+.creds div::before{content:"";width:3px;background:var(--amber);flex:none;margin:3px 0}
+
+/* method */
+.mth{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:26px}
+@media(min-width:700px){.mth{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.mth{grid-template-columns:repeat(3,1fr)}}
+.mth div{background:var(--paper);padding:20px 18px}
+.mth i{font-family:var(--display);font-style:normal;font-weight:700;font-size:12px;color:var(--amber);display:block;margin-bottom:9px}
+.mth b{display:block;font-weight:500;font-size:15px;margin-bottom:6px}
+.mth p{margin:0;font-size:14px;line-height:1.5;color:var(--ink-2)}
+
+/* fit */
+.fit{display:grid;gap:1px;background:var(--line-navy);border:1px solid var(--line-navy);margin-top:28px}
+@media(min-width:760px){.fit{grid-template-columns:1fr 1fr}}
+.fit>div{background:var(--navy);padding:24px 22px}
+.fit h3{font-size:1.02rem;margin-bottom:14px;display:flex;align-items:center;gap:9px}
+.fit h3 s{width:18px;height:18px;border-radius:50%;flex:none;text-decoration:none;display:inline-flex;
+  align-items:center;justify-content:center;font-family:var(--sans);font-size:11px;font-weight:500;color:#fff}
+.fit .y s{background:var(--ok)}
+.fit .n s{background:var(--no)}
+.fit ul{list-style:none;margin:0;padding:0}
+.fit li{font-size:14.5px;line-height:1.5;color:var(--on-navy-2);padding:9px 0;border-bottom:1px solid var(--line-navy)}
+.fit li:last-child{border-bottom:0;padding-bottom:0}
+
+/* board */
+.brd{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:24px}
+@media(min-width:620px){.brd{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:980px){.brd{grid-template-columns:repeat(3,1fr)}}
+.brd div{background:var(--paper);padding:15px 17px}
+.brd b{display:block;font-weight:500;font-size:14.5px}
+.brd span{font-size:12.5px;color:var(--ink-3)}
+
+/* final cta */
+.final{text-align:center}
+.final h2{max-width:16em;margin:0 auto 16px}
+.final p{max-width:34em;margin:0 auto 26px}
+.pricebox{display:inline-block;border:1px solid var(--navy-3);background:var(--navy-2);
+  padding:14px 22px;margin-bottom:26px;font-size:14.5px;color:var(--on-navy-2)}
+.pricebox b{color:#fff;font-weight:500}
+
+footer{background:var(--navy);color:var(--on-navy-3);padding:38px 0 44px;font-size:13px;border-top:1px solid var(--line-navy)}
+footer p{margin:0 0 .6em;color:var(--on-navy-3)}
+footer a{color:var(--on-navy-2)}
+footer b{color:var(--on-navy-2);font-weight:500}
+
+/* sticky mobile cta */
+.mcta{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--white);
+  border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  display:none;gap:12px;align-items:center;box-shadow:0 -6px 20px rgba(15,29,42,.10)}
+.mcta span{font-size:12.5px;line-height:1.3;color:var(--ink-2);flex:1}
+.mcta .btn{flex:none}
+@media(max-width:999px){.mcta.show{display:flex}body.has-mcta{padding-bottom:74px}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="wrap">
+    <div class="wm">Blue Ocean<i>Education</i></div>
+    <div class="hdr-r">
+      <a class="hdr-tel" href="tel:+919821118128">+91 98211 18128</a>
+      <a class="btn sm" href="#formCard">Request a call</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="tagpill"><s></s>For parents of students in <b>Grades 8 to 11</b></div>
+      <h1>Most Indian applicants are <em>very good</em>. Almost none are specific.</h1>
+      <p class="hero-sub">Blue Ocean builds the student before the application. Dr. Sanjay works directly with every student in the cohort, which is why we take on only a small number of families each year.</p>
+
+      <div class="stats">
+        <div class="stat"><b>Rs 1 Cr</b><span>Average scholarship per admitted student</span></div>
+        <div class="stat"><b>Founder&#8209;led</b><span>Dr. Sanjay is in the room, not a junior counsellor</span></div>
+        <div class="stat"><b>3 to 4 yrs</b><span>The runway a serious profile actually needs</span></div>
+      </div>
+
+      <div class="press">
+        <span>Covered in</span>
+        <img src="img/forbes.png" alt="Forbes" loading="lazy" width="70" height="17">
+        <img src="img/times-of-india.png" alt="The Times of India" loading="lazy" width="70" height="17">
+        <img src="img/hindustan-times.png" alt="Hindustan Times" loading="lazy" width="70" height="17">
+        <img src="img/ndtv.png" alt="NDTV" loading="lazy" width="52" height="17">
+        <img src="img/mint.png" alt="Mint" loading="lazy" width="52" height="17">
+      </div>
+    </div>
+
+    <div class="card" id="formCard">
+      <div class="card-in">
+        <div class="card-h">
+          <h2>Request an introduction call</h2>
+          <span class="stepn" id="stepn">1 / 3</span>
+        </div>
+        <p class="card-sub" id="cardSub">Thirty minutes. We tell you where the profile stands today.</p>
+        <div class="pbar" aria-hidden="true"><i class="on" id="p1"></i><i id="p2"></i><i id="p3"></i></div>
+
+        <form id="leadForm" novalidate>
+          <div class="step on" id="s1">
+            <div class="f">
+              <label class="chk" for="isParent" id="chkWrap">
+                <input type="checkbox" id="isParent">
+                <span>I am the parent or guardian of the student, and over 18</span>
+              </label>
+              <p class="er" id="errParent">We arrange these calls with parents. Please confirm to continue.</p>
+            </div>
+            <div class="f">
+              <label for="grade">The student is currently in</label>
+              <select id="grade">
+                <option value="" disabled selected>Select current grade</option>
+                <option value="grade8">Grade 8</option><option value="grade9">Grade 9</option>
+                <option value="grade10">Grade 10</option><option value="grade11">Grade 11</option>
+                <option value="grade12">Grade 12</option>
+              </select>
+              <p class="er" id="errGrade">Please select a grade.</p>
+            </div>
+            <div class="f">
+              <label for="board">Board</label>
+              <select id="board">
+                <option value="" disabled selected>Select the board</option>
+                <option value="ib">IB</option><option value="igcse">IGCSE / Cambridge</option>
+                <option value="alevels">A Levels</option><option value="ap">American / AP</option>
+                <option value="cbse">CBSE</option><option value="icse">ICSE / ISC</option>
+                <option value="state">State board</option><option value="__other">Other board</option>
+              </select>
+              <p class="er" id="errBoard">Please select a board.</p>
+            </div>
+            <div class="f" id="boardOtherF" hidden>
+              <label for="boardOther">Which board</label>
+              <input type="text" id="boardOther" placeholder="Name of the board">
+            </div>
+            <div class="acts"><button type="button" class="btn block" id="n1">Continue</button></div>
+            <div class="reassure"><b>No decision asked for on the call</b><b>We reply the same day</b></div>
+          </div>
+
+          <div class="step" id="s2">
+            <div class="f">
+              <label for="schoolCity">School city</label>
+              <select id="schoolCity"><option value="" disabled selected>Select the city</option><option value="__other">Other city</option></select>
+              <p class="er" id="errCity">Please select a city.</p>
+            </div>
+            <div class="f" id="cityOtherF" hidden>
+              <label for="schoolCityOther">Which city</label>
+              <input type="text" id="schoolCityOther" placeholder="Kolkata">
+            </div>
+            <div class="f" id="schoolSelF">
+              <label for="school">School name</label>
+              <select id="school" disabled><option value="" disabled selected>Select the city first</option></select>
+              <p class="er" id="errSchool">Please tell us the school.</p>
+            </div>
+            <div class="f" id="schoolOtherF" hidden>
+              <label for="schoolOther">Which school</label>
+              <input type="text" id="schoolOther" placeholder="Full name of the school">
+            </div>
+            <div class="f">
+              <label for="pincode">Residence pincode <span class="nt">(so we offer a sensible time)</span></label>
+              <input type="text" id="pincode" placeholder="110001" inputmode="numeric" maxlength="6">
+            </div>
+            <div class="acts">
+              <button type="button" class="btn ghost" id="b2">Back</button>
+              <button type="button" class="btn" id="n2">Continue</button>
+            </div>
+          </div>
+
+          <div class="step" id="s3">
+            <div class="f">
+              <span class="lb" id="rankLb">Where the student is aiming <span class="nt">(tap up to three, in order)</span></span>
+              <div class="chips" role="group" aria-labelledby="rankLb" id="rankGrid">
+                <button type="button" class="chip" data-v="US"><u></u>US</button>
+                <button type="button" class="chip" data-v="UK"><u></u>UK</button>
+                <button type="button" class="chip" data-v="Canada"><u></u>Canada</button>
+                <button type="button" class="chip" data-v="Germany"><u></u>Germany</button>
+                <button type="button" class="chip" data-v="Europe"><u></u>Europe</button>
+                <button type="button" class="chip" data-v="Singapore, Hong Kong, Australia"><u></u>Singapore, HK, Aus</button>
+              </div>
+              <p class="er" id="errRank">Please choose at least one.</p>
+            </div>
+            <div class="f">
+              <label for="scholarship">Scholarship funding needed to cover tuition abroad</label>
+              <select id="scholarship">
+                <option value="" disabled selected>Select an option</option>
+                <option value="none">None needed. We can cover all of the costs.</option>
+                <option value="aware">Not needed, but I would like to know what exists.</option>
+                <option value="some">Some, but we can cover most of the costs.</option>
+                <option value="half">At least 50% of costs.</option>
+                <option value="full">100% of costs.</option>
+              </select>
+              <p class="er" id="errAid">Please select an option.</p>
+            </div>
+            <div class="f two">
+              <div><label for="firstName">Your first name</label><input type="text" id="firstName" placeholder="Meera" autocomplete="given-name"></div>
+              <div><label for="lastName">Your last name</label><input type="text" id="lastName" placeholder="Sharma" autocomplete="family-name"></div>
+            </div>
+            <p class="er" id="errName" style="margin-top:-8px">Please enter your name.</p>
+            <div class="f">
+              <label for="email">Your email</label>
+              <input type="email" id="email" placeholder="meera@example.com" autocomplete="email">
+              <p class="er" id="errEmail">Please enter a valid email address.</p>
+            </div>
+            <div class="f">
+              <label for="phone">Your phone</label>
+              <div class="phone">
+                <select id="phonePrefix" aria-label="Country code">
+                  <option value="+91">+91 IN</option><option value="+971">+971 AE</option>
+                  <option value="+65">+65 SG</option><option value="+1">+1 US</option>
+                  <option value="+44">+44 UK</option><option value="+61">+61 AU</option>
+                </select>
+                <input type="tel" id="phone" placeholder="10-digit number" inputmode="numeric" maxlength="10" autocomplete="tel">
+              </div>
+              <p class="er" id="errPhone">Please enter a valid phone number.</p>
+            </div>
+            <div class="acts">
+              <button type="button" class="btn ghost" id="b3">Back</button>
+              <button type="button" class="btn" id="submitBtn">Request the call</button>
+            </div>
+            <p class="legal">We collect your name, email, phone, city and pincode to contact you and schedule the call, and the student's grade, board and school so we can prepare for it. We do not collect the student's personal details. Withdraw consent or request deletion any time at <a href="mailto:privacy@blueoceanedu.com">privacy@blueoceanedu.com</a>.</p>
+          </div>
+        </form>
+
+        <div class="out" id="outQ">
+          <h3 style="margin-bottom:6px">Pick your time</h3>
+          <p class="card-sub">Your details are with our team. Choose a slot and the call is confirmed straight away.</p>
+          <div class="bframe" id="bookingFrame"
+            data-calendly-url="https://calendly.com/operations-blueoceanedu/meet-with-blue-ocean-education?background_color=ffffff&amp;text_color=14181b&amp;primary_color=e0600e&amp;hide_gdpr_banner=1"></div>
+        </div>
+
+        <div class="out" id="outN">
+          <h3 style="margin-bottom:10px">Thank you. Here is where to start.</h3>
+          <p style="font-size:14.5px;color:var(--ink-2)">We have your details. Blue Ocean is a small, founder-led practice and we take on a limited number of families each year, so we are not the right fit for everyone who writes in.</p>
+          <p style="font-size:14.5px;color:var(--ink-2)">What is useful to you now, whether or not we work together, is knowing what a serious profile looks like at the student's stage. We have sent that to your email.</p>
+          <p style="font-size:14.5px;color:var(--ink-2);margin:0">If your situation changes, reply to that email and a member of the team will read it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wall">
+  <div class="wrap">
+    <p>Where Blue Ocean students have been admitted</p>
+    <div class="wall-row">
+      <img src="img/harvard.png" alt="Harvard" loading="lazy"><img src="img/yale.png" alt="Yale" loading="lazy">
+      <img src="img/princeton.png" alt="Princeton" loading="lazy"><img src="img/stanford.png" alt="Stanford" loading="lazy">
+      <img src="img/mit.png" alt="MIT" loading="lazy"><img src="img/cornell.png" alt="Cornell" loading="lazy"><img src="img/brown.png" alt="Brown" loading="lazy">
+      <img src="img/penn.png" alt="Penn" loading="lazy"><img src="img/johns-hopkins.png" alt="Johns Hopkins" loading="lazy">
+      <img src="img/oxford.png" alt="Oxford" loading="lazy"><img src="img/cambridge.png" alt="Cambridge" loading="lazy">
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap narrow">
+    <div class="rule"></div>
+    <h2>A 4.0 and eleven activities is the entry ticket. It is not the differentiator.</h2>
+    <p class="lead" style="margin-top:20px">Every applicant a selective university compares your child against has the marks. What separates the file that gets in is whether a reader can tell, in six minutes, what this particular student actually cares about and what they have built because of it.</p>
+    <div class="insight"><p>Most Indian applicants describe achievements. Admitted applicants describe consequences.</p></div>
+    <p class="lead">That is not something written into an application in Grade 12. It is built over two to four years, deliberately, with someone who has read enough files to know what registers and what does not.</p>
+  </div>
+</section>
+
+<section style="background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <p class="eyebrow">Outcomes</p>
+    <h2>Where students have gone.</h2>
+    <p class="lead" style="margin-top:14px;max-width:46em">Blue Ocean students have averaged around Rs 1 Cr each in scholarship. These are awards won by families who were prepared to fund the education themselves, not a route to funding one.</p>
+    <div class="cards">
+      <div class="pcard"><img src="img/manya.webp" alt="" loading="lazy"><b>Manya</b><div class="u">Brown, Carnegie Mellon</div><div class="s">Rs 1.5 Cr in aid</div></div>
+      <div class="pcard"><img src="img/prateek.webp" alt="" loading="lazy"><b>Prateek</b><div class="u">Harvard</div><div class="s">Rs 95L in aid</div></div>
+      <div class="pcard"><img src="img/arunima.webp" alt="" loading="lazy"><b>Arunima</b><div class="u">Harvard</div><div class="s">Full-need aid</div></div>
+      <div class="pcard"><div class="av" aria-hidden="true">B</div><b>Bhakti</b><div class="u">Yale, HEC Paris, CMU</div><div class="s">Rs 70L in aid</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">The founder</p>
+    <h2>Founder led, and capped on purpose.</h2>
+    <div class="fnd" style="margin-top:30px">
+      <img src="img/founder.webp" alt="Dr. Sanjay Kumar" width="560" height="560" loading="lazy" decoding="async">
+      <div>
+        <h3>Dr. Sanjay Kumar</h3>
+        <p style="color:var(--ink-3);font-size:13.5px;margin:5px 0 16px">Founder and Strategic Director</p>
+        <p class="lead">He sets the direction for every student in the cohort, and no plan is finalised without him. The cohort is capped because that level of attention does not scale, and we would rather cap it than dilute it.</p>
+        <div class="creds">
+          <div>MPA, Harvard Kennedy School</div>
+          <div>Former India Country Director, Harvard Mittal South Asia Institute</div>
+          <div>PhD, Jawaharlal Nehru University</div>
+          <div>Author of Katihar to Kennedy, published by Penguin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="on-dark">
+  <div class="wrap narrow">
+    <p class="eyebrow">The introduction call</p>
+    <h2>What the call actually is.</h2>
+    <p class="lead" style="margin-top:20px">Thirty minutes with a senior member of the team, and with Dr. Sanjay where the fit looks right.</p>
+    <p class="lead">We ask about the student. What they are actually good at, what they have built, what they read when nobody is assigning it. We tell you honestly which universities the current profile is competitive for, and which it is not. If there is a gap, we say where it is.</p>
+    <div class="insight"><p>Nobody asks you for a decision on the call. We say yes when we think we can do real work for the student, and no when we cannot.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">The method</p>
+    <h2>Develop the student. Admissions follow.</h2>
+    <div class="mth">
+      <div><i>01</i><b>Academic project development</b><p>Original work that stands as primary evidence of who the student is intellectually. Not a school assignment, not a resume filler.</p></div>
+      <div><i>02</i><b>Competition strategy</b><p>The competitions and prizes in the student's domain where a result actually moves a committee, and a plan to compete in them.</p></div>
+      <div><i>03</i><b>Community impact</b><p>Service designed to outlast the student's involvement. Generic volunteering does not move selective committees.</p></div>
+      <div><i>04</i><b>Distinctive skill</b><p>The one natural strength most programmes never develop properly, taken far enough to be hard to ignore.</p></div>
+      <div><i>05</i><b>Language and argumentation</b><p>Thinking, writing and defending a position with precision. It strengthens essays, interviews and academic work at once.</p></div>
+      <div><i>06</i><b>Admissions strategy</b><p>A targeted list and an application architecture connecting every part of the profile to one coherent story, across the US, UK, Singapore and beyond.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="on-dark">
+  <div class="wrap">
+    <p class="eyebrow">Right fit</p>
+    <h2>This works when the family, the student and the mentor all take the work seriously.</h2>
+    <div class="fit">
+      <div class="y">
+        <h3><s>&#10003;</s>It fits if</h3>
+        <ul>
+          <li>The student is hardworking, coachable, and willing to do original work over years rather than months.</li>
+          <li>You are thinking about who the student becomes, not only about where they get in.</li>
+          <li>You want the founder in the room rather than a junior counsellor.</li>
+          <li>You have three to four years of runway, or one year and realistic expectations.</li>
+        </ul>
+      </div>
+      <div class="n">
+        <h3><s>&times;</s>It does not fit if</h3>
+        <ul>
+          <li>You are looking for shortcuts or a guaranteed admit. We do not offer either.</li>
+          <li>You want the application written for you while the student does not grow.</li>
+          <li>Cost is the main factor in the decision. We are not the cheapest option and are not trying to be.</li>
+          <li>The student is not serious about the work.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">The counsel</p>
+    <h2>A board that has sat on the other side of the table.</h2>
+    <div class="brd">
+      <div><b>Ashok Mittal</b><span>President, Harvard Club of India</span></div>
+      <div><b>Adwait Vikram Singh</b><span>Vice President, Harvard Club of India</span></div>
+      <div><b>Amit Singh Chauhan</b><span>Secretary, Harvard Club of India</span></div>
+      <div><b>Ishira Mehta</b><span>Harvard, LSE, formerly World Bank</span></div>
+      <div><b>Sunita Swaraj</b><span>Harvard GSE, Harvard Kennedy School</span></div>
+      <div><b>Rajat Sethi</b><span>Harvard, MIT Sloan, IIT Kharagpur</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="on-dark final">
+  <div class="wrap narrow">
+    <h2>Find out where the profile stands today.</h2>
+    <p class="lead">Grades 8 to 11, at IB, IGCSE, A Level, AP, and top CBSE and ICSE schools. Thirty minutes, and no decision asked for.</p>
+    <div class="pricebox" id="priceBox"></div>
+    <div><a class="btn" href="#formCard" style="padding:16px 34px">Request an introduction call</a></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Blue Ocean Education Consulting.</b> 6 School Lane, Connaught Place, New Delhi 110001. +91 98211 18128.</p>
+    <p>A founder-led advisory helping Indian students build the profiles required for the world's most selective universities. We do not guarantee admission to any university.</p>
+    <p style="margin:0">&copy; 2026 Blue Ocean Education Consulting. <a href="https://blueoceanedu.com/privacy">Privacy</a></p>
+  </div>
+</footer>
+
+<div class="mcta" id="mcta">
+  <span>Grades 8 to 11. Thirty minutes, no decision asked for.</span>
+  <a class="btn sm" href="#formCard">Request a call</a>
+</div>
+
+<script src="school-fees.js" defer></script>
+<script src="lead-events.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+  try {
+
+  /* ══ SET BEFORE LAUNCH ═══════════════════════════════════════════════
+     Programmes start at this figure. It is the cheapest quality filter on
+     the page. Leave it empty and the page falls back to a true but softer
+     line; fill it in and the filter gets much sharper. */
+  var PRICE_FROM = '';
+
+  /* false means a family the rule marks Non-target does not see the
+     calendar, so Schedule only ever fires for a qualified family. That is
+     a business decision. Flip to true to let everyone book. */
+  var OFFER_CALENDAR_TO_NON_TARGET = false;
+
+  var SHEET_URL = 'https://script.google.com/macros/s/AKfycbxzYB2CtlMlPP0H9zCeEJAElhuSRWnF5RdyiL75JH_G2PcOn7ExTbxdc6kDev63ssMo8w/exec';
+  var FORM_SOURCE = 'lp_v2';
+  var FEE_FLOOR = 500000;
+  var PIXEL = '754270597536586';
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* school-fees.js exports cities() and inCity(). Each method is defaulted
+     individually, so a partial or missing object degrades to a plain text
+     field rather than throwing and taking every handler on the page with it. */
+  var S = window.BOSchools || {};
+  var BO = {
+    cities: typeof S.cities === 'function' ? S.cities.bind(S) : function(){ return []; },
+    inCity: typeof S.inCity === 'function' ? S.inCity.bind(S) : function(){ return []; },
+    resolveFee: typeof S.resolveFee === 'function' ? S.resolveFee.bind(S) : function(){
+      return { annualFee:'', ibFee:'', generalFee:'', feeBand:'Unknown', feeBasis:'',
+               matchedName:'', matchMethod:'lookup-unavailable', matchScore:'' };
+    }
+  };
+
+  $('priceBox').innerHTML = PRICE_FROM
+    ? 'Programmes start at <b>' + PRICE_FROM + '</b> a year and run for a full academic year.'
+    : 'Programmes run into <b>several lakh a year</b> and are committed for a full academic year.';
+
+  /* ══ click id and cookies, captured on load ══ */
+  function param(n){ return new URLSearchParams(location.search).get(n) || ''; }
+  function cookie(n){ var m = document.cookie.match('(^|;)\\s*' + n + '\\s*=\\s*([^;]+)'); return m ? m.pop() : ''; }
+  var fbclid = param('fbclid');
+  var fbc = cookie('_fbc') || (fbclid ? 'fb.1.' + Date.now() + '.' + fbclid : '');
+  var fbp = cookie('_fbp');
+
+  /* ══ steps ══ */
+  var subs = ['Thirty minutes. We tell you where the profile stands today.',
+              'Which school, so we know where the plan would start.',
+              'The last few answers. They decide who joins the call.'];
+  function show(i){
+    ['s1','s2','s3'].forEach(function(id,n){ $(id).classList.toggle('on', n===i); });
+    ['p1','p2','p3'].forEach(function(id,n){ $(id).classList.toggle('on', n<=i); });
+    $('stepn').textContent = (i+1) + ' / 3';
+    $('cardSub').textContent = subs[i];
+    if (window.innerWidth < 1000) $('formCard').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  function er(id,bad){ $(id).classList.toggle('on', !!bad); return !bad; }
+
+  /* ══ sticky mobile bar, hidden while the form is in view ══ */
+  var mcta = $('mcta');
+  if ('IntersectionObserver' in window) {
+    document.body.classList.add('has-mcta');
+    new IntersectionObserver(function(e){
+      mcta.classList.toggle('show', !e[0].isIntersecting);
+    }, {threshold:0.12}).observe($('formCard'));
+  }
+
+  /* ══ conditional fields ══ */
+  $('isParent').addEventListener('change', function(){
+    $('chkWrap').classList.toggle('checked', this.checked);
+  });
+  $('board').addEventListener('change', function(){ $('boardOtherF').hidden = this.value !== '__other'; });
+
+  var citySel = $('schoolCity'), schoolSel = $('school');
+  (BO.cities() || []).forEach(function(c){
+    var o = document.createElement('option'); o.value = c; o.textContent = c;
+    citySel.insertBefore(o, citySel.querySelector('option[value="__other"]'));
+  });
+  citySel.addEventListener('change', function(){
+    var other = this.value === '__other';
+    $('cityOtherF').hidden = !other;
+    $('schoolSelF').hidden = other;
+    $('schoolOtherF').hidden = !other;
+    if (other) { schoolSel.disabled = true; return; }
+    schoolSel.innerHTML = '<option value="" disabled selected>Select the school</option>';
+    /* inCity() returns records, not strings. The name is the value. */
+    (BO.inCity(this.value) || []).forEach(function(rec){
+      var nm = (rec && rec.name) ? rec.name : String(rec);
+      var o = document.createElement('option'); o.value = nm; o.textContent = nm; schoolSel.appendChild(o);
+    });
+    var o = document.createElement('option'); o.value='__other'; o.textContent='My school is not listed';
+    schoolSel.appendChild(o); schoolSel.disabled = false;
+  });
+  schoolSel.addEventListener('change', function(){ $('schoolOtherF').hidden = this.value !== '__other'; });
+
+  /* ══ country ranking ══ */
+  var picks = [];
+  $('rankGrid').addEventListener('click', function(e){
+    var chip = e.target.closest('.chip'); if (!chip) return;
+    var v = chip.dataset.v, at = picks.indexOf(v);
+    if (at > -1) picks.splice(at,1); else if (picks.length < 3) picks.push(v);
+    Array.prototype.forEach.call(this.querySelectorAll('.chip'), function(c){
+      var i = picks.indexOf(c.dataset.v);
+      c.classList.toggle('on', i > -1);
+      c.querySelector('u').textContent = i > -1 ? (i+1) : '';
+    });
+  });
+
+  /* ══ navigation ══ */
+  $('n1').addEventListener('click', function(){
+    var ok = er('errParent', !$('isParent').checked);
+    ok = er('errGrade', !$('grade').value) && ok;
+    ok = er('errBoard', !$('board').value) && ok;
+    if (ok) show(1);
+  });
+  $('b2').addEventListener('click', function(){ show(0); });
+  $('n2').addEventListener('click', function(){
+    var otherCity = citySel.value === '__other';
+    var ok = er('errCity', !citySel.value);
+    var school = otherCity || schoolSel.value === '__other' ? $('schoolOther').value.trim() : schoolSel.value;
+    if (otherCity) ok = er('errCity', !$('schoolCityOther').value.trim()) && ok;
+    ok = er('errSchool', !school) && ok;
+    if (ok) show(2);
+  });
+  $('b3').addEventListener('click', function(){ show(1); });
+
+  function city(){ return citySel.value === '__other' ? $('schoolCityOther').value.trim() : citySel.value; }
+  function school(){
+    if (citySel.value === '__other' || schoolSel.value === '__other') return $('schoolOther').value.trim();
+    return schoolSel.value;
+  }
+  function boardLabel(){
+    var b = $('board');
+    return b.value === '__other' ? ($('boardOther').value.trim() || 'Other board') : b.options[b.selectedIndex].text;
+  }
+
+  /* ══ qualification. Five tests, all decidable at submit. ══ */
+  function qualify(fees, aid, grade, isParent){
+    if (!isParent) return 'not_parent';
+    if (['grade8','grade9','grade10','grade11'].indexOf(grade) === -1) return 'grade_out_of_range';
+    if (fees.matchMethod === 'none') return 'school_not_on_list';
+    if (fees.annualFee && fees.annualFee < FEE_FLOOR) return 'school_fee_below_floor';
+    if (aid === 'half' || aid === 'full') return 'aid_dependent';
+    return 'pass';
+  }
+  /* The original column, unchanged, so the history stays comparable. */
+  function legacy(fee, ranked, method){
+    if (ranked.slice(0,2).indexOf('US') === -1) return 'Non-target';
+    if (method === 'none') return 'Non-target';
+    if (fee && fee < FEE_FLOOR) return 'Non-target';
+    return 'Target';
+  }
+
+  /* ══ submit ══ */
+  $('submitBtn').addEventListener('click', async function(){
+    var ok = er('errRank', picks.length === 0);
+    ok = er('errAid', !$('scholarship').value) && ok;
+    ok = er('errName', !$('firstName').value.trim() || !$('lastName').value.trim()) && ok;
+    ok = er('errEmail', !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test($('email').value.trim())) && ok;
+    ok = er('errPhone', $('phone').value.trim().length < 7) && ok;
+    if (!ok) return;
+
+    var btn = this, label = btn.textContent;
+    btn.textContent = 'Submitting'; btn.disabled = true;
+
+    var sName = school(), cName = city();
+    var fees = BO.resolveFee(sName, cName, $('board').value);
+    var aid = $('scholarship').value, grade = $('grade').value;
+    var reason = qualify(fees, aid, grade, $('isParent').checked);
+    var isTarget = reason === 'pass';
+    var stamp = new Date().toISOString();
+
+    var payload = {
+      timestamp: stamp, form_source: FORM_SOURCE, user_type: 'guardian',
+      first_name: $('firstName').value.trim(), last_name: $('lastName').value.trim(),
+      email: $('email').value.trim(),
+      phone: $('phonePrefix').value.replace('+','00') + ' ' + $('phone').value.trim(),
+      grade: grade, school_city: cName, school_name: sName, school_board: boardLabel(),
+      school_ib_fee_inr: fees.ibFee, school_general_fee_inr: fees.generalFee,
+      school_fee_annual_inr: fees.annualFee, school_fee_band: fees.feeBand,
+      school_fee_basis: fees.feeBasis, school_fee_matched_name: fees.matchedName,
+      school_fee_match_method: fees.matchMethod, school_fee_match_score: fees.matchScore,
+      pincode: $('pincode').value.trim(),
+      country_pref_1: picks[0]||'', country_pref_2: picks[1]||'', country_pref_3: picks[2]||'',
+      country_prefs: picks.join(' > '),
+      financial_aid: $('scholarship').options[$('scholarship').selectedIndex].text,
+      financial_aid_code: aid,
+      target_audience: legacy(fees.annualFee, picks, fees.matchMethod),
+      target_v2: isTarget ? 'Target' : 'Non-target',
+      target_reason: reason,
+      fbclid: fbclid, fbc: fbc, fbp: fbp, event_id: 'lead-' + stamp,
+      utm_content: param('utm_content'), utm_campaign: param('utm_campaign'),
+      page_url: location.href, page_title: document.title
+    };
+
+    try {
+      await fetch(SHEET_URL, { method:'POST', mode:'no-cors', body:new URLSearchParams(payload) });
+    } catch (e) { console.error('Sheet submit error:', e); }
+
+    btn.textContent = label; btn.disabled = false;
+
+    /* Advanced matching before the events, so everything fired from here
+       and from next-steps.html carries it. */
+    try {
+      fbq('init', PIXEL, {
+        em: payload.email.toLowerCase(), ph: payload.phone.replace(/\D/g,''),
+        fn: payload.first_name.toLowerCase(), ln: payload.last_name.toLowerCase(),
+        zp: payload.pincode
+      });
+    } catch (e) {}
+
+    /* Lead for every submission. TargetLead for the subset only. Meta needs
+       both counts to work out a rate, so never suppress the first. */
+    try { BOEvents.lead(payload); } catch (e) { console.error('Lead event failed:', e); }
+    if (isTarget) {
+      try { fbq('trackCustom','TargetLead',{content_category:grade,content_name:FORM_SOURCE},
+                {eventID:'targetlead-'+stamp}); } catch (e) {}
+    }
+    try { window.dataLayer.push({event:isTarget?'TARGET_LEAD':'NON_TARGET_LEAD', lead_reason:reason}); } catch (e) {}
+
+    /* The qualification result is the number this page exists to move, so it
+       goes to PostHog as its own event with the reason on it. The distribution
+       of reasons is what says which condition is killing the most leads, and
+       therefore what to change in the ad rather than on the page. */
+    try {
+      window.BOPostHog.capture(isTarget ? 'target_lead' : 'non_target_lead',
+        { lead_reason: reason, lead_grade: grade, lead_source: FORM_SOURCE });
+    } catch (e) {}
+
+    $('leadForm').style.display = 'none';
+    $('stepn').style.display = 'none';
+    document.querySelector('.pbar').style.display = 'none';
+    mcta.classList.remove('show');
+
+    if (isTarget || OFFER_CALENDAR_TO_NON_TARGET) {
+      $('cardSub').textContent = 'One step left.';
+      $('outQ').classList.add('on');
+      try {
+        BOEvents.mountCalendly({ mount: $('bookingFrame'), lead: payload,
+          onBooked: function(){ location.href = 'next-steps.html'; } });
+      } catch (e) { console.error('Scheduler failed:', e); }
+    } else {
+      $('cardSub').style.display = 'none';
+      document.querySelector('.card-h h2').textContent = 'Received';
+      $('outN').classList.add('on');
+    }
+    $('formCard').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+
+  } catch (bootErr) {
+    /* The form must still take a lead even if something above failed. */
+    console.error('Landing page init failed:', bootErr);
+  }
+});
+</script>
+</body>
+</html>

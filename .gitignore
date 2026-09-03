@@ -4,3 +4,7 @@
 # 250MB of brochure PDFs. Every one is a render of an HTML file that is
 # in the repo; the renders are kept locally only.
 *.pdf
+__pycache__/
+
+# Editor-local, and this repo is public.
+.vscode/

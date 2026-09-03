@@ -3455,6 +3455,120 @@
       }
     }
 
+    /* ── The questions families ask ───────────────────────────────
+
+       On fit.html, under how-to-join. Markup and the FAQPage schema
+       that describes it are both generated from the FAQ list in
+       tools/build-seo.py, so the answer a parent reads and the answer
+       an answer engine quotes cannot drift apart.
+
+       Drawn the way .join-steps is drawn: a 1px gap over --line with
+       each cell filled --paper, so the single pixel showing through
+       is the divider and the block reads as one object rather than
+       ten cards. The chevron is the mobile panel's, a square with two
+       borders rotated 45 degrees, which is the site's one disclosure
+       affordance.
+
+       <details> rather than a scripted accordion. It is open to find
+       on the page with the browser's own search, it survives JS
+       failing, and a crawler reads the answer whether or not the
+       element is open. The first item ships open so the block does
+       not read as a wall of closed rows. */
+
+    .faq-list {
+      display: grid;
+      gap: 1px;
+      margin-top: clamp(28px, 3.2vw, 44px);
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .faq-item {
+      background: var(--paper);
+    }
+
+    .faq-q {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 14px;
+      align-items: center;
+      gap: clamp(14px, 2vw, 26px);
+      padding: clamp(18px, 1.9vw, 26px) clamp(20px, 2.2vw, 30px);
+      margin: 0;
+      cursor: pointer;
+      list-style: none;
+      /* Text, not Display. The brand's floor for Display is 20px and this
+         tops out at 19px, so a Display cut here would read as a second,
+         unrelated typeface sitting beside the answer under it. */
+      font-family: var(--sans);
+      font-size: clamp(16.5px, 1.22vw, 19px);
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--ink);
+      transition: background 130ms;
+    }
+
+    /* Safari draws its own marker unless both of these are stated. */
+    .faq-q::-webkit-details-marker { display: none; }
+    .faq-item summary::marker { content: ''; }
+
+    .faq-q:hover { background: var(--paper-low); }
+
+    .faq-q:focus-visible {
+      outline: 2px solid var(--moss);
+      outline-offset: -3px;
+    }
+
+    .faq-q::after {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      justify-self: end;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      opacity: 0.4;
+      transform: translateY(-2px) rotate(45deg);
+      transition: transform 180ms, opacity 130ms;
+    }
+
+    .faq-item[open] .faq-q::after {
+      transform: translateY(2px) rotate(225deg);
+      opacity: 0.7;
+    }
+
+    .faq-a {
+      margin: 0;
+      padding: 0 clamp(20px, 2.2vw, 30px) clamp(20px, 2.2vw, 28px);
+      color: var(--ink-soft);
+      font-size: clamp(15px, 1.08vw, 17px);
+      line-height: 1.65;
+      max-width: 78ch;
+    }
+
+    /* ── 404 ──────────────────────────────────────────────────────
+
+       404.html reuses .join-pair to lay six destinations out in
+       three rows. The panel headings there are links, and a heading
+       that happens to be clickable is not a link, so they take the
+       letter's citation treatment: body colour, a Support underline,
+       colour on hover only. Nowhere else on the site is a .join-panel
+       heading a link, which is why this is scoped. */
+
+    .notfound-pair .join-panel h3 a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: var(--moss);
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 4px;
+      transition: color 130ms;
+    }
+
+    .notfound-pair .join-panel h3 a:hover {
+      color: var(--moss);
+    }
+
     /* ── Why start early / the whole student / the year ───────────
 
        The year grid is five streams by twelve months with three

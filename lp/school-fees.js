@@ -55,6 +55,7 @@
 
   /* [name, cityIndex, ibFee, generalFee] */
   var SCHOOLS = [
+    ["Adani International School – Shantigram", 0, 572749, 0],
     ["Ahmedabad International School", 0, 361800, 160950],
     ["Mayo College", 1, 0, 1152000],
     ["Mayo College Girls' School", 1, 0, 1152000],
@@ -64,6 +65,7 @@
     ["Canadian International School – Yelahanka", 3, 1030000, 0],
     ["Ebenezer International School Bangalore – Electronic City", 3, 320000, 420000],
     ["Head Start Educational Academy – Dommasandra", 3, 0, 420000],
+    ["Indus International School – Sarjapur", 3, 767500, 767500],
     ["Legacy School – Byrathi Village", 3, 550000, 0],
     ["One World International School – Sarjapur", 3, 600000, 0],
     ["Stonehill International School – North Bengaluru", 3, 2024271, 0],
@@ -89,6 +91,7 @@
     ["DPS International – Sector 50", 8, 869848, 0],
     ["Excelsior American School – Sector 43", 8, 1358220, 0],
     ["GD Goenka World School – Sohna", 8, 322908, 322908],
+    ["GEMS International School – Palam Vihar", 8, 333440, 333440],
     ["Heritage Xperiential Learning School – Sector 62", 8, 0, 532000],
     ["Kunskapsskolan International School", 8, 0, 424840],
     ["Lancers International School – Sector 53 / DLF Phase 5", 8, 1536000, 0],
@@ -123,6 +126,7 @@
     ["B.D. Somani International School – Cuffe Parade", 17, 1100000, 0],
     ["Bombay International School – Malabar Hill", 17, 1000000, 0],
     ["Bombay Scottish School", 17, 0, 105000],
+    ["Dhirubhai Ambani International School", 17, 965000, 448000],
     ["Ecole Mondiale World School", 17, 1090000, 0],
     ["Edubridge International School – Girgaon", 17, 365004, 0],
     ["Fazlani L'Academie Globale – Mazgaon", 17, 0, 650000],
@@ -152,8 +156,10 @@
     ["Amity Global School – Noida", 21, 614640, 614640],
     ["Amity International School – Noida", 21, 0, 195732],
     ["Apeejay School – Sector 16A", 21, 0, 220951],
+    ["Genesis Global School – Sector 132", 21, 907200, 550800],
     ["Gyanshree School – Sector 127", 21, 0, 241200],
     ["Prometheus School – Sector 131", 21, 1110000, 926000],
+    ["Good Shepherd International School", 22, 1950000, 1700000],
     ["The Lawrence School, Lovedale", 22, 0, 710000],
     ["Billimoria High School", 23, 0, 635960],
     ["Birla School Pilani", 24, 0, 477730],

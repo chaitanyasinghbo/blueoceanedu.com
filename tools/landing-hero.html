@@ -1076,7 +1076,7 @@
     /* ── School city and school ───────────────────────
        The city drives the school list, so a family picks from ten names
        rather than scrolling past a hundred. Either dropdown can fall back to
-       a text field, because the list is 112 schools and India has thousands.
+       a text field, because the list is 118 schools and India has thousands.
        A typed name is still matched against the list at submit time. */
     const citySelect      = document.getElementById('schoolCity');
     const cityOtherField  = document.getElementById('schoolCityOtherField');
@@ -1288,7 +1288,7 @@
 
     function targetAudience(annualFee, ranked, matchMethod) {
       if (ranked.slice(0, 2).indexOf('US') === -1) return 'Non-target';
-      /* A school the list does not carry is Non-target. The 112 are the schools
+      /* A school the list does not carry is Non-target. The 118 are the schools
          worth a callback, so a name that matches none of them is the answer
          rather than a gap in it. school_fee_match_method reads `none` on those
          rows, so the call is checkable.

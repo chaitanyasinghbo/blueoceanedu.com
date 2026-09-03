@@ -1,0 +1,107 @@
+# blueoceanedu.com
+#
+# Everything on this site is meant to be read, by people and by machines.
+# The AI crawlers are named explicitly rather than left to the wildcard,
+# because a family asking ChatGPT or Gemini "who are the best admissions
+# consultants in India" is the same family that would have typed it into
+# Google, and a crawler that is not allowed cannot cite what it cannot read.
+#
+# Two kinds of bot are named below and they are not the same thing:
+#
+#   Search crawlers    build an index a person later searches.
+#   Answer crawlers    fetch a page live to answer one question, right now.
+#
+# Blocking the second kind removes the site from the answer, not from the
+# training set. Both are allowed.
+#
+# Nothing here is disallowed. Pages that should stay out of an index carry
+# `<meta name="robots" content="noindex, follow">` instead, because a page
+# blocked in robots.txt is never fetched, so the noindex is never read, and
+# the URL can still surface as a bare link with no title under it. The pages
+# that carry it are next-steps.html and the two generated landing folders.
+
+User-agent: *
+Allow: /
+
+# ── Google ───────────────────────────────────────────────────────────
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+# Google-Extended controls Gemini and Vertex grounding. Disallowing it does
+# not affect Search ranking, and does remove the site from Gemini answers.
+User-agent: Google-Extended
+Allow: /
+
+# ── Microsoft, and through it Copilot ────────────────────────────────
+User-agent: Bingbot
+Allow: /
+
+# ── OpenAI ───────────────────────────────────────────────────────────
+# GPTBot trains, OAI-SearchBot indexes for ChatGPT Search, and ChatGPT-User
+# fetches a page live when a user's question needs it. The last one is the
+# one that decides whether ChatGPT can answer "what is Blue Ocean Education"
+# from the site rather than from whatever else it has seen.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# ── Anthropic ────────────────────────────────────────────────────────
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# ── Perplexity ───────────────────────────────────────────────────────
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# ── Apple Intelligence and Siri ──────────────────────────────────────
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ── Meta AI ──────────────────────────────────────────────────────────
+User-agent: meta-externalagent
+Allow: /
+
+# ── Common Crawl, which most open models are trained from ────────────
+User-agent: CCBot
+Allow: /
+
+# ── Others ───────────────────────────────────────────────────────────
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+Sitemap: https://blueoceanedu.com/sitemap.xml
