@@ -52,6 +52,8 @@ It ships with no key. Until `PROJECT_KEY` is set it appends no script, requests 
 
 **`tools/posthog-daily.py` is the morning report**, and it needs a *Personal* API key, which is not the `phc_` key in `posthog-init.js`. That one is publishable and write-only; this one reads the project back out. Read-only, scoped to `query` and `project`, never committed.
 
+**`privacy.html` is the page that has to keep up with all of this.** It is hand-written, no builder checks it, and it names the exact form fields we collect, the school fee band `school-fees.js` derives without the family typing it, the five companies that receive something (Google, Meta, PostHog, Calendly, Cloudflare), and the promise that session replay masks every input. A change to the form, to the lead sheet payload, to `posthog-init.js`, or to the third parties is a change to that page. It is written for the Digital Personal Data Protection Act, 2023 and the IT Act, 2000, not adapted from a US policy, and its section on students under 18 is what makes running a pixel on a site aimed at minors defensible. Full reasoning is in `docs/site.md` under *`privacy.html`*.
+
 **Every `BOEvents` call is wrapped in a `try`, and must stay that way.** A missing script tag once left `BOEvents` undefined, and the bare call threw on the line before the scheduler is revealed — `Request Consultation` posted the lead and then did nothing visible. Analytics is always what gives way, never the booking. The build fails if a page calls `BOEvents` without loading `lead-events.js`.
 
 ## The landing pages are generated, not written

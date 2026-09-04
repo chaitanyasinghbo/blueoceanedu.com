@@ -5028,6 +5028,13 @@
       font-size: 12px;
     }
 
+    /* `.footer a` sets 14px, which is the column lists. The legal link in
+       the bottom row sits beside two 12px spans and takes their size. */
+    .footer-bottom a {
+      font-size: inherit;
+      line-height: inherit;
+    }
+
     .footer-brand {
       display: inline-flex;
       align-items: center;

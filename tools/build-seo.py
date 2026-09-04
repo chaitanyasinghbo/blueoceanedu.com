@@ -593,6 +593,18 @@ PAGES = [
         "page_type": "ContactPage",
         "og_type": "website",
     },
+    {
+        "file": "privacy.html",
+        "path": "/privacy",
+        "crumb": "Privacy Policy",
+        "title": "Privacy Policy | Blue Ocean Education",
+        "description":
+            "What Blue Ocean Education collects from families, why, who it "
+            "goes to, and the rights the Digital Personal Data Protection "
+            "Act, 2023 gives you over it.",
+        "page_type": "WebPage",
+        "og_type": "article",
+    },
     # Reached only after a booking, and it carries a newsletter form and a
     # resource list rather than anything a search result should land on.
     # `follow` rather than `none` so the links out of it still pass.

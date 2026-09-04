@@ -2,11 +2,11 @@
 
 ## Stack
 
-Multi-page static site. Working file: `index.html` (landing page). Ocean Ember rebrand mock: `mock-index.html`. Sub-pages: `method.html`, `results.html`, `founder.html`, `fit.html`, `team.html`. Shared CSS lives in `main.css` (linked by all pages). Shared scroll behavior in `scroll-story.js`. School and fee reference data in `school-fees.js`, used by `start.html` and by both landing pages. No framework, self-hosted fonts only.
+Multi-page static site. Working file: `index.html` (landing page). Ocean Ember rebrand mock: `mock-index.html`. Sub-pages: `method.html`, `results.html`, `founder.html`, `fit.html`, `team.html`, `privacy.html`. Shared CSS lives in `main.css` (linked by all pages). Shared scroll behavior in `scroll-story.js`. School and fee reference data in `school-fees.js`, used by `start.html` and by both landing pages. No framework, self-hosted fonts only.
 
 **There is one build step, and it is the landing pages.** `lp/` and `iblp/` are generated from `index.html` by `tools/build-landing-pages.py` and must never be hand-edited. See [The landing pages are generated](#the-landing-pages-are-generated) below.
 
-Nav is five items in this order: Method, Founder, Results, Right Fit, Team. Every root page carries the same list three times, in `.nav-links`, `.mobile-panel-links`, and the footer `Explore` column. `lp/` and `iblp/` carry the footer list only, with absolute `https://blueoceanedu.com/` URLs. `case-studies/` carry a minimal `.case-nav` with no link list.
+Nav is five items in this order: Method, Founder, Results, Right Fit, Team. Every root page carries the same list three times, in `.nav-links`, `.mobile-panel-links`, and the footer `Explore` column. `privacy.html` is deliberately not on that list. It sits in the `.footer-bottom` row instead, on every root page, which is where a family looks for it and where adding a sixth nav item would cost the five that sell the work. `lp/` and `iblp/` carry the footer list only, with absolute `https://blueoceanedu.com/` URLs. `case-studies/` carry a minimal `.case-nav` with no link list.
 
 ---
 
@@ -335,6 +335,25 @@ Rajat Sethi and Rajiv Gupta moved out of the old `.team-support-stack` and into 
 
 1. **The founder** (`.team-section`, dark) — Dr. Sanjay alone in `.team-founder.is-wide`
 2. **The counsel** (`.section.dark.counsel-section`) — `.counsel-wall` over the Harvard campus photograph
+
+### `privacy.html` — Privacy Policy
+
+1. Page header
+2. Dark compact hero — eyebrow, the h1, one line of lede, and the `.legal-dates` line carrying **Last updated** and **Effective**
+3. `.legal-layout` — a sticky `.legal-toc` left, the fifteen numbered `<section>` blocks of `.legal-body` right
+4. Footer
+
+**No CTA section and no sticky CTA bar.** Every other page carries both. A floating `Get Started` bar over a privacy statement reads as a sales page wearing a legal document, and a family who has opened this page is checking whether to trust us with a child's name, not deciding whether to book. The inline script already guards on `stickyCta` being present, so removing the element is the whole change.
+
+**The page is written for Indian law, not adapted from an American one.** It names the Digital Personal Data Protection Act, 2023 and uses its vocabulary (`Data Fiduciary`, `Data Principal`, the six rights in section 9), the Information Technology Act, 2000 and the 2011 rules under it for the security standard, and the National Do Not Call registry for the consent to call. There is no CCPA "sale or sharing" section, no GDPR legal-bases table, and no Do Not Track promise, because none of those is the law that binds us. A US template dropped in here would state rights the reader does not have and omit the Grievance Officer, which is the one thing Indian law actually requires us to publish.
+
+**Section 10 exists because of who our students are.** The DPDP Act treats anyone under 18 as a child, requires verifiable parental consent before their data is processed, and forbids behavioural tracking of them and advertising targeted at them. Almost every student on our files is a minor when the family first writes in, and the site runs a Meta pixel and session replay. The page therefore states that the forms are written for a parent or guardian, that a submission from a student under 18 is treated as incomplete until a parent or guardian consents on the first call, and that we build no advertising audience from students. **Do not soften that section, and do not add any advertising audience built from student data without changing it first.**
+
+**Every disclosure in it is checked against what the site actually does.** Section 2 lists the enquiry form's real fields, including the school fee band `school-fees.js` derives from the school name and posts to the lead sheet, which is collected data the family never typed and so has to be disclosed. Section 6 names Google, Meta, PostHog, Calendly and Cloudflare because those are the five that receive something. Section 2 states that session replay masks every form input, which is the promise `maskAllInputs` in `posthog-init.js` keeps. **A change to the form, to the lead sheet payload, to `posthog-init.js`, or to the list of third parties is a change to this page.** The page is hand-written and no builder checks it against the code, so nothing will catch the drift for you.
+
+Three values in it are business facts rather than code facts, and they are the ones to re-check before the page is treated as final: the Grievance Officer named in section 15, the mailbox at `privacy@blueoceanedu.com`, and the retention periods in section 8 (24 months for an enquiry, three years after the final application cycle for a client file).
+
+The consent line under both consultation forms links here, in `start.html` and in `tools/landing-hero.html`. `privacy.html` is in `SITE_PAGES` in `tools/build-landing-pages.py`, so the footer link on `lp/` and `iblp/` is rewritten absolute; the form's link is rewritten the same way.
 
 ## The counsel wall
 

@@ -52,6 +52,7 @@ PAGES = [
     ("fit.html",     "/fit",      "0.8",  "monthly"),
     ("team.html",    "/team",     "0.8",  "monthly"),
     ("start.html",   "/start",    "0.7",  "monthly"),
+    ("privacy.html", "/privacy",  "0.3",  "yearly"),
 ]
 
 

@@ -50,7 +50,8 @@ def all_files():
 def entry_points(files):
     """The pages the site serves. Everything it needs hangs off these."""
     pages = ['index.html', 'start.html', 'next-steps.html', 'method.html',
-             'results.html', 'fit.html', 'team.html', 'founder.html']
+             'results.html', 'fit.html', 'team.html', 'founder.html',
+             'privacy.html']
     pages += sorted(f for f in files
                     if f.startswith('case-studies/') and f.endswith('.html'))
     pages += sorted(f for f in files

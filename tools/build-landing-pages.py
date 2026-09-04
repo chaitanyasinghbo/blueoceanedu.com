@@ -116,7 +116,7 @@ SEO_CLOSE = "<!-- /@seo -->"
 # Site pages a landing page links out to. A landing page is often served on its
 # own hostname, so every one of these has to be absolute or it 404s.
 SITE_PAGES = ["method.html", "founder.html", "results.html", "fit.html",
-              "team.html", "index.html"]
+              "team.html", "privacy.html", "index.html"]
 
 # Directories that exist only at the repo root and are not copied down. The
 # case-study pages are linked from the student-stories section, which ships
