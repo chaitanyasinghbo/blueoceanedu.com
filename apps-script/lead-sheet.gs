@@ -32,6 +32,25 @@
  * `Leads` stay where they are and are cleaned up by hand.
  */
 
+/* The rejection-pile page keeps its own sheet, and that is the one the team
+   reads. Every lead this script records is forwarded there too, so one sheet
+   holds every page's leads without start.html, lp/, iblp/ and lp-v2/ each
+   having to be edited and the site redeployed for it.
+
+   Leads only. Newsletter signups stay here, because the reason they were
+   routed to their own tab is that they carry the same name, email, phone,
+   grade and school as the lead they were prefilled from, and one family
+   reading as two leads is exactly the bug that routing fixed.
+
+   Set to '' to stop mirroring. */
+var MIRROR_URL = 'https://script.google.com/macros/s/AKfycbzPHgACwTiqaQ4hFOoRZcDTZtX9_sAEiXhHD91mQV5h8s3vdCexhs-YohboZlUamdSX/exec';
+
+/* Pages that already post to the mirror themselves, straight from the browser.
+   Forwarding one of those again files the same family twice, once from the
+   browser and once from here. A page belongs on this list the moment its own
+   SHEET_URLS carries the mirror. */
+var MIRROR_SKIP_SOURCES = ['lp_rejection_pile'];
+
 var SHEET_NAME = 'Leads';
 var NEWSLETTER_SHEET_NAME = 'Newsletter';
 var TIME_ZONE = 'Asia/Kolkata';
@@ -148,6 +167,12 @@ function doPost(e) {
     });
 
     sheet.appendRow(row);
+
+    /* After the append, so a row is only ever mirrored once it is actually
+       recorded here, and inside its own guard, so a mirror that is down or
+       slow cannot cost this sheet a lead. */
+    if (route.name === SHEET_NAME) mirror_(data);
+
     return json_({ ok: true });
   } catch (err) {
     return json_({ ok: false, error: String(err) });
@@ -169,6 +194,25 @@ function doPost(e) {
 
    Nothing needs redeploying for that. A deployment still carrying the old
    code simply answers a question the site has stopped asking. */
+
+/* One synchronous hop, which adds roughly half a second to the response the
+   form is waiting on. That is the price of catching every posting page in one
+   place instead of adding a second endpoint to each of them, and Apps Script
+   has no way to send this in the background. */
+function mirror_(data) {
+  if (!MIRROR_URL) return;
+  if (MIRROR_SKIP_SOURCES.indexOf(String(data.form_source || '')) !== -1) return;
+  try {
+    UrlFetchApp.fetch(MIRROR_URL, {
+      method: 'post',
+      payload: data,
+      followRedirects: true,
+      muteHttpExceptions: true
+    });
+  } catch (err) {
+    console.error('mirror failed: ' + err);
+  }
+}
 
 function doGet() {
   return json_({ ok: true, service: 'Blue Ocean lead sheet' });
